@@ -1,4 +1,4 @@
 /**
  * This package contains controller classes.
  */
-package com.paymybuddy.login.controller;
+package com.paymybuddy.sendmoney.controller;

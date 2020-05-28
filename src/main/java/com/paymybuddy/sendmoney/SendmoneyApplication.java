@@ -1,4 +1,4 @@
-package com.paymybuddy.login;
+package com.paymybuddy.sendmoney;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
