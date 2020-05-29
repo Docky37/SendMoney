@@ -1,4 +1,4 @@
-package com.paymybuddy.sendmoney.validator;
+package com.paymybuddy.sendmoney.security.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -6,8 +6,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.paymybuddy.sendmoney.model.Buddy;
-import com.paymybuddy.sendmoney.service.UserService;
+import com.paymybuddy.sendmoney.security.model.Buddy;
+import com.paymybuddy.sendmoney.security.service.UserService;
 
 @Component
 public class UserValidator implements Validator {

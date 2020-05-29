@@ -1,13 +1,13 @@
-package com.paymybuddy.sendmoney.service;
+package com.paymybuddy.sendmoney.security.service;
 
 import java.util.HashSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.paymybuddy.sendmoney.model.Buddy;
-import com.paymybuddy.sendmoney.repository.RoleRepository;
-import com.paymybuddy.sendmoney.repository.UserRepository;
+import com.paymybuddy.sendmoney.security.model.Buddy;
+import com.paymybuddy.sendmoney.security.repository.RoleRepository;
+import com.paymybuddy.sendmoney.security.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {

@@ -1,9 +1,9 @@
 /**
  * 
  */
-package com.paymybuddy.sendmoney.service;
+package com.paymybuddy.sendmoney.security.service;
 
-import com.paymybuddy.sendmoney.model.Buddy;
+import com.paymybuddy.sendmoney.security.model.Buddy;
 
 /**
  * @author Thierry Schreiner

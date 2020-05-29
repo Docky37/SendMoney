@@ -1,4 +1,4 @@
-package com.paymybuddy.sendmoney.model;
+package com.paymybuddy.sendmoney.security.model;
 
 import java.util.Set;
 
@@ -12,7 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.paymybuddy.sendmoney.model.Role;
+import com.paymybuddy.sendmoney.security.model.Role;
 
 /**
  * The Buddy class is the user entity of Pay My Buddy.

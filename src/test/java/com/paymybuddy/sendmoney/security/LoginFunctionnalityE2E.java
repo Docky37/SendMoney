@@ -1,4 +1,4 @@
-package com.paymybuddy.sendmoney;
+package com.paymybuddy.sendmoney.security;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
@@ -22,7 +22,7 @@ import org.springframework.web.context.WebApplicationContext;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class LoginFunctionnalityIT {
+public class LoginFunctionnalityE2E {
     @Autowired
     private WebApplicationContext context;
 
@@ -31,10 +31,8 @@ public class LoginFunctionnalityIT {
 
     @BeforeEach
     public void setup() {
-        mvc = MockMvcBuilders
-                .webAppContextSetup(context)
-                .apply(springSecurity())
-                .build();
+        mvc = MockMvcBuilders.webAppContextSetup(context)
+                .apply(springSecurity()).build();
     }
 
     @Test
@@ -43,15 +41,18 @@ public class LoginFunctionnalityIT {
     }
 
     @Test
-    public void userLoginTest() throws Exception {
-        mvc.perform(formLogin("/login").user("springuser").password("spring123")).andExpect(authenticated());
+    public void givenValidCredentials_whenLogin_thenAuthenticated()
+            throws Exception {
+        mvc.perform(
+                formLogin("/login").user("springuser").password("spring123"))
+                .andExpect(authenticated());
     }
-
 
     @Test
-    public void userLoginFail() throws Exception {
-        mvc.perform(formLogin("/login").user("springuser").password("spring12345")).andExpect(unauthenticated());
+    public void givenInvalidCredentials_whenLogin_thenFail() throws Exception {
+        mvc.perform(
+                formLogin("/login").user("springuser").password("spring12345"))
+                .andExpect(unauthenticated());
     }
 
-    
 }
