@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.paymybuddy.sendmoney.security.model.Buddy;
 
 public interface UserRepository extends JpaRepository<Buddy, Long> {
-    Buddy findByUsername(String username);
+    Buddy findByEmail(String username);
 }

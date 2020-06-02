@@ -4,9 +4,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,22 +33,17 @@ public class LoginFunctionnalityE2E {
     }
 
     @Test
-    public void shouldReturnDefaultMessage() throws Exception {
-        mvc.perform(get("/login")).andDo(print()).andExpect(status().isOk());
-    }
-
-    @Test
     public void givenValidCredentials_whenLogin_thenAuthenticated()
             throws Exception {
         mvc.perform(
-                formLogin("/login").user("springuser").password("spring123"))
+                formLogin("/login").user("user.test@paymybuddy.com").password("spring123"))
                 .andExpect(authenticated());
     }
 
     @Test
     public void givenInvalidCredentials_whenLogin_thenFail() throws Exception {
         mvc.perform(
-                formLogin("/login").user("springuser").password("spring12345"))
+                formLogin("/login").user("user.test@paymybuddy.com").password("spring12"))
                 .andExpect(unauthenticated());
     }
 

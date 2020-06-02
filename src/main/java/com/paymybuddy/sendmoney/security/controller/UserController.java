@@ -1,12 +1,14 @@
 package com.paymybuddy.sendmoney.security.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 /* IMPORTS FOR OAUTH2
 import java.security.Principal;
 import java.util.Map;
@@ -20,7 +22,7 @@ import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;*/
-import com.paymybuddy.sendmoney.security.model.Buddy;
+import com.paymybuddy.sendmoney.security.model.UserDTO;
 import com.paymybuddy.sendmoney.security.service.UserService;
 import com.paymybuddy.sendmoney.security.validator.UserValidator;
 
@@ -33,15 +35,15 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    @GetMapping(value = "/registration")
     public String registration(Model model) {
-        model.addAttribute("userForm", new Buddy());
-
+        model.addAttribute("userForm", new UserDTO());
         return "registration";
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") Buddy userForm,
+    @PostMapping(value = "/registration")
+    public String registration(
+            @ModelAttribute("userForm") @Valid UserDTO userForm,
             BindingResult bindingResult, Model model) {
         userValidator.validate(userForm, bindingResult);
 
@@ -52,7 +54,20 @@ public class UserController {
         return "redirect:/welcome";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    /*
+     * ORIGINAL WITH ENTITY
+     * 
+     * @PostMapping(value = "/registration") public String
+     * registration(@ModelAttribute("userForm") Buddy userForm, BindingResult
+     * bindingResult, Model model) { userValidator.validate(userForm,
+     * bindingResult);
+     * 
+     * if (bindingResult.hasErrors()) { return "registration"; }
+     * userService.save(userForm); return "redirect:/welcome"; }
+     * 
+     */
+
+    @GetMapping(value = "/login")
     public String login(Model model, String error, String logout) {
         if (error != null)
             model.addAttribute("error",
@@ -65,7 +80,7 @@ public class UserController {
         return "login";
     }
 
-    @RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
+    @GetMapping(value = { "/", "/welcome" })
     public String welcome(Model model) {
         return "welcome";
     }

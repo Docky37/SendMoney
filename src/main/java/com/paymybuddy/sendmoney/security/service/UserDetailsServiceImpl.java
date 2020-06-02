@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        Buddy user = userRepository.findByUsername(username);
+        Buddy user = userRepository.findByEmail(username);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         for (Role role : user.getRoles()) {
@@ -34,6 +34,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         return new org.springframework.security.core.userdetails.User(
-                user.getUsername(), user.getPassword(), grantedAuthorities);
+                user.getEmail(), user.getPassword(), grantedAuthorities);
     }
 }
