@@ -24,6 +24,6 @@ public interface UserService {
      * @param email
      * @return a Buddy object
      */
-    Buddy findByUsername(String email);
+    Buddy findByEmail(String email);
 
 }

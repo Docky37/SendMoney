@@ -54,19 +54,6 @@ public class UserController {
         return "redirect:/welcome";
     }
 
-    /*
-     * ORIGINAL WITH ENTITY
-     * 
-     * @PostMapping(value = "/registration") public String
-     * registration(@ModelAttribute("userForm") Buddy userForm, BindingResult
-     * bindingResult, Model model) { userValidator.validate(userForm,
-     * bindingResult);
-     * 
-     * if (bindingResult.hasErrors()) { return "registration"; }
-     * userService.save(userForm); return "redirect:/welcome"; }
-     * 
-     */
-
     @GetMapping(value = "/login")
     public String login(Model model, String error, String logout) {
         if (error != null)
@@ -83,6 +70,11 @@ public class UserController {
     @GetMapping(value = { "/", "/welcome" })
     public String welcome(Model model) {
         return "welcome";
+    }
+
+    @GetMapping(value = { "/admin" })
+    public String admin(Model model) {
+        return "admin";
     }
 }
 
