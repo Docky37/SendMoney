@@ -39,32 +39,86 @@ public class Buddy implements UserDetails {
      */
     private static final long serialVersionUID = -5322172864212606550L;
 
+    /**
+     * The Buddy's id field.
+     */
     @Getter
     @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    /**
+     * The Buddy's first name.
+     */
     @Getter
     @Setter
     private String firstName;
+
+    /**
+     * The Buddy's last name.
+     */
     @Getter
     @Setter
     private String lastName;
+
+    /**
+     * The Buddy's email, used as user name for login.
+     */
     @Getter
     @Setter
     private String email;
+
+    /**
+     * The Buddy's encrypted password.
+     */
     @Getter
     @Setter
     private String password;
 
+    /**
+     * The join table used to map buddy and its roles.
+     */
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @Cascade(value = CascadeType.REMOVE)
-    @JoinTable(name = "buddy_role", joinColumns = @JoinColumn(name = "buddy_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "buddy_role",
+        joinColumns = @JoinColumn(name = "buddy_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id"))
     @Getter
     @Setter
     private Set<Role> roles;
 
+    /**
+     * Boolean field that tells us if account is expired.
+     */
+    @Getter
+    @Setter
+    private boolean accountNonExpired = true;
+
+    /**
+     * Boolean field that tells us if account is locked.
+     */
+    @Getter
+    @Setter
+    private boolean accountNonLocked = true;
+
+    /**
+     * Boolean field that tells us if credentials are expired.
+     */
+    @Getter
+    @Setter
+    private boolean credentialsNonExpired = true;
+
+    /**
+     * Boolean field that tells us if account is enabled.
+     */
+    @Getter
+    @Setter
+    private boolean enabled = true;
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         String stringRoles = "";
@@ -75,37 +129,16 @@ public class Buddy implements UserDetails {
             }
             stringRoles = stringRoles.concat(it.next().getName());
         }
-System.out.println(stringRoles);        
+        System.out.println(stringRoles);
         return AuthorityUtils.commaSeparatedStringToAuthorityList(stringRoles);
     }
 
+    /**
+     * Return email as ussername.
+     */
     @Override
     public String getUsername() {
         return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        // TODO Auto-generated method stub
-        return true;
     }
 
 }
