@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
 /* IMPORTS FOR OAUTH2
 import java.security.Principal;
 import java.util.Map;
@@ -35,6 +36,7 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
+// Sign Up form
     @GetMapping(value = "/registration")
     public String registration(Model model) {
         model.addAttribute("userForm", new UserDTO());
@@ -51,9 +53,10 @@ public class UserController {
             return "registration";
         }
         userService.save(userForm);
-        return "redirect:/welcome";
+        return "redirect:/bank-account";
     }
 
+// Login form
     @GetMapping(value = "/login")
     public String login(Model model, String error, String logout) {
         if (error != null)
@@ -72,6 +75,7 @@ public class UserController {
         return "welcome";
     }
 
+// Admin page
     @GetMapping(value = { "/admin" })
     public String admin(Model model) {
         return "admin";

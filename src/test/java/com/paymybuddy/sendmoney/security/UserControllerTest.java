@@ -64,7 +64,7 @@ public class UserControllerTest {
         MockMvcRequestBuilders.post("/registration")
                 .param("email","springuser.123@oc.com")
                 .param("password","spring123")
-                .param("confirmPassword","spring123"))
+                .param("confirmPassword","spring123")).andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         System.out.println(result);

@@ -1,4 +1,4 @@
 /**
- * This package contains security tests. 
+ * Root package for security.
  */
 package com.paymybuddy.sendmoney.security;
