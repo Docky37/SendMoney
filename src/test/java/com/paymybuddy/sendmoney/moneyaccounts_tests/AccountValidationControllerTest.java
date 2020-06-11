@@ -1,4 +1,4 @@
-package com.paymybuddy.sendmoney.moneyaccounts;
+package com.paymybuddy.sendmoney.moneyaccounts_tests;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

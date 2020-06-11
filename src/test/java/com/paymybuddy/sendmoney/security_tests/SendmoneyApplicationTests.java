@@ -1,4 +1,4 @@
-package com.paymybuddy.sendmoney.security;
+package com.paymybuddy.sendmoney.security_tests;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;

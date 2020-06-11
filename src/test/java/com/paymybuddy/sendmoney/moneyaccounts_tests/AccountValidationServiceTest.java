@@ -1,4 +1,4 @@
-package com.paymybuddy.sendmoney.moneyaccounts;
+package com.paymybuddy.sendmoney.moneyaccounts_tests;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.ArgumentMatchers.any;
