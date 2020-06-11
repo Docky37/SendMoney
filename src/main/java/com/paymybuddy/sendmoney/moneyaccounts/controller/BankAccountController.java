@@ -38,7 +38,7 @@ public class BankAccountController {
         if (bindingResult.hasErrors()) {
             return "redirect:/bank-account";
         }
-       bankAccountService.save(bankAccountForm);
+       bankAccountService.saveBankAccount(bankAccountForm);
         return "welcome";
     }
 

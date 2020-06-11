@@ -1,42 +1,20 @@
 package com.paymybuddy.sendmoney.moneyaccounts.service;
 
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.paymybuddy.sendmoney.moneyaccounts.model.BankAccount;
 import com.paymybuddy.sendmoney.moneyaccounts.model.BankAccountDTO;
-import com.paymybuddy.sendmoney.moneyaccounts.repository.BankAccountRepository;
-import com.paymybuddy.sendmoney.security.model.Buddy;
-import com.paymybuddy.sendmoney.security.repository.UserRepository;
 
 /**
- * 
+ * Used to perform the recording of a bank account in relation with its owner.
+ *
  * @author Thierry SCHREINER
  */
-@Service
-public class BankAccountService {
-
-    @Autowired
-    private BankAccountRepository bankAccountRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+public interface BankAccountService {
 
     /**
-     * @param bankAccDTO
+     * The saveBankAccount method is in charge of the BankAccountDTO mapping to
+     * a BankAccount entity, using encryption for IBAN before recording in DB. 
+     *
+     * @param bankAccountDTO coming from frontend form
      */
-    public void save(@Valid BankAccountDTO bankAccDTO) {
-        BankAccount bankAccount = new BankAccount();
-        bankAccount.setIban(bankAccDTO.getIbanCode());
-        bankAccount.setSwift(bankAccDTO.getSwift());
-
-        Buddy buddy = userRepository.findByEmail(bankAccDTO.getEmail());
-        bankAccount.setOwner(buddy);
-
-        bankAccountRepository.save(bankAccount);
-
-    }
+    void saveBankAccount(BankAccountDTO bankAccountDTO);
 
 }

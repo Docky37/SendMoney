@@ -53,7 +53,7 @@ public class BankAccountServiceTest {
         bankAccDTO.setEmail("service.test@test.fr");
         given(userRepository.findByEmail(anyString())).willReturn(new Buddy());
         // WHEN
-        service.save(bankAccDTO);
+        service.saveBankAccount(bankAccDTO);
         // THEN
         verify(userRepository).findByEmail(anyString());
         verify(bankAccountRepository).save(any(BankAccount.class));
