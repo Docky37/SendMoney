@@ -16,7 +16,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import com.paymybuddy.sendmoney.moneyaccounts.model.BankAccount;
 import com.paymybuddy.sendmoney.moneyaccounts.model.BankAccountDTO;
 import com.paymybuddy.sendmoney.moneyaccounts.repository.BankAccountRepository;
-import com.paymybuddy.sendmoney.moneyaccounts.service.AccountValidationService;
+import com.paymybuddy.sendmoney.moneyaccounts.service.BankAccountService;
 import com.paymybuddy.sendmoney.security.model.Buddy;
 import com.paymybuddy.sendmoney.security.repository.UserRepository;
 
@@ -25,14 +25,14 @@ import com.paymybuddy.sendmoney.security.repository.UserRepository;
  * @author Thierry SCHREINER
  */
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class AccountValidationServiceTest {
+public class BankAccountServiceTest {
      
     @LocalServerPort
     private int port;
 
 
     @Autowired
-    private AccountValidationService service;
+    private BankAccountService service;
 
     @MockBean
     private BankAccountRepository bankAccountRepository;

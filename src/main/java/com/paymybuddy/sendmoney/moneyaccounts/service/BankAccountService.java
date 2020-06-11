@@ -16,7 +16,7 @@ import com.paymybuddy.sendmoney.security.repository.UserRepository;
  * @author Thierry SCHREINER
  */
 @Service
-public class AccountValidationService {
+public class BankAccountService {
 
     @Autowired
     private BankAccountRepository bankAccountRepository;

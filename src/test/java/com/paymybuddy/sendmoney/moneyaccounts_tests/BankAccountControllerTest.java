@@ -16,8 +16,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.paymybuddy.sendmoney.moneyaccounts.controller.AccountValidationController;
-import com.paymybuddy.sendmoney.moneyaccounts.service.AccountValidationService;
+import com.paymybuddy.sendmoney.moneyaccounts.controller.BankAccountController;
+import com.paymybuddy.sendmoney.moneyaccounts.service.BankAccountService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class AccountValidationControllerTest {
+public class BankAccountControllerTest {
      
     @LocalServerPort
     private int port;
@@ -41,13 +41,13 @@ public class AccountValidationControllerTest {
     private WebApplicationContext context;
 
     @Autowired
-    private AccountValidationController controller;
+    private BankAccountController controller;
  
     @Autowired
     private MockMvc mvc;
 
     @MockBean
-    private AccountValidationService accountValidService;
+    private BankAccountService bankAccountService;
 
     @BeforeEach
     public void setup() {

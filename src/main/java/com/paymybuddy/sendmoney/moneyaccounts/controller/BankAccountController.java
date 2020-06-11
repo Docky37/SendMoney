@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.paymybuddy.sendmoney.moneyaccounts.model.BankAccountDTO;
-import com.paymybuddy.sendmoney.moneyaccounts.service.AccountValidationService;
+import com.paymybuddy.sendmoney.moneyaccounts.service.BankAccountService;
 
 /**
  * 
  * @author Thierry SCHREINER
  */
 @Controller
-public class AccountValidationController {
+public class BankAccountController {
 
     @Autowired
-    private AccountValidationService accountValidationService;
+    private BankAccountService bankAccountService;
 
     // Add bank account
     @GetMapping(value = "/bank-account")
@@ -38,7 +38,7 @@ public class AccountValidationController {
         if (bindingResult.hasErrors()) {
             return "redirect:/bank-account";
         }
-       accountValidationService.save(bankAccountForm);
+       bankAccountService.save(bankAccountForm);
         return "welcome";
     }
 
