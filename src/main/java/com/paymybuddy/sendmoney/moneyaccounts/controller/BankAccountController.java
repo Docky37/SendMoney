@@ -14,31 +14,49 @@ import com.paymybuddy.sendmoney.moneyaccounts.model.BankAccountDTO;
 import com.paymybuddy.sendmoney.moneyaccounts.service.BankAccountService;
 
 /**
- * 
+ * This controller is in charge of the bank account registering.
+ *
  * @author Thierry SCHREINER
  */
 @Controller
 public class BankAccountController {
 
+    /**
+     * Declare a BankAccountService object.
+     */
     @Autowired
     private BankAccountService bankAccountService;
 
-    // Add bank account
+    /**
+     * HTML GET method used to provide Bank account frontend form.
+     *
+     * @param model
+     * @return a String (name of frontendpage)
+     */
     @GetMapping(value = "/bank-account")
-    public String addBankAccount(Model model) {
+    public String addBankAccount(final Model model) {
         model.addAttribute("bankAccountForm", new BankAccountDTO());
         return "bank-account";
     }
 
+    /**
+     * HTML POST method used to process with Bank account form data.
+     *
+     * @param bankAccountForm
+     * @param bindingResult
+     * @param model
+     * @return a String (name of frontendpage)
+     */
     @PostMapping(value = "/bank-account")
     public String newBankAccount(
-            @ModelAttribute("bankAccountForm") @Valid BankAccountDTO bankAccountForm,
-            BindingResult bindingResult, Model model) {
+            @ModelAttribute("bankAccountForm")
+            @Valid final BankAccountDTO bankAccountForm,
+            final BindingResult bindingResult, final Model model) {
         System.out.println("Controller");
         if (bindingResult.hasErrors()) {
             return "redirect:/bank-account";
         }
-       bankAccountService.saveBankAccount(bankAccountForm);
+        bankAccountService.saveBankAccount(bankAccountForm);
         return "welcome";
     }
 

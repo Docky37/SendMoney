@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
      * with the userDTO data before it calls the userRepository to persist.
      */
     @Override
-    public void save(UserDTO userDTO) {
+    public void save(final UserDTO userDTO) {
         Buddy buddy = new Buddy();
         buddy.setFirstName(userDTO.getFirstName());
         buddy.setLastName(userDTO.getLastName());
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
      * email address.
      */
     @Override
-    public Buddy findByEmail(String email) {
+    public Buddy findByEmail(final String email) {
         return userRepository.findByEmail(email);
     }
 

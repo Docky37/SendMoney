@@ -1,7 +1,5 @@
 package com.paymybuddy.sendmoney.moneyaccounts.service;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +10,7 @@ import com.paymybuddy.sendmoney.security.model.Buddy;
 import com.paymybuddy.sendmoney.security.repository.UserRepository;
 
 /**
- * {@inheritDoc}
+ * {@inheritDoc}.
  */
 @Service
 public class BankAccountServiceImpl implements BankAccountService {
@@ -34,7 +32,7 @@ public class BankAccountServiceImpl implements BankAccountService {
      * {@inheritDoc}
      */
     @Override
-    public void saveBankAccount(@Valid BankAccountDTO bankAccountDTO) {
+    public void saveBankAccount(final BankAccountDTO bankAccountDTO) {
         BankAccount bankAccount = new BankAccount();
         bankAccount.setIban(bankAccountDTO.getIbanCode());
         bankAccount.setSwift(bankAccountDTO.getSwift());

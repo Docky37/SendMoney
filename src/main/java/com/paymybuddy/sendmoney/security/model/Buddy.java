@@ -20,8 +20,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.paymybuddy.sendmoney.security.model.Role;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -134,7 +132,7 @@ public class Buddy implements UserDetails {
     }
 
     /**
-     * Return email as ussername.
+     * {@inheritDoc}.
      */
     @Override
     public String getUsername() {

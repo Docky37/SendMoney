@@ -27,26 +27,54 @@ import com.paymybuddy.sendmoney.security.model.UserDTO;
 import com.paymybuddy.sendmoney.security.service.UserService;
 import com.paymybuddy.sendmoney.security.validator.UserValidator;
 
+/**
+ * This controller class is in charge of html request methods of registration
+ * and login.
+ *
+ * @author Thierry SCHREINER
+ */
 @Controller
 public class UserController {
 
+    /**
+     * Declares the service class that provides business work behind this
+     * controller.
+     */
     @Autowired
     private UserService userService;
 
+    /**
+     * Declares a class in charge of the validation of the registration form
+     * data.
+     */
     @Autowired
     private UserValidator userValidator;
 
-// Sign Up form
+    // REGISTRATION PART
+    /**
+     * A GET html request that provides the frontend registration form.
+     *
+     * @param model
+     * @return a String (the name of the frontend page)
+     */
     @GetMapping(value = "/registration")
-    public String registration(Model model) {
+    public String registration(final Model model) {
         model.addAttribute("userForm", new UserDTO());
         return "registration";
     }
 
+    /**
+     * POST html request used to process with registration form data.
+     *
+     * @param userForm
+     * @param bindingResult
+     * @param model
+     * @return a String (the name of the next frontend page)
+     */
     @PostMapping(value = "/registration")
     public String registration(
-            @ModelAttribute("userForm") @Valid UserDTO userForm,
-            BindingResult bindingResult, Model model) {
+            @ModelAttribute("userForm") @Valid final UserDTO userForm,
+            final BindingResult bindingResult, final Model model) {
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -56,90 +84,49 @@ public class UserController {
         return "redirect:/bank-account";
     }
 
-// Login form
+// LOGIN PART
+    /**
+     * A GET html request that provides the frontend registration form.
+     *
+     * @param model
+     * @param error
+     * @param logout
+     * @return a String (the name of the next frontend page)
+     */
     @GetMapping(value = "/login")
-    public String login(Model model, String error, String logout) {
-        if (error != null)
+    public String login(final Model model, final String error,
+            final String logout) {
+        if (error != null) {
             model.addAttribute("error",
                     "Your username and password is invalid.");
-
-        if (logout != null)
+        }
+        if (logout != null) {
             model.addAttribute("message",
                     "You have been logged out successfully.");
-
+        }
         return "login";
     }
 
+    /**
+     * A GET html request that provides the frontend user welcome page.
+     *
+     * @param model
+     * @return a String (the name of the next frontend page)
+     */
     @GetMapping(value = { "/", "/welcome" })
-    public String welcome(Model model) {
+    public String welcome(final Model model) {
         return "welcome";
     }
 
-// Admin page
+// ADMIN
+    /**
+     * A GET html request that provides the frontend admin welcome page.
+     *
+     * @param model
+     * @return a String (the name of the next frontend page)
+     */
     @GetMapping(value = { "/admin" })
-    public String admin(Model model) {
+    public String admin(final Model model) {
         return "admin";
     }
 }
-
-/*
- * OAUTH2 Functionnality private final OAuth2AuthorizedClientService
- * authorizedClientService;
- * 
- * public UserController(OAuth2AuthorizedClientService authorizedClientService)
- * { this.authorizedClientService = authorizedClientService; }
- * 
- * @RequestMapping("/**")
- * 
- * @RolesAllowed("USER") public String getUser() { return "Welcome, user"; }
- * 
- * @RequestMapping("/admin")
- * 
- * @RolesAllowed("ADMIN") public String getAdmin() { return "Welcome, admin";
- * 
- * }
- * 
- * @RequestMapping("/*") public String getUserInfo(Principal user) {
- * StringBuffer userInfo = new StringBuffer(); if (user instanceof
- * UsernamePasswordAuthenticationToken) {
- * userInfo.append(getUsernamePasswordLoginInfo(user)); } else if (user
- * instanceOf OAuth2AuthenticationToken) {
- * userInfo.append(getOauth2LoginInfo(user)); } return userInfo.toString(); }
- * 
- * private StringBuffer getOauth2LoginInfo(Principal user) { StringBuffer
- * protectedInfo = new StringBuffer(); OAuth2AuthenticationToken authToken =
- * ((OAuth2AuthenticationToken) user); OAuth2User principal =
- * ((OAuth2AuthenticationToken) user).getPrincipal(); OAuth2AuthorizedClient
- * authClient = this.authorizedClientService
- * .loadAuthorizedClient(authToken.getAuthorizedClientRegistrationId(),
- * authToken.getName());
- * 
- * Map<String, Object> userAttributes = ((DefaultOAuth2User)
- * authToken.getPrincipal()).getAttributes(); String userToken =
- * authClient.getAccessToken().getTokenValue(); protectedInfo.append("Welcome, "
- * + userAttributes.get("name") + "<br><br>"); protectedInfo.append("e-mail: " +
- * userAttributes.get("email") + "<br><br>");
- * protectedInfo.append("Access Token: " + userToken + "<br><br>");
- * 
- * OidcIdToken idToken = getIdToken(principal); if (idToken != null) {
- * protectedInfo.append("idToken value: " + idToken.getTokenValue());
- * protectedInfo.append("Token mapped values <br><br>"); Map<String, Object>
- * claims = idToken.getClaims();
- * 
- * for (String key : claims.keySet()) { protectedInfo.append("    " + key +
- * ":   " + claims.get(key) + "<br>"); } } else { protectedInfo.append("NA"); }
- * return protectedInfo; }
- * 
- * private StringBuffer getUsernamePasswordLoginInfo(Principal user) {
- * StringBuffer usernameInfo = new StringBuffer();
- * 
- * UsernamePasswordAuthenticationToken token =
- * ((UsernamePasswordAuthenticationToken) user); if (token.isAuthenticated()) {
- * User u = (User) token.getPrincipal(); usernameInfo.append("Welcome, " +
- * u.getUsername()); } else { usernameInfo.append("NA"); } return usernameInfo;
- * }
- * 
- * private OidcIdToken getIdToken(OAuth2User principal) { if (principal
- * instanceOf DefaultOidcUser) { DefaultOidcUser oidcUser = (DefaultOidcUser)
- * principal; return oidcUser.getIdToken(); } return null; }
- */

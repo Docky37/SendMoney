@@ -14,17 +14,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * The BankAccount entity is used to persist bank account data in order to
- * allow external money transfers.
+ * The PmbAccount entity is used to persist Pay My Buddy account in order to
+ * allow internal money transfers between buddies.
  *
  * @author Thierry SCHREINER
  */
 @Entity
-@Table(name = "bank_account")
-public class BankAccount {
+@Table(name = "pmb_account")
+public class PmbAccount {
 
     /**
-     * The id and primary key of bank_account table.
+     * The id and primary key of pmb_account table.
      */
     @Getter
     @Setter
@@ -33,18 +33,19 @@ public class BankAccount {
     private long id;
 
     /**
-     * The IBAN of buddy's bank account to create.
+     * The Pay My Buddy account identification Number, a 10 characters String
+     * that begins by "PMB" and contains the buddy id.
      */
     @Getter
     @Setter
-    private String iban;
+    private String pmbAccountNumber;
 
     /**
-     * The SWIFT code of buddy's bank account to create.
+     * The credit balance of the Pay My Buddy account (cannot be negative).
      */
     @Getter
     @Setter
-    private String swift;
+    private Double accountBalance;
 
     /**
      * The buddy who is the owner of this bank account.

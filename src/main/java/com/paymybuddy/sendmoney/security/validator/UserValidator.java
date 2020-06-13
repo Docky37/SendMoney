@@ -10,23 +10,36 @@ import com.paymybuddy.sendmoney.security.model.Buddy;
 import com.paymybuddy.sendmoney.security.model.UserDTO;
 import com.paymybuddy.sendmoney.security.service.UserService;
 
+/**
+ * This class has responsibility to check the validity of registering form data.
+ *
+ * @author Thierry SCHREINER
+ */
 @Component
 public class UserValidator implements Validator {
+    /**
+     * Declares the service that provides registration and login.
+     */
     @Autowired
     private UserService userService;
 
+    /**
+     * {@inheritDoc}.
+     */
     @Override
-    public boolean supports(Class<?> aClass) {
+    public boolean supports(final Class<?> aClass) {
         return Buddy.class.equals(aClass);
     }
 
+    /**
+     * {@inheritDoc}.
+     */
     @Override
-    public void validate(Object o, Errors errors) {
+    public void validate(final Object o, final Errors errors) {
         UserDTO user = (UserDTO) o;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email",
-                "NotEmpty");
-        
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
+
         if (userService.findByEmail(user.getEmail()) != null) {
             errors.rejectValue("email", "Duplicate.userForm.email");
         }

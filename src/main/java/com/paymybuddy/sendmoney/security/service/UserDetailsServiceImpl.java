@@ -32,7 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      */
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String email)
+    public UserDetails loadUserByUsername(final String email)
             throws UsernameNotFoundException {
         Buddy user = userRepository.findByEmail(email);
         if (user == null) {

@@ -6,8 +6,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SendmoneyApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SendmoneyApplication.class, args);
-	}
+    /**
+     * Main function, entry point of the application.
+     * @param args
+     */
+    public static void main(final String[] args) {
+        SpringApplication.run(SendmoneyApplication.class, args);
+    }
 
+    /**
+     * Private empty constructor.
+     */
+    protected SendmoneyApplication() {
+    }
 }

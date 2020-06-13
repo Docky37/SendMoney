@@ -15,12 +15,35 @@ import lombok.Setter;
  */
 public class UserDTO {
 
+    /**
+     * The minimum size for email.
+     */
+    static final int EMAIL_MIN_SIZE = 6;
+    /**
+     * The maximum size for email.
+     */
+    static final int EMAIL_MAX_SIZE = 35;
+    /**
+     * The minimum size for password.
+     */
+    static final int PASSWORD_MIN_SIZE = 6;
+    /**
+     * The maximum size for password.
+     */
+    static final int PASSWORD_MAX_SIZE = 35;
+
+    /**
+     * The first name of the Buddy.
+     */
     @NotNull
     @NotEmpty
     @Getter
     @Setter
     private String firstName;
 
+    /**
+     * The last name of the Buddy.
+     */
     @NotNull
     @NotEmpty
     @Getter
@@ -34,7 +57,7 @@ public class UserDTO {
      * UserValidator class.
      */
     @NotNull
-    @Size(min = 6, max = 35)
+    @Size(min = EMAIL_MIN_SIZE, max = EMAIL_MAX_SIZE)
     @Email(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)"
             + "*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
     @Getter
@@ -47,7 +70,7 @@ public class UserDTO {
      */
     @NotNull
     @NotEmpty
-    @Size(min = 7, max = 14)
+    @Size(min = PASSWORD_MIN_SIZE, max = PASSWORD_MAX_SIZE)
     @Getter
     @Setter
     private String password;

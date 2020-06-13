@@ -4,7 +4,8 @@ import com.paymybuddy.sendmoney.security.model.Buddy;
 import com.paymybuddy.sendmoney.security.model.UserDTO;
 
 /**
- * This UserService class
+ * This UserService interface defines 2 methods, one to save new users, the
+ * second to find a registred user by his email address.
  *
  * @author Thierry Schreiner
  */
