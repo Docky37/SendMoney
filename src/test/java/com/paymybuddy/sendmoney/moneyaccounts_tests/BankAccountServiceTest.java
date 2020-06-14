@@ -9,9 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.web.server.LocalServerPort;
 
 import com.paymybuddy.sendmoney.moneyaccounts.model.BankAccount;
 import com.paymybuddy.sendmoney.moneyaccounts.model.BankAccountDTO;
@@ -24,12 +22,8 @@ import com.paymybuddy.sendmoney.security.repository.UserRepository;
  * 
  * @author Thierry SCHREINER
  */
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest("BankAccountServiceImpl.class")
 public class BankAccountServiceTest {
-     
-    @LocalServerPort
-    private int port;
-
 
     @Autowired
     private BankAccountService service;
@@ -44,8 +38,9 @@ public class BankAccountServiceTest {
     public void setup() {
     }
 
-    @Test 
-    public void givenValidData_whenSaveBankAccount_thenCreated() throws Exception {
+    @Test
+    public void givenValidData_whenSaveBankAccount_thenCreated()
+            throws Exception {
         // GIVEN
         BankAccountDTO bankAccDTO = new BankAccountDTO();
         bankAccDTO.setIbanCode("FR3330002005500000157841Z25");
