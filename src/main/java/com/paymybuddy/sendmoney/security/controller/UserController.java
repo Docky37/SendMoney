@@ -78,10 +78,10 @@ public class UserController {
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "registration";
+            return "redirect:/registration";
         }
         userService.save(userForm);
-        return "redirect:/bank-account";
+        return "bank-account";
     }
 
 // LOGIN PART
@@ -107,6 +107,7 @@ public class UserController {
         return "login";
     }
 
+ // USER WELCOME PAGE
     /**
      * A GET html request that provides the frontend user welcome page.
      *
@@ -118,7 +119,7 @@ public class UserController {
         return "welcome";
     }
 
-// ADMIN
+// ADMIN WELCOME PAGE
     /**
      * A GET html request that provides the frontend admin welcome page.
      *

@@ -42,6 +42,7 @@ public class UserControllerTest {
         mvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
 
+// TEST OF LOGIN FUNCTIONALITY
     @Test // GetMapping(value = "/login")
     public void whenGetLogin_thenViewLoginForm() throws Exception {
         mvc.perform(get("/login")).andDo(print())
@@ -49,6 +50,7 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
     }
 
+// TEST OF REGISTRATION FUNCTIONALITY
     @Test // GetMapping(value = "/registration")
     public void whenGetRegistration_thenViewRegistrationForm()
             throws Exception {
@@ -59,9 +61,11 @@ public class UserControllerTest {
     }
 
     @Test // PostMapping(value = "/registration")
-    public void whenPostRegistration_thenCreated() throws Exception {
+    public void givenNoError_whenPostRegistration_thenCreated() throws Exception {
         final MvcResult result = mvc.perform(
         MockMvcRequestBuilders.post("/registration")
+                .param("firstName", "User")
+                .param("lastName", "TEST")
                 .param("email","springuser.123@oc.com")
                 .param("password","spring123")
                 .param("confirmPassword","spring123")).andDo(print())
@@ -69,4 +73,35 @@ public class UserControllerTest {
                 .andReturn();
         System.out.println(result);
     }
+
+    @Test // PostMapping(value = "/registration")
+    public void givenErrors_whenPostRegistration_then302() throws Exception {
+        final MvcResult result = mvc.perform(
+        MockMvcRequestBuilders.post("/registration")
+                .param("firstName", "User")
+                .param("lastName", "TEST")
+                .param("email","springuser.123")
+                .param("password","spring123")
+                .param("confirmPassword","spring123")).andDo(print())
+                .andExpect(MockMvcResultMatchers.status().is(302))
+                .andReturn();
+        System.out.println(result);
+    }
+
+ // TEST OF USER WELCOME PAGE FUNCTIONALITY
+    @Test // GetMapping(value = "/welcome")
+    public void whenGetWelcome_thenViewWelcome() throws Exception {
+        mvc.perform(get("/welcome")).andDo(print())
+                .andExpect(forwardedUrl("/WEB-INF/jsp/welcome.jsp"))
+                .andExpect(status().isOk());
+    }
+
+    // TEST OF USER WELCOME PAGE FUNCTIONALITY
+    @Test // GetMapping(value = "/admin")
+    public void whenGetAdmin_thenViewAdmin() throws Exception {
+        mvc.perform(get("/admin")).andDo(print())
+                .andExpect(forwardedUrl("/WEB-INF/jsp/admin.jsp"))
+                .andExpect(status().isOk());
+    }
+
 }
