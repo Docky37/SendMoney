@@ -4,18 +4,15 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -77,8 +74,7 @@ public class Buddy implements UserDetails {
     /**
      * The join table used to map buddy and its roles.
      */
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @Cascade(value = CascadeType.REMOVE)
+    @ManyToMany
     @JoinTable(name = "buddy_role",
         joinColumns = @JoinColumn(name = "buddy_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id"))
