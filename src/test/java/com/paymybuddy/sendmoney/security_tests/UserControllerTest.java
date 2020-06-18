@@ -36,7 +36,7 @@ public class UserControllerTest {
 
     @MockBean
     private UserService userService;
-    
+
     @BeforeEach
     public void setup() {
         mvc = MockMvcBuilders.webAppContextSetup(context).build();
@@ -60,22 +60,24 @@ public class UserControllerTest {
 
     }
 
-    @Test // PostMapping(value = "/registration")
-    public void givenNoError_whenPostRegistration_thenCreated() throws Exception {
-        final MvcResult result = mvc.perform(
-        MockMvcRequestBuilders.post("/registration")
-                .param("firstName", "User")
-                .param("lastName", "TEST")
-                .param("email","springuser.123@oc.com")
-                .param("password","spring123")
-                .param("confirmPassword","spring123")).andDo(print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
+    @Test // PostMapping(value = "/registration")-
+          // No error -> redirect /bank-account (Status 302)
+    public void givenNoError_whenPostRegistration_thenCreated1Status302()
+            throws Exception {
+        final MvcResult result = mvc
+                .perform(MockMvcRequestBuilders.post("/registration")
+                        .param("firstName", "User").param("lastName", "TEST")
+                        .param("email", "springuser.123@oc.com")
+                        .param("password", "spring123")
+                        .param("confirmPassword", "spring123"))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().is(302)).andReturn();
         System.out.println(result);
     }
 
-    @Test // PostMapping(value = "/registration")
-    public void givenErrors_whenPostRegistration_then302() throws Exception {
+    @Test // POST(value = "/registration") 
+          // With error -> forward /registration (Status OK)
+    public void givenErrors_whenPostRegistration_thenForwardRegistrationOk() throws Exception {
         final MvcResult result = mvc.perform(
         MockMvcRequestBuilders.post("/registration")
                 .param("firstName", "User")
@@ -83,12 +85,12 @@ public class UserControllerTest {
                 .param("email","springuser.123")
                 .param("password","spring123")
                 .param("confirmPassword","spring123")).andDo(print())
-                .andExpect(MockMvcResultMatchers.status().is(302))
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         System.out.println(result);
     }
 
- // TEST OF USER WELCOME PAGE FUNCTIONALITY
+    // TEST OF USER WELCOME PAGE FUNCTIONALITY
     @Test // GetMapping(value = "/welcome")
     public void whenGetWelcome_thenViewWelcome() throws Exception {
         mvc.perform(get("/welcome")).andDo(print())

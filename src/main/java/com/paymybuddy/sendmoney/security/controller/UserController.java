@@ -78,10 +78,10 @@ public class UserController {
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "redirect:/registration";
+            return "registration";
         }
         userService.save(userForm);
-        return "bank-account";
+        return "redirect:/bank-account";
     }
 
 // LOGIN PART
