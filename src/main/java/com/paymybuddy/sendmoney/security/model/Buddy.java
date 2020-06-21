@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -74,7 +75,8 @@ public class Buddy implements UserDetails {
     /**
      * The join table used to map buddy and its roles.
      */
-    @ManyToMany
+    
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "buddy_role",
         joinColumns = @JoinColumn(name = "buddy_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id"))

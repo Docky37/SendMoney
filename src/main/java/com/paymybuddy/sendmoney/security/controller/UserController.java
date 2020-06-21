@@ -3,13 +3,24 @@ package com.paymybuddy.sendmoney.security.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.paymybuddy.sendmoney.security.model.AuthenticationRequest;
+import com.paymybuddy.sendmoney.security.model.AuthenticationResponse;
+import com.paymybuddy.sendmoney.security.model.UserDTO;
+import com.paymybuddy.sendmoney.security.service.UserService;
 /* IMPORTS FOR OAUTH2
 import java.security.Principal;
 import java.util.Map;
@@ -23,9 +34,8 @@ import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;*/
-import com.paymybuddy.sendmoney.security.model.UserDTO;
-import com.paymybuddy.sendmoney.security.service.UserService;
 import com.paymybuddy.sendmoney.security.validator.UserValidator;
+import com.paymybuddy.sendmoney.security.util.JwtUtil;
 
 /**
  * This controller class is in charge of html request methods of registration
@@ -33,13 +43,12 @@ import com.paymybuddy.sendmoney.security.validator.UserValidator;
  *
  * @author Thierry SCHREINER
  */
-@Controller
+@RestController
 public class UserController {
 
-    /**
-     * Declares the service class that provides business work behind this
-     * controller.
-     */
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     @Autowired
     private UserService userService;
 
@@ -50,84 +59,68 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
-    // REGISTRATION PART
-    /**
-     * A GET html request that provides the frontend registration form.
-     *
-     * @param model
-     * @return a String (the name of the frontend page)
-     */
-    @GetMapping(value = "/registration")
-    public String registration(final Model model) {
-        model.addAttribute("userForm", new UserDTO());
-        return "registration";
-    }
+    @Autowired
+    private JwtUtil jwtUtil;
 
-    /**
-     * POST html request used to process with registration form data.
-     *
-     * @param userForm
-     * @param bindingResult
-     * @param model
-     * @return a String (the name of the next frontend page)
-     */
-    @PostMapping(value = "/registration")
-    public String registration(
-            @ModelAttribute("userForm") @Valid final UserDTO userForm,
-            final BindingResult bindingResult, final Model model) {
-        userValidator.validate(userForm, bindingResult);
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-        if (bindingResult.hasErrors()) {
-            return "registration";
-        }
-        userService.save(userForm);
-        return "redirect:/bank-account";
-    }
-
-// LOGIN PART
-    /**
-     * A GET html request that provides the frontend registration form.
-     *
-     * @param model
-     * @param error
-     * @param logout
-     * @return a String (the name of the next frontend page)
-     */
-    @GetMapping(value = "/login")
-    public String login(final Model model, final String error,
-            final String logout) {
-        if (error != null) {
-            model.addAttribute("error",
-                    "Your username and password is invalid.");
-        }
-        if (logout != null) {
-            model.addAttribute("message",
-                    "You have been logged out successfully.");
-        }
-        return "login";
-    }
-
- // USER WELCOME PAGE
+    // USER WELCOME PAGE
     /**
      * A GET html request that provides the frontend user welcome page.
      *
      * @param model
      * @return a String (the name of the next frontend page)
      */
-    @GetMapping(value = { "/", "/welcome" })
-    public String welcome(final Model model) {
-        return "welcome";
+    @GetMapping("/welcome")
+    public String welcomePage() {
+        return "Welcome";
     }
 
-// ADMIN WELCOME PAGE
-    /**
-     * A GET html request that provides the frontend admin welcome page.
-     *
-     * @param model
-     * @return a String (the name of the next frontend page)
-     */
-    @GetMapping(value = { "/admin" })
-    public String admin(final Model model) {
-        return "admin";
+    @PostMapping("/authenticate")
+    public ResponseEntity<?> createAuthenticationToken(
+            @RequestBody AuthenticationRequest authenticationRequest)
+            throws Exception {
+        try {
+            authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(
+                            authenticationRequest.getUsername(),
+                            authenticationRequest.getPassword()));
+        } catch (BadCredentialsException e) {
+            throw new Exception("Incorrect username or password", e);
+        }
+        final UserDetails userDetails = userDetailsService
+                .loadUserByUsername(authenticationRequest.getUsername());
+        final String jwt = jwtUtil.generateToken(userDetails);
+
+        return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
+
+    // REGISTRATION PART
+    /**
+     * POST html request used to create a new account.
+     *
+     * @param userDTO
+     * @param bindingResult
+     * @return a ResponseEntity<Object>
+     */
+    @PostMapping("/registration")
+    public ResponseEntity<Object> registration(
+            @RequestBody @Valid final UserDTO userDTO,
+            final BindingResult bindingResult) {
+        userValidator.validate(userDTO, bindingResult);
+        System.out.println(bindingResult.getFieldError().getDefaultMessage());
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<Object>(
+                    "Rejected value: "
+                            + bindingResult.getFieldError().getRejectedValue()
+                            + " because: "
+                            + bindingResult.getFieldError().getDefaultMessage(),
+                    new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        }
+        userService.save(userDTO);
+        return new ResponseEntity<Object>("User account saved.",
+                new HttpHeaders(), HttpStatus.OK);
+    }
+
 }
