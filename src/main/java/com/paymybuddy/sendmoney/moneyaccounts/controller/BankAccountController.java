@@ -3,12 +3,15 @@ package com.paymybuddy.sendmoney.moneyaccounts.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.paymybuddy.sendmoney.moneyaccounts.model.BankAccountDTO;
 import com.paymybuddy.sendmoney.moneyaccounts.service.BankAccountService;
@@ -18,7 +21,7 @@ import com.paymybuddy.sendmoney.moneyaccounts.service.BankAccountService;
  *
  * @author Thierry SCHREINER
  */
-@Controller
+@RestController
 public class BankAccountController {
 
     /**
@@ -28,36 +31,32 @@ public class BankAccountController {
     private BankAccountService bankAccountService;
 
     /**
-     * HTML GET method used to provide Bank account frontend form.
-     *
-     * @param model
-     * @return a String (name of frontendpage)
-     */
-    @GetMapping(value = "/bank-account")
-    public String addBankAccount(final Model model) {
-        model.addAttribute("bankAccountForm", new BankAccountDTO());
-        return "bank-account";
-    }
-
-    /**
-     * HTML POST method used to process with Bank account form data.
+     * HTML POST method used to register a Bank account.
      *
      * @param bankAccountForm
      * @param bindingResult
      * @param model
      * @return a String (name of frontendpage)
      */
-    @PostMapping(value = "/bank-account")
-    public String newBankAccount(
-            @ModelAttribute("bankAccountForm")
-            @Valid final BankAccountDTO bankAccountForm,
-            final BindingResult bindingResult, final Model model) {
-        System.out.println("Controller");
+    @PostMapping("/bank-account")
+    public ResponseEntity<Object> newBankAccount(
+            @RequestBody @Valid final BankAccountDTO bankAccountDTO,
+            final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/bank-account";
+            return new ResponseEntity<Object>(
+                    "Rejected value: "
+                            + bindingResult.getFieldError().getRejectedValue()
+                            + " because: "
+                            + bindingResult.getFieldError().getDefaultMessage(),
+                    new HttpHeaders(), HttpStatus.BAD_REQUEST);
         }
-        bankAccountService.saveBankAccount(bankAccountForm);
-        return "welcome";
+        Object principal = SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+        bankAccountDTO.setEmail(((UserDetails) principal).getUsername()); 
+
+        bankAccountService.saveBankAccount(bankAccountDTO);
+        return new ResponseEntity<Object>("Bank account saved.",
+                new HttpHeaders(), HttpStatus.OK);
     }
 
 }
