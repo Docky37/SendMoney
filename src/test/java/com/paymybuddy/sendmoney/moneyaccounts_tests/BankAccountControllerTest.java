@@ -1,5 +1,8 @@
 package com.paymybuddy.sendmoney.moneyaccounts_tests;
 
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.never;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,8 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -18,13 +21,10 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.paymybuddy.sendmoney.moneyaccounts.controller.BankAccountController;
 import com.paymybuddy.sendmoney.moneyaccounts.service.BankAccountService;
+import com.paymybuddy.sendmoney.security.util.EmailRetrieve;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 
 /**
  * 
@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 public class BankAccountControllerTest {
-     
+
     @LocalServerPort
     private int port;
 
@@ -42,16 +42,20 @@ public class BankAccountControllerTest {
 
     @Autowired
     private BankAccountController controller;
- 
+
     @Autowired
     private MockMvc mvc;
 
     @MockBean
     private BankAccountService bankAccountService;
 
+    @MockBean
+    private EmailRetrieve emailRetrieve;
+
     @BeforeEach
     public void setup() {
         mvc = MockMvcBuilders.webAppContextSetup(context).build();
+        given(emailRetrieve.getEmail()).willReturn("my.mail@mel.fr");
     }
 
     @Test
@@ -59,43 +63,44 @@ public class BankAccountControllerTest {
     public void accountValidation() {
         assertThat(controller).isNotNull();
     }
-    
-    @Test // GetMapping(value = "/bank-account")
-    public void whenAddBankAccount_thenBankAccountForm()
+
+    @Test // PostMapping("/bank-account")
+    public void givenValidData_whenPostBankAccount_thenCreated()
             throws Exception {
-        mvc.perform(get("/bank-account")).andDo(print())
-                .andExpect(forwardedUrl("/WEB-INF/jsp/bank-account.jsp"))
-                .andExpect(status().isOk());
+        mvc.perform(MockMvcRequestBuilders.post("/bank-account")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\r\n"
+                        + "\"ibanCode\":\"FR3330002005ETYOYO000000Z25\",\r\n"
+                        + "\"swift\":\"CRLYFRPPXXX\"}"))
+                .andDo(print()).andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+        verify(emailRetrieve).getEmail();
     }
 
     @Test // PostMapping(value = "/bank-account")
-    public void givenValidData_whenPostBankAccount_thenCreated() throws Exception {
-        final MvcResult result = mvc.perform(
-        MockMvcRequestBuilders.post("/bank-account")
-                .param("ibanCode","FR3330002005500000157841Z25")
-                .param("swift","CRLYFRPPXXX")).andDo(print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
+    public void givenInvalidIban_whenPostBankAccount_thenError()
+            throws Exception {
+        mvc.perform(MockMvcRequestBuilders.post("/bank-account")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\r\n"
+                        + "\"ibanCode\":\"FR3330002005ETYOYO000000Z\",\r\n"
+                        + "\"swift\":\"CRLYFRPPXXX\"}"))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().is(400)).andReturn();
+        verify(emailRetrieve, never()).getEmail();
     }
 
     @Test // PostMapping(value = "/bank-account")
-    public void givenInvalidIban_whenPostBankAccount_thenError() throws Exception {
-        final MvcResult result = mvc.perform(
-        MockMvcRequestBuilders.post("/bank-account")
-                .param("ibanCode","FR3330002005500000157841Z")
-                .param("swift","CRLYFRPPXXX")).andDo(print())
-                .andExpect(MockMvcResultMatchers.status().is(302))
-                .andReturn();
-    }
-
-    @Test // PostMapping(value = "/bank-account")
-    public void givenInvalidSwift_whenPostBankAccount_thenError() throws Exception {
-        final MvcResult result = mvc.perform(
-        MockMvcRequestBuilders.post("/bank-account")
-                .param("ibanCode","FR3330002005500000157841Z25")
-                .param("swift","CRLYFRPP")).andDo(print())
-                .andExpect(MockMvcResultMatchers.status().is(302))
-                .andReturn();
+    public void givenInvalidSwift_whenPostBankAccount_thenError()
+            throws Exception {
+        mvc.perform(MockMvcRequestBuilders.post("/bank-account")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\r\n"
+                        + "\"ibanCode\":\"FR3330002005ETYOYO000000Z25\",\r\n"
+                        + "\"swift\":\"CRLYFRPP\"}"))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().is(400)).andReturn();
+        verify(emailRetrieve, never()).getEmail();
     }
 
 }

@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.paymybuddy.sendmoney.moneyaccounts.model.BankAccountDTO;
 import com.paymybuddy.sendmoney.moneyaccounts.service.BankAccountService;
+import com.paymybuddy.sendmoney.security.util.EmailRetrieve;
 
 /**
  * This controller is in charge of the bank account registering.
@@ -29,6 +28,9 @@ public class BankAccountController {
      */
     @Autowired
     private BankAccountService bankAccountService;
+
+    @Autowired
+    private EmailRetrieve emailRetrieve;
 
     /**
      * HTML POST method used to register a Bank account.
@@ -50,9 +52,7 @@ public class BankAccountController {
                             + bindingResult.getFieldError().getDefaultMessage(),
                     new HttpHeaders(), HttpStatus.BAD_REQUEST);
         }
-        Object principal = SecurityContextHolder.getContext()
-                .getAuthentication().getPrincipal();
-        bankAccountDTO.setEmail(((UserDetails) principal).getUsername()); 
+        bankAccountDTO.setEmail(emailRetrieve.getEmail()); 
 
         bankAccountService.saveBankAccount(bankAccountDTO);
         return new ResponseEntity<Object>("Bank account saved.",
