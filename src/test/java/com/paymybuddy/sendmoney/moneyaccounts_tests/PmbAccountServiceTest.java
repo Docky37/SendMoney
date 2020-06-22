@@ -8,9 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.web.server.LocalServerPort;
 
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount;
 import com.paymybuddy.sendmoney.moneyaccounts.repository.PmbAccountRepository;
@@ -22,11 +20,8 @@ import com.paymybuddy.sendmoney.security.repository.UserRepository;
  * 
  * @author Thierry SCHREINER
  */
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest("PmbAccountServiceImpl.class")
 public class PmbAccountServiceTest {
-
-    @LocalServerPort
-    private int port;
 
     @Autowired
     private PmbAccountService pmbAccountService;
