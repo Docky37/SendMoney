@@ -84,4 +84,30 @@ public class UserDTO {
     @Setter
     private String confirmPassword;
 
+    /**
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param password
+     * @param confirmPassword
+     */
+    public UserDTO(@NotNull @NotEmpty String firstName,
+            @NotNull @NotEmpty String lastName,
+            @NotNull @Size(min = 6, max = 35) @Email(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$") String email,
+            @NotNull @NotEmpty @Size(min = 6, max = 35) String password,
+            String confirmPassword) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+    }
+
+    /**
+     * 
+     */
+    public UserDTO() {
+    }
+
+    
 }

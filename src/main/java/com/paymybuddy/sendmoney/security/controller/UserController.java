@@ -109,7 +109,6 @@ public class UserController {
             @RequestBody @Valid final UserDTO userDTO,
             final BindingResult bindingResult) {
         userValidator.validate(userDTO, bindingResult);
-        System.out.println(bindingResult.getFieldError().getDefaultMessage());
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<Object>(
                     "Rejected value: "
