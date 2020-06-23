@@ -1,10 +1,16 @@
 package com.paymybuddy.sendmoney.moneyaccounts.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -55,5 +61,20 @@ public class PmbAccount {
     @OneToOne(targetEntity = Buddy.class)
     @JoinColumn(name = "owner")
     private Buddy owner;
+
+    /**
+     * The join table used to make connections.
+     */
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "connection",
+        joinColumns = @JoinColumn(name = "me_id"),
+        inverseJoinColumns = @JoinColumn(name = "beneficiary_id"))
+    @Getter
+    @Setter
+    private Set<PmbAccount> connections = new HashSet<PmbAccount>();
+
+    public void addConnection(PmbAccount pmbAccount) {
+        this.connections.add(pmbAccount);
+    }  
 
 }

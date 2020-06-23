@@ -3,13 +3,10 @@ package com.paymybuddy.sendmoney.security.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -39,9 +36,9 @@ public class Role {
 
     /**
      * The join table used to map buddy and its roles.
-     */
+     
     @Getter
     @Setter
     @ManyToMany(mappedBy = "roles")
-    private Set<Buddy> users;
+    private Set<Buddy> users;*/
 }
