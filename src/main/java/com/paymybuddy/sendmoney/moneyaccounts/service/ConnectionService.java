@@ -1,8 +1,6 @@
 package com.paymybuddy.sendmoney.moneyaccounts.service;
 
-import java.util.Set;
-
-import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount;
+import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccountDTO;
 
 /**
  * The ConnectionService interface contains three methods used to manage
@@ -19,7 +17,7 @@ public interface ConnectionService {
      * @param eMail
      * @return a PmbAccount
      */
-    public PmbAccount addConnection(String eMail);
+    public PmbAccountDTO addConnection(String eMail);
 
     /**
      * This method removes a connection of the PmbAccount corresponding to the
@@ -28,13 +26,13 @@ public interface ConnectionService {
      * @param eMail
      * @return the PmbAccount that has been disconnected
      */
-    public PmbAccount delConnection(String eMail);
+    public PmbAccountDTO delConnection(String eMail);
 
     /**
      * This method returns the list of all connections of the logged user.
      *
      * @return a Set<PmbAccount>
      */
-    public Set<PmbAccount> getConnections();
+    public PmbAccountDTO getConnections();
 
 }

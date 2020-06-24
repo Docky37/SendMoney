@@ -1,12 +1,12 @@
 package com.paymybuddy.sendmoney.moneyaccounts.service;
 
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount;
+import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccountDTO;
 import com.paymybuddy.sendmoney.moneyaccounts.repository.PmbAccountRepository;
+import com.paymybuddy.sendmoney.moneyaccounts.util.PmbAccountMapping;
 import com.paymybuddy.sendmoney.security.util.EmailRetrieve;
 
 /**
@@ -23,6 +23,9 @@ public class ConnectionServiceImpl implements ConnectionService {
     @Autowired
     private PmbAccountRepository pmbAccountRepository;
 
+    @Autowired
+    private PmbAccountMapping pmbAccountMapping;
+
     /**
      * Instance of EmailRetrieve utility class declaration.
      */
@@ -33,7 +36,7 @@ public class ConnectionServiceImpl implements ConnectionService {
      * {@inheritDoc}
      */
     @Override
-    public PmbAccount addConnection(final String eMail) {
+    public PmbAccountDTO addConnection(final String eMail) {
 
         PmbAccount pmbAccountToAdd = pmbAccountRepository
                 .findByOwnerEmail(eMail);
@@ -44,7 +47,7 @@ public class ConnectionServiceImpl implements ConnectionService {
                     .findByOwnerEmail(userEmail);
             myPmbAccount.addConnection(pmbAccountToAdd);
             pmbAccountRepository.save(myPmbAccount);
-            return myPmbAccount;
+            return pmbAccountMapping.mapPmbAccountToDTO(myPmbAccount);
         } else {
             return null;
         }
@@ -55,7 +58,7 @@ public class ConnectionServiceImpl implements ConnectionService {
      * {@inheritDoc}
      */
     @Override
-    public PmbAccount delConnection(String eMail) {
+    public PmbAccountDTO delConnection(String eMail) {
         PmbAccount pmbAccountToDelete = pmbAccountRepository
                 .findByOwnerEmail(eMail);
 
@@ -63,11 +66,12 @@ public class ConnectionServiceImpl implements ConnectionService {
             String userEmail = emailRetrieve.getEmail();
             PmbAccount myPmbAccount = pmbAccountRepository
                     .findByOwnerEmail(userEmail);
-            Set<PmbAccount> connections = myPmbAccount.getConnections();
+            /*Set<PmbAccount> connections = myPmbAccount.getConnections();
             connections.remove(pmbAccountToDelete);
-            myPmbAccount.setConnections(connections);
+            myPmbAccount.setConnections(connections);*/
+            myPmbAccount.getConnections().remove(pmbAccountToDelete);
             pmbAccountRepository.save(myPmbAccount);
-            return myPmbAccount;
+            return pmbAccountMapping.mapPmbAccountToDTO(myPmbAccount);
         } else {
             return null;
         }
@@ -77,12 +81,11 @@ public class ConnectionServiceImpl implements ConnectionService {
      * {@inheritDoc}
      */
     @Override
-    public Set<PmbAccount> getConnections() {
+    public PmbAccountDTO getConnections() {
         String userEmail = emailRetrieve.getEmail();
         PmbAccount myPmbAccount = pmbAccountRepository
                 .findByOwnerEmail(userEmail);
-        Set<PmbAccount> connections = myPmbAccount.getConnections();
-        return connections;
+        return pmbAccountMapping.mapPmbAccountToDTO(myPmbAccount);
     }
 
 }

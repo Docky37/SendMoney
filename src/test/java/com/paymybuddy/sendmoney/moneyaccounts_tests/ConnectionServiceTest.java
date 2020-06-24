@@ -17,8 +17,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.paymybuddy.sendmoney.moneyaccounts.repository.PmbAccountRepository;
 import com.paymybuddy.sendmoney.moneyaccounts.service.ConnectionService;
+import com.paymybuddy.sendmoney.moneyaccounts.util.PmbAccountMapping;
 import com.paymybuddy.sendmoney.security.util.EmailRetrieve;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount;
+import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccountDTO;
 
 /**
  * @author Thierry SCHREINER
@@ -32,6 +34,9 @@ public class ConnectionServiceTest {
 
     @MockBean
     private PmbAccountRepository pmbAccountRepository;
+
+    @MockBean
+    private PmbAccountMapping pmbAccountMapping;
 
     @MockBean
     private EmailRetrieve emailRetrieve;
@@ -51,11 +56,14 @@ public class ConnectionServiceTest {
         given(pmbAccountRepository.findByOwnerEmail(anyString()))
                 .willReturn(pmbAccountToAdd);
         given(emailRetrieve.getEmail()).willReturn("My.Mail@pmb.fr");
+        given(pmbAccountMapping.mapPmbAccountToDTO(any(PmbAccount.class)))
+                .willReturn(new PmbAccountDTO());
         // WHEN
         connectionService.addConnection(eMail);
         // THEN
         verify(pmbAccountRepository, times(2)).findByOwnerEmail(anyString());
         verify(pmbAccountRepository).save(any(PmbAccount.class));
+        verify(pmbAccountMapping).mapPmbAccountToDTO(any(PmbAccount.class));
     }
 
     @Test // DelConnection method
@@ -69,11 +77,14 @@ public class ConnectionServiceTest {
         given(pmbAccountRepository.findByOwnerEmail(anyString()))
                 .willReturn(pmbAccountToAdd, new PmbAccount());
         given(emailRetrieve.getEmail()).willReturn("My.Mail@pmb.fr");
+        given(pmbAccountMapping.mapPmbAccountToDTO(any(PmbAccount.class)))
+                .willReturn(new PmbAccountDTO());
         // WHEN
         connectionService.delConnection(eMail);
         // THEN
         verify(pmbAccountRepository, times(2)).findByOwnerEmail(anyString());
         verify(pmbAccountRepository).save(any(PmbAccount.class));
+        verify(pmbAccountMapping).mapPmbAccountToDTO(any(PmbAccount.class));
     }
 
     @Test // GetConnections method
@@ -83,10 +94,13 @@ public class ConnectionServiceTest {
         given(pmbAccountRepository.findByOwnerEmail(anyString()))
                 .willReturn(new PmbAccount());
         given(emailRetrieve.getEmail()).willReturn("My.Mail@pmb.fr");
+        given(pmbAccountMapping.mapPmbAccountToDTO(any(PmbAccount.class)))
+                .willReturn(new PmbAccountDTO());
         // WHEN
         connectionService.getConnections();
         // THEN
         verify(pmbAccountRepository).findByOwnerEmail(anyString());
+        verify(pmbAccountMapping).mapPmbAccountToDTO(any(PmbAccount.class));
     }
 
 }

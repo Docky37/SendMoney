@@ -1,7 +1,7 @@
 package com.paymybuddy.sendmoney.moneyaccounts.model;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -71,7 +71,7 @@ public class PmbAccount {
         inverseJoinColumns = @JoinColumn(name = "beneficiary_id"))
     @Getter
     @Setter
-    private Set<PmbAccount> connections = new HashSet<PmbAccount>();
+    private Set<PmbAccount> connections = new TreeSet<PmbAccount>();
 
     public void addConnection(PmbAccount pmbAccount) {
         this.connections.add(pmbAccount);
