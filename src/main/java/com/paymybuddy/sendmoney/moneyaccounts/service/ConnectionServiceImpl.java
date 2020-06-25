@@ -66,9 +66,6 @@ public class ConnectionServiceImpl implements ConnectionService {
             String userEmail = emailRetrieve.getEmail();
             PmbAccount myPmbAccount = pmbAccountRepository
                     .findByOwnerEmail(userEmail);
-            /*Set<PmbAccount> connections = myPmbAccount.getConnections();
-            connections.remove(pmbAccountToDelete);
-            myPmbAccount.setConnections(connections);*/
             myPmbAccount.getConnections().remove(pmbAccountToDelete);
             pmbAccountRepository.save(myPmbAccount);
             return pmbAccountMapping.mapPmbAccountToDTO(myPmbAccount);

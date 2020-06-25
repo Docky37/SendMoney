@@ -7,6 +7,9 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.verify;
+
+import java.util.TreeSet;
+
 import static org.mockito.Mockito.times;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +21,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import com.paymybuddy.sendmoney.moneyaccounts.repository.PmbAccountRepository;
 import com.paymybuddy.sendmoney.moneyaccounts.service.ConnectionService;
 import com.paymybuddy.sendmoney.moneyaccounts.util.PmbAccountMapping;
+import com.paymybuddy.sendmoney.security.model.Buddy;
 import com.paymybuddy.sendmoney.security.util.EmailRetrieve;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccountDTO;
@@ -50,11 +54,15 @@ public class ConnectionServiceTest {
             throws Exception {
         // GIVEN
         String eMail = "Yo.Yo@yoyo.fr";
-        PmbAccount pmbAccountToAdd = new PmbAccount();
-        pmbAccountToAdd.setId(1L);
-        pmbAccountToAdd.setPmbAccountNumber("PMB0001515");
+        Buddy owner = new Buddy();
+        owner.setId(1L);
+        owner.setEmail(eMail);
+        PmbAccount pmbAccount = new PmbAccount();
+        pmbAccount.setId(1L);
+        pmbAccount.setPmbAccountNumber("PMB0001515");
+        pmbAccount.setOwner(owner);
         given(pmbAccountRepository.findByOwnerEmail(anyString()))
-                .willReturn(pmbAccountToAdd);
+                .willReturn(pmbAccount);
         given(emailRetrieve.getEmail()).willReturn("My.Mail@pmb.fr");
         given(pmbAccountMapping.mapPmbAccountToDTO(any(PmbAccount.class)))
                 .willReturn(new PmbAccountDTO());
@@ -74,8 +82,9 @@ public class ConnectionServiceTest {
         PmbAccount pmbAccountToAdd = new PmbAccount();
         pmbAccountToAdd.setId(1L);
         pmbAccountToAdd.setPmbAccountNumber("PMB0001515");
+        pmbAccountToAdd.setConnections(new TreeSet<PmbAccount>());
         given(pmbAccountRepository.findByOwnerEmail(anyString()))
-                .willReturn(pmbAccountToAdd, new PmbAccount());
+                .willReturn(pmbAccountToAdd);
         given(emailRetrieve.getEmail()).willReturn("My.Mail@pmb.fr");
         given(pmbAccountMapping.mapPmbAccountToDTO(any(PmbAccount.class)))
                 .willReturn(new PmbAccountDTO());

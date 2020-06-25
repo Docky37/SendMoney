@@ -27,7 +27,7 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "pmb_account")
-public class PmbAccount {
+public class PmbAccount implements Comparable<PmbAccount> {
 
     /**
      * The id and primary key of pmb_account table.
@@ -75,6 +75,15 @@ public class PmbAccount {
 
     public void addConnection(PmbAccount pmbAccount) {
         this.connections.add(pmbAccount);
-    }  
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int compareTo(PmbAccount o) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
 }
