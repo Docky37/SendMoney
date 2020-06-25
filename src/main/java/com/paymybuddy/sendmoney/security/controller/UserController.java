@@ -46,9 +46,15 @@ import com.paymybuddy.sendmoney.security.util.JwtUtil;
 @RestController
 public class UserController {
 
+    /**
+     * Instance of UserDetailsService declaration.
+     */
     @Autowired
     private UserDetailsService userDetailsService;
 
+    /**
+     * Instance of UserService declaration.
+     */
     @Autowired
     private UserService userService;
 
@@ -59,17 +65,22 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
+    /**
+     * Instance of Jason Web Token utility class declaration.
+     */
     @Autowired
     private JwtUtil jwtUtil;
 
+    /**
+     * Instance of AuthenticationManager declaration.
+     */
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    // USER WELCOME PAGE
+    // USER WELCOME PAGE*********************************************
     /**
      * A GET html request that provides the frontend user welcome page.
      *
-     * @param model
      * @return a String (the name of the next frontend page)
      */
     @GetMapping("/welcome")
@@ -77,9 +88,16 @@ public class UserController {
         return "Welcome";
     }
 
+    /**
+     * POST html request used to authenticate and provide a Token.
+     *
+     * @param authenticationRequest
+     * @return a ResponseEntity<Object>
+     * @throws Exception
+     */
     @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(
-            @RequestBody AuthenticationRequest authenticationRequest)
+            @RequestBody final AuthenticationRequest authenticationRequest)
             throws Exception {
         try {
             authenticationManager

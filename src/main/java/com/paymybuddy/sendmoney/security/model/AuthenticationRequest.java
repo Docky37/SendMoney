@@ -1,21 +1,25 @@
-/**
- * 
- */
 package com.paymybuddy.sendmoney.security.model;
 
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @author Thierry SCHREINER
+ * Model class used to store the credentials of an authentication request.
  *
+ * @author Thierry SCHREINER
  */
 public class AuthenticationRequest {
 
+    /**
+     * The email of the user, used as credential username.
+     */
     @Getter
     @Setter
     private String username;
 
+    /**
+     * The password of the user.
+     */
     @Getter
     @Setter
     private String password;
@@ -29,12 +33,13 @@ public class AuthenticationRequest {
     /**
      * Class constructor.
      *
-     * @param username
-     * @param password
+     * @param pUsername
+     * @param pPassword
      */
-    public AuthenticationRequest(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public AuthenticationRequest(final String pUsername,
+            final String pPassword) {
+        username = pUsername;
+        password = pPassword;
     }
 
 }

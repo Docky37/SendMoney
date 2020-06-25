@@ -33,12 +33,4 @@ public class Role {
     @Getter
     @Setter
     private String name;
-
-    /**
-     * The join table used to map buddy and its roles.
-     
-    @Getter
-    @Setter
-    @ManyToMany(mappedBy = "roles")
-    private Set<Buddy> users;*/
 }

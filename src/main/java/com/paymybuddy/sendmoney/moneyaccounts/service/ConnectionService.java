@@ -17,7 +17,7 @@ public interface ConnectionService {
      * @param eMail
      * @return a PmbAccount
      */
-    public PmbAccountDTO addConnection(String eMail);
+    PmbAccountDTO addConnection(String eMail);
 
     /**
      * This method removes a connection of the PmbAccount corresponding to the
@@ -26,13 +26,13 @@ public interface ConnectionService {
      * @param eMail
      * @return the PmbAccount that has been disconnected
      */
-    public PmbAccountDTO delConnection(String eMail);
+    PmbAccountDTO delConnection(String eMail);
 
     /**
      * This method returns the list of all connections of the logged user.
      *
      * @return a Set<PmbAccount>
      */
-    public PmbAccountDTO getConnections();
+    PmbAccountDTO getConnections();
 
 }

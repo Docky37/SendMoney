@@ -17,29 +17,45 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
- * 
+ * The JSON Web Token (JWT) Authentication filter checks if the incoming request
+ * has a valid JSON Web Token (JWT). It checks the validity of the JWT by
+ * verifying the JWT signature, audiences and issuer based on the HTTP filter
+ * configuration.
+ *
  * @author Thierry SCHREINER
  */
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
+    /**
+     * Instance of UserDetailsService declaration. Spring will use the
+     * UserDetailsServiceImpl class.
+     */
     @Autowired
     private UserDetailsService userDetailsService;
 
+    /**
+     * Instance of JwtUtil class, a utility class that provides methods to
+     * authenticate with a Json web token.
+     */
     @Autowired
     private JwtUtil jwtUtil;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-            HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(final HttpServletRequest request,
+            final HttpServletResponse response, final FilterChain filterChain)
             throws ServletException, IOException {
         final String authorizationHeader = request.getHeader("Authorization");
         String username = null;
         String jwt = null;
+        String bearer = "Bearer ";
 
         if (authorizationHeader != null
-                && authorizationHeader.startsWith("Bearer ")) {
-            jwt = authorizationHeader.substring(7);
+                && authorizationHeader.startsWith(bearer)) {
+            jwt = authorizationHeader.substring(bearer.length());
             username = jwtUtil.extractUsername(jwt);
         }
 
@@ -48,7 +64,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             UserDetails userDetails = this.userDetailsService
                     .loadUserByUsername(username);
             if (jwtUtil.validateToken(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken userPassAuthToken = 
+                UsernamePasswordAuthenticationToken userPassAuthToken =
                         new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 userPassAuthToken

@@ -29,15 +29,17 @@ public class BankAccountController {
     @Autowired
     private BankAccountService bankAccountService;
 
+    /**
+     * Utility class used to retrieve the email of the current logged user.
+     */
     @Autowired
     private EmailRetrieve emailRetrieve;
 
     /**
      * HTML POST method used to register a Bank account.
      *
-     * @param bankAccountForm
+     * @param bankAccountDTO
      * @param bindingResult
-     * @param model
      * @return a String (name of frontendpage)
      */
     @PostMapping("/bank-account")
@@ -52,7 +54,7 @@ public class BankAccountController {
                             + bindingResult.getFieldError().getDefaultMessage(),
                     new HttpHeaders(), HttpStatus.BAD_REQUEST);
         }
-        bankAccountDTO.setEmail(emailRetrieve.getEmail()); 
+        bankAccountDTO.setEmail(emailRetrieve.getEmail());
 
         bankAccountService.saveBankAccount(bankAccountDTO);
         return new ResponseEntity<Object>("Bank account saved.",

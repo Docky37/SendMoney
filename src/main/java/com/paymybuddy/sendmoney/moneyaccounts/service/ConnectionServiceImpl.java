@@ -23,6 +23,9 @@ public class ConnectionServiceImpl implements ConnectionService {
     @Autowired
     private PmbAccountRepository pmbAccountRepository;
 
+    /**
+     * Instance of PmbAccountMapping class declaration.
+     */
     @Autowired
     private PmbAccountMapping pmbAccountMapping;
 
@@ -58,7 +61,7 @@ public class ConnectionServiceImpl implements ConnectionService {
      * {@inheritDoc}
      */
     @Override
-    public PmbAccountDTO delConnection(String eMail) {
+    public PmbAccountDTO delConnection(final String eMail) {
         PmbAccount pmbAccountToDelete = pmbAccountRepository
                 .findByOwnerEmail(eMail);
 

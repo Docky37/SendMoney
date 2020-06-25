@@ -26,11 +26,11 @@ public class UserDTO {
     /**
      * The minimum size for password.
      */
-    static final int PASSWORD_MIN_SIZE = 6;
+    static final int PASSWORD_MIN_SIZE = 7;
     /**
      * The maximum size for password.
      */
-    static final int PASSWORD_MAX_SIZE = 35;
+    static final int PASSWORD_MAX_SIZE = 14;
 
     /**
      * The first name of the Buddy.
@@ -85,29 +85,32 @@ public class UserDTO {
     private String confirmPassword;
 
     /**
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @param password
-     * @param confirmPassword
+     * @param pFirstName
+     * @param pLastName
+     * @param pEmail
+     * @param pPassword
+     * @param pConfirmPassword
      */
-    public UserDTO(@NotNull @NotEmpty String firstName,
-            @NotNull @NotEmpty String lastName,
-            @NotNull @Size(min = 6, max = 35) @Email(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$") String email,
-            @NotNull @NotEmpty @Size(min = 6, max = 35) String password,
-            String confirmPassword) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
+    public UserDTO(@NotNull @NotEmpty final String pFirstName,
+            @NotNull @NotEmpty final String pLastName,
+            @NotNull @Size(min = EMAIL_MIN_SIZE, max = EMAIL_MAX_SIZE)
+            @Email(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/"
+                + "=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
+                final String pEmail,
+            @NotNull @NotEmpty @Size(min = EMAIL_MIN_SIZE, max = EMAIL_MAX_SIZE)
+                final String pPassword,
+            final String pConfirmPassword) {
+        firstName = pFirstName;
+        lastName = pLastName;
+        email = pEmail;
+        password = pPassword;
+        confirmPassword = pConfirmPassword;
     }
 
     /**
-     * 
+     * Empty constructor.
      */
     public UserDTO() {
     }
 
-    
 }

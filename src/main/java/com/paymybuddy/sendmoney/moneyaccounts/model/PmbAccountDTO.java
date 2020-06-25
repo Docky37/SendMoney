@@ -36,7 +36,13 @@ public class PmbAccountDTO {
     @Setter
     private Set<String> connections = new TreeSet<String>();
 
-    public void addConnection(String email) {
+    /**
+     * This method is used to add a email in the Set<String> field
+     * (named 'connections') of the logged user's PmbAccountDTO.
+     *
+     * @param email
+     */
+    public void addConnection(final String email) {
         this.connections.add(email);
     }
 
