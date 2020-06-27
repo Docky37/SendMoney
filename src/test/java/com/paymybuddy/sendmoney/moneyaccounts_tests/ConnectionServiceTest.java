@@ -14,6 +14,7 @@ import static org.mockito.Mockito.times;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -57,10 +58,10 @@ public class ConnectionServiceTest {
         Buddy owner = new Buddy();
         owner.setId(1L);
         owner.setEmail(eMail);
-        PmbAccount pmbAccount = new PmbAccount();
-        pmbAccount.setId(1L);
-        pmbAccount.setPmbAccountNumber("PMB0001515");
-        pmbAccount.setOwner(owner);
+        PmbAccount pmbAccount = Mockito.mock(PmbAccount.class);
+        given(pmbAccount.getId()).willReturn(1L);
+        given(pmbAccount.getPmbAccountNumber()).willReturn("PMB0001515");
+        given(pmbAccount.getOwner()).willReturn(owner);
         given(pmbAccountRepository.findByOwnerEmail(anyString()))
                 .willReturn(pmbAccount);
         given(emailRetrieve.getEmail()).willReturn("My.Mail@pmb.fr");
@@ -72,6 +73,8 @@ public class ConnectionServiceTest {
         verify(pmbAccountRepository, times(2)).findByOwnerEmail(anyString());
         verify(pmbAccountRepository).save(any(PmbAccount.class));
         verify(pmbAccountMapping).mapPmbAccountToDTO(any(PmbAccount.class));
+        verify(pmbAccount).addConnection(any(PmbAccount.class));
+
     }
 
     @Test // DelConnection method
