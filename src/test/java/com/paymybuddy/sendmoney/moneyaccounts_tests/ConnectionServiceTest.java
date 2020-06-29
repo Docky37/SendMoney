@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.paymybuddy.sendmoney.moneyaccounts_tests;
 
 import static org.mockito.BDDMockito.given;
@@ -10,11 +7,12 @@ import static org.mockito.Mockito.verify;
 
 import java.util.TreeSet;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.never; 
 import static org.mockito.Mockito.times;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -44,6 +42,9 @@ public class ConnectionServiceTest {
     private PmbAccountMapping pmbAccountMapping;
 
     @MockBean
+    private PmbAccount pmbAccount;
+
+    @MockBean
     private EmailRetrieve emailRetrieve;
 
     @BeforeEach
@@ -58,10 +59,6 @@ public class ConnectionServiceTest {
         Buddy owner = new Buddy();
         owner.setId(1L);
         owner.setEmail(eMail);
-        PmbAccount pmbAccount = Mockito.mock(PmbAccount.class);
-        given(pmbAccount.getId()).willReturn(1L);
-        given(pmbAccount.getPmbAccountNumber()).willReturn("PMB0001515");
-        given(pmbAccount.getOwner()).willReturn(owner);
         given(pmbAccountRepository.findByOwnerEmail(anyString()))
                 .willReturn(pmbAccount);
         given(emailRetrieve.getEmail()).willReturn("My.Mail@pmb.fr");
@@ -74,7 +71,25 @@ public class ConnectionServiceTest {
         verify(pmbAccountRepository).save(any(PmbAccount.class));
         verify(pmbAccountMapping).mapPmbAccountToDTO(any(PmbAccount.class));
         verify(pmbAccount).addConnection(any(PmbAccount.class));
+   }
 
+    @Test // AddConnection method
+    public void givenNonRegistredEmail_whenAddConnection_thenConnectionIsAdded()
+            throws Exception {
+        // GIVEN
+        String eMail = "Yo.Yo@yoyo.fr";
+        given(pmbAccountRepository.findByOwnerEmail(anyString()))
+                .willReturn(null);
+        given(emailRetrieve.getEmail()).willReturn("My.Mail@pmb.fr");
+        given(pmbAccountMapping.mapPmbAccountToDTO(any(PmbAccount.class)))
+                .willReturn(new PmbAccountDTO());
+        // WHEN
+        PmbAccountDTO pmbAccountDTO = connectionService.addConnection(eMail);
+
+        // THEN
+        verify(pmbAccountRepository).findByOwnerEmail(anyString());
+        verify(pmbAccountRepository, never()).save(any(PmbAccount.class));
+        assertThat(pmbAccountDTO).isEqualTo(null);
     }
 
     @Test // DelConnection method
@@ -82,12 +97,11 @@ public class ConnectionServiceTest {
             throws Exception {
         // GIVEN
         String eMail = "Yo.Yo@yoyo.fr";
-        PmbAccount pmbAccountToAdd = new PmbAccount();
-        pmbAccountToAdd.setId(1L);
-        pmbAccountToAdd.setPmbAccountNumber("PMB0001515");
-        pmbAccountToAdd.setConnections(new TreeSet<PmbAccount>());
+        pmbAccount.setId(1L);
+        pmbAccount.setPmbAccountNumber("PMB0001515");
+        pmbAccount.setConnections(new TreeSet<PmbAccount>());
         given(pmbAccountRepository.findByOwnerEmail(anyString()))
-                .willReturn(pmbAccountToAdd);
+                .willReturn(pmbAccount);
         given(emailRetrieve.getEmail()).willReturn("My.Mail@pmb.fr");
         given(pmbAccountMapping.mapPmbAccountToDTO(any(PmbAccount.class)))
                 .willReturn(new PmbAccountDTO());
@@ -97,6 +111,22 @@ public class ConnectionServiceTest {
         verify(pmbAccountRepository, times(2)).findByOwnerEmail(anyString());
         verify(pmbAccountRepository).save(any(PmbAccount.class));
         verify(pmbAccountMapping).mapPmbAccountToDTO(any(PmbAccount.class));
+        verify(pmbAccount).getConnections();
+    }
+
+    @Test // DelConnection method
+    public void givenNonRegistredEmail_whenDelConnection_thenConnectionIsDeleted()
+            throws Exception {
+        // GIVEN
+        String eMail = "Yo.Yo@yoyo.fr";
+        given(pmbAccountRepository.findByOwnerEmail(anyString()))
+                .willReturn(null);
+        // WHEN
+        PmbAccountDTO pmbAccountDTO = connectionService.delConnection(eMail);
+       // THEN
+        verify(pmbAccountRepository).findByOwnerEmail(anyString());
+        verify(pmbAccountRepository, never()).save(any(PmbAccount.class));
+        assertThat(pmbAccountDTO).isEqualTo(null);
     }
 
     @Test // GetConnections method
