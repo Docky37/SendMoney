@@ -3,6 +3,7 @@ package com.paymybuddy.sendmoney.moneyaccounts.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.paymybuddy.sendmoney.moneyaccounts.exception.UserWithoutPmbAccountException;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccountDTO;
 import com.paymybuddy.sendmoney.moneyaccounts.repository.PmbAccountRepository;
@@ -37,9 +38,12 @@ public class ConnectionServiceImpl implements ConnectionService {
 
     /**
      * {@inheritDoc}
+     *
+     * @throws Throwable
      */
     @Override
-    public PmbAccountDTO addConnection(final String eMail) {
+    public PmbAccountDTO addConnection(final String eMail)
+            throws UserWithoutPmbAccountException {
 
         PmbAccount pmbAccountToAdd = pmbAccountRepository
                 .findByOwnerEmail(eMail);
@@ -48,9 +52,13 @@ public class ConnectionServiceImpl implements ConnectionService {
             String userEmail = emailRetrieve.getEmail();
             PmbAccount myPmbAccount = pmbAccountRepository
                     .findByOwnerEmail(userEmail);
-            myPmbAccount.addConnection(pmbAccountToAdd);
-            pmbAccountRepository.save(myPmbAccount);
-            return pmbAccountMapping.mapPmbAccountToDTO(myPmbAccount);
+            if (myPmbAccount != null) {
+                myPmbAccount.addConnection(pmbAccountToAdd);
+                pmbAccountRepository.save(myPmbAccount);
+                return pmbAccountMapping.mapPmbAccountToDTO(myPmbAccount);
+            } else {
+                throw new UserWithoutPmbAccountException();
+            }
         } else {
             return null;
         }
@@ -59,9 +67,12 @@ public class ConnectionServiceImpl implements ConnectionService {
 
     /**
      * {@inheritDoc}
+     *
+     * @throws Throwable
      */
     @Override
-    public PmbAccountDTO delConnection(final String eMail) {
+    public PmbAccountDTO delConnection(final String eMail)
+            throws UserWithoutPmbAccountException {
         PmbAccount pmbAccountToDelete = pmbAccountRepository
                 .findByOwnerEmail(eMail);
 
@@ -69,9 +80,13 @@ public class ConnectionServiceImpl implements ConnectionService {
             String userEmail = emailRetrieve.getEmail();
             PmbAccount myPmbAccount = pmbAccountRepository
                     .findByOwnerEmail(userEmail);
-            myPmbAccount.getConnections().remove(pmbAccountToDelete);
-            pmbAccountRepository.save(myPmbAccount);
-            return pmbAccountMapping.mapPmbAccountToDTO(myPmbAccount);
+            if (myPmbAccount != null) {
+                myPmbAccount.getConnections().remove(pmbAccountToDelete);
+                pmbAccountRepository.save(myPmbAccount);
+                return pmbAccountMapping.mapPmbAccountToDTO(myPmbAccount);
+            } else {
+                throw new UserWithoutPmbAccountException();
+            }
         } else {
             return null;
         }
@@ -85,7 +100,10 @@ public class ConnectionServiceImpl implements ConnectionService {
         String userEmail = emailRetrieve.getEmail();
         PmbAccount myPmbAccount = pmbAccountRepository
                 .findByOwnerEmail(userEmail);
-        return pmbAccountMapping.mapPmbAccountToDTO(myPmbAccount);
+        if (myPmbAccount != null) {
+            return pmbAccountMapping.mapPmbAccountToDTO(myPmbAccount);
+        }
+        return null;
     }
 
 }

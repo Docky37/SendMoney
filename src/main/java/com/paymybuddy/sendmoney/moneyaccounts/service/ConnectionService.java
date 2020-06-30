@@ -1,5 +1,6 @@
 package com.paymybuddy.sendmoney.moneyaccounts.service;
 
+import com.paymybuddy.sendmoney.moneyaccounts.exception.UserWithoutPmbAccountException;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccountDTO;
 
 /**
@@ -16,8 +17,10 @@ public interface ConnectionService {
      *
      * @param eMail
      * @return a PmbAccount
+     * @throws Throwable
      */
-    PmbAccountDTO addConnection(String eMail);
+    PmbAccountDTO addConnection(String eMail)
+            throws UserWithoutPmbAccountException;
 
     /**
      * This method removes a connection of the PmbAccount corresponding to the
@@ -25,8 +28,10 @@ public interface ConnectionService {
      *
      * @param eMail
      * @return the PmbAccount that has been disconnected
+     * @throws Throwable
      */
-    PmbAccountDTO delConnection(String eMail);
+    PmbAccountDTO delConnection(String eMail)
+            throws UserWithoutPmbAccountException;
 
     /**
      * This method returns the list of all connections of the logged user.
