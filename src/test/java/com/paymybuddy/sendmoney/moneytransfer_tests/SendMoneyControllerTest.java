@@ -52,9 +52,10 @@ public class SendMoneyControllerTest {
     }
 
     @Test // PostMapping("/send-money")
-    public void givenAnOrderDTO_whenSend_thenCreated()
-            throws Exception {
+    public void givenAValidOrderDTO_whenSend_thenCreated() throws Exception {
         given(emailRetrieve.getEmail()).willReturn("logged.user@pmb.com");
+        given(sendMoneyService.send(any(OrderDTO.class)))
+                .willReturn("201 Created - Transfer done & saved.");
         mvc.perform(MockMvcRequestBuilders.post("/send-money")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"email\":\"my.beneficiary@pmb.fr\","
@@ -62,9 +63,9 @@ public class SendMoneyControllerTest {
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andReturn();
-        
+
         verify(emailRetrieve).getEmail();
         verify(sendMoneyService).send(any(OrderDTO.class));
     }
-    
+
 }

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.paymybuddy.sendmoney.money_transfer.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +31,26 @@ public class SendMoneyController {
     @Autowired
     private EmailRetrieve emailRetrieve;
 
+    /**
+     * The Post html request sendMoney method allows PMB logged user to send
+     * some money to another PMB buddy.
+     *
+     * @param orderDTO
+     * @return a ResponseEntity<Object>
+     */
     @PostMapping("/send-money")
     public ResponseEntity<Object> sendMoney(
             @RequestBody final OrderDTO orderDTO) {
         orderDTO.setSender(emailRetrieve.getEmail());
-        sendMoneyService.send(orderDTO);
-        return new ResponseEntity<Object>("Transfer done & saved.",
-                new HttpHeaders(), HttpStatus.CREATED);
+        String response = sendMoneyService.send(orderDTO);
+        if (response.contains("201")) {
+            return new ResponseEntity<Object>(response, new HttpHeaders(),
+                    HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<Object>(response, new HttpHeaders(),
+                    HttpStatus.BAD_REQUEST);
+
+        }
     }
 
 }
