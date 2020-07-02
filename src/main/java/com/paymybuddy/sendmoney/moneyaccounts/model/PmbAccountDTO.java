@@ -1,6 +1,9 @@
 package com.paymybuddy.sendmoney.moneyaccounts.model;
 
 import java.util.TreeSet;
+
+import org.springframework.stereotype.Component;
+
 import java.util.Set;
 
 import lombok.Getter;
@@ -12,6 +15,7 @@ import lombok.Setter;
  *
  * @author Thierry SCHREINER
  */
+@Component
 public class PmbAccountDTO {
 
     /**

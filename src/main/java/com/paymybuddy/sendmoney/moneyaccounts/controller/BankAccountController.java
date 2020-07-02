@@ -40,7 +40,7 @@ public class BankAccountController {
      *
      * @param bankAccountDTO
      * @param bindingResult
-     * @return a String (name of frontendpage)
+     * @return a String
      */
     @PostMapping("/bank-account")
     public ResponseEntity<Object> newBankAccount(
