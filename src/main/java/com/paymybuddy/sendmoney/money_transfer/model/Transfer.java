@@ -77,6 +77,13 @@ public class Transfer {
     private Double amount;
 
     /**
+     * The fee of the transaction.
+     */
+    @Getter
+    @Setter
+    private Double fee;
+
+    /**
      * This boolean value (false per default) will be set to true when the
      * transaction will be effective in both sender & beneficiary accounts.
      */

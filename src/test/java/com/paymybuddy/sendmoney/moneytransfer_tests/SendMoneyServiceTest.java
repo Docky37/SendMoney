@@ -2,6 +2,7 @@ package com.paymybuddy.sendmoney.moneytransfer_tests;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.TreeSet;
 
@@ -60,6 +61,7 @@ public class SendMoneyServiceTest {
             sender.getEmail());
     static PmbAccount pmbAccountSender = new PmbAccount();
     static PmbAccount pmbAccountBeneficiary = new PmbAccount();
+    static Transfer transfer = new Transfer();
     static {
         pmbAccountSender.setPmbAccountNumber("PMB0000007");
         pmbAccountSender.setAccountBalance(500.00D);
@@ -70,6 +72,11 @@ public class SendMoneyServiceTest {
         pmbAccountBeneficiary.setPmbAccountNumber("PMB0000015");
         pmbAccountBeneficiary.setAccountBalance(350.00D);
         pmbAccountBeneficiary.setOwner(beneficiary);
+
+        transfer.setAmount(100D);
+        transfer.setFee(0.5D);
+        transfer.setPmbAccountBeneficiary(pmbAccountBeneficiary);
+        transfer.setPmbAccountSender(pmbAccountSender);
     }
 
     @Test // With a valid orderDTO
@@ -87,6 +94,19 @@ public class SendMoneyServiceTest {
         verify(transferMapping).convertToEntity(any(TransferDTO.class));
         verify(transferRepository).save(any(Transfer.class));
         // verify(pmbAccountRepository, times(2)).save(any(PmbAccount.class));
+    }
+
+    @Test // With a valid orderDTO
+    public void givenATransfer_whenSaveTransaction_thenAccountUpdated()
+            throws Exception {
+        // GIVEN
+
+        // WHEN
+        sendMoneyService.doTransaction(transfer);
+        // THEN
+        assertThat(pmbAccountSender.getAccountBalance()).isEqualTo(399.50D);
+        //verify(transferRepository).save(any(Transfer.class));
+        verify(pmbAccountRepository, times(2)).save(any(PmbAccount.class));
     }
 
 }
