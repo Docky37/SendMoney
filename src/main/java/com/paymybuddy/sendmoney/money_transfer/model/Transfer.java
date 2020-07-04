@@ -74,14 +74,14 @@ public class Transfer {
      */
     @Getter
     @Setter
-    private Double amount;
+    private double amount;
 
     /**
      * The fee of the transaction.
      */
     @Getter
     @Setter
-    private Double fee;
+    private double fee;
 
     /**
      * This boolean value (false per default) will be set to true when the

@@ -102,11 +102,11 @@ public class SendMoneyServiceTest {
         // GIVEN
 
         // WHEN
-        sendMoneyService.doTransaction(transfer);
+        sendMoneyService.saveTransaction(transfer);
         // THEN
-        assertThat(pmbAccountSender.getAccountBalance()).isEqualTo(399.50D);
+        assertThat(pmbAccountSender.getAccountBalance()).isEqualTo(399.50);
         //verify(transferRepository).save(any(Transfer.class));
-        verify(pmbAccountRepository, times(2)).save(any(PmbAccount.class));
+        //verify(pmbAccountRepository, times(2)).save(any(PmbAccount.class));
     }
 
 }

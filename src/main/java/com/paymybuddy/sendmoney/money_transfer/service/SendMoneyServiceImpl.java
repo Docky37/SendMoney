@@ -3,6 +3,8 @@ package com.paymybuddy.sendmoney.money_transfer.service;
 import java.util.Date;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +85,9 @@ public class SendMoneyServiceImpl implements SendMoneyService {
         Transfer transfer = transferMapping.convertToEntity(transferDTO);
         LOGGER.debug("transfer = {}", transfer.toString());
         transferRepository.save(transfer);
+
+        Boolean isSaved = saveTransaction(transfer);
+
         response = "201 Created - Transfer done & saved.";
         LOGGER.info(response);
         return response;
@@ -92,9 +97,21 @@ public class SendMoneyServiceImpl implements SendMoneyService {
      * {@inheritDoc}.
      */
     @Override
-    public boolean doTransaction(final Transfer transfer) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean saveTransaction(final Transfer transfer) {
+        PmbAccount senderAccount = transfer.getPmbAccountSender();
+        senderAccount.setAccountBalance(senderAccount.getAccountBalance()
+                - transfer.getAmount() - transfer.getFee());
+        LOGGER.info("sender AccountBalance = {}",
+                senderAccount.getAccountBalance());
+
+        PmbAccount beneficiaryAccount = transfer.getPmbAccountBeneficiary();
+        beneficiaryAccount.setAccountBalance(
+                beneficiaryAccount.getAccountBalance() + transfer.getAmount());
+
+        pmbAccountRepository.save(senderAccount);
+        pmbAccountRepository.save(beneficiaryAccount);
+
+        return true;
     }
 
 }

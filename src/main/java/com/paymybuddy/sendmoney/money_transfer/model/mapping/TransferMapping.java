@@ -12,6 +12,17 @@ import com.paymybuddy.sendmoney.money_transfer.model.TransferDTO;
 public class TransferMapping {
 
     /**
+     * This constant defines the value of the fee rate of PMB transfer.
+     */
+    public static final double FEE_RATE = 0.005; // 0.5%
+    
+    /**
+    /**
+     * This constant contains the value of 100.
+     */
+    public static final double CENT = 100;
+    
+   /**
      * This method create a Transfer entity object and fill its fields with the
      * values carried by the given transferDTO object.
      *
@@ -26,6 +37,7 @@ public class TransferMapping {
         transfer.setPmbAccountBeneficiary(
                 transferDTO.getPmbAccountBeneficiary());
         transfer.setAmount(transferDTO.getAmount());
+        transfer.setFee(Math.rint(transfer.getAmount()*FEE_RATE*CENT)/CENT);
         return transfer;
     }
 

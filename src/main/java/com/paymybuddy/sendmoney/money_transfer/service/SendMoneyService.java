@@ -31,6 +31,6 @@ public interface SendMoneyService {
      * @param transfer
      * @return a boolean (true if operation succeeds)
      */
-    boolean doTransaction(Transfer transfer);
+    boolean saveTransaction(Transfer transfer);
 
 }
