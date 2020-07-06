@@ -3,13 +3,13 @@ package com.paymybuddy.sendmoney.money_transfer.service;
 import java.util.Date;
 import java.util.Set;
 
-import javax.transaction.Transactional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.paymybuddy.sendmoney.PmbConstants;
 import com.paymybuddy.sendmoney.money_transfer.model.OrderDTO;
 import com.paymybuddy.sendmoney.money_transfer.model.Transfer;
 import com.paymybuddy.sendmoney.money_transfer.model.TransferDTO;
@@ -53,20 +53,32 @@ public class SendMoneyServiceImpl implements SendMoneyService {
     private TransferRepository transferRepository;
 
     /**
+     * Class variable used to build a response message that will be return to
+     * the controller.
+     */
+    private String response = "";
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getResponse() {
+        return response;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
-    public String send(final OrderDTO orderDTO) {
+    public Transfer send(final OrderDTO orderDTO) {
 
-        String response;
         PmbAccount pmbAccountSender = pmbAccountRepository
                 .findByOwnerEmail(orderDTO.getSender());
-        if (pmbAccountSender.getAccountBalance() < 1.005
-                * orderDTO.getAmount()) {
+        if (pmbAccountSender.getAccountBalance() < 1
+                + PmbConstants.FEE_RATE * orderDTO.getAmount()) {
             response = "400 Bad Request - "
                     + "Insufficient funds on PMB account for this transfer!";
             LOGGER.info(response);
-            return response;
+            return null;
         }
         LOGGER.debug("Sufficient account balance.");
         PmbAccount pmbAccountBeneficiary = pmbAccountRepository
@@ -76,7 +88,7 @@ public class SendMoneyServiceImpl implements SendMoneyService {
             response = "400 Bad Request - "
                     + "Beneficiary is not a valid connection of the user!";
             LOGGER.info(response);
-            return response;
+            return null;
         }
         LOGGER.debug("Beneficiary is well connected to user!");
         TransferDTO transferDTO = new TransferDTO(new Date(), "Sending",
@@ -84,20 +96,19 @@ public class SendMoneyServiceImpl implements SendMoneyService {
         LOGGER.debug("transferDTO = {}", transferDTO.toString());
         Transfer transfer = transferMapping.convertToEntity(transferDTO);
         LOGGER.debug("transfer = {}", transfer.toString());
-        transferRepository.save(transfer);
-
-        Boolean isSaved = saveTransaction(transfer);
+        Transfer savedTransfer = transferRepository.save(transfer);
 
         response = "201 Created - Transfer done & saved.";
         LOGGER.info(response);
-        return response;
+        return savedTransfer;
     }
 
     /**
      * {@inheritDoc}.
      */
     @Override
-    public boolean saveTransaction(final Transfer transfer) {
+    @Transactional
+    public String saveTransaction(final Transfer transfer) {
         PmbAccount senderAccount = transfer.getPmbAccountSender();
         senderAccount.setAccountBalance(senderAccount.getAccountBalance()
                 - transfer.getAmount() - transfer.getFee());
@@ -108,10 +119,23 @@ public class SendMoneyServiceImpl implements SendMoneyService {
         beneficiaryAccount.setAccountBalance(
                 beneficiaryAccount.getAccountBalance() + transfer.getAmount());
 
-        pmbAccountRepository.save(senderAccount);
-        pmbAccountRepository.save(beneficiaryAccount);
-
-        return true;
+        try {
+            pmbAccountRepository.save(senderAccount);
+            pmbAccountRepository.save(beneficiaryAccount);
+            response.concat(" The account balance of both sender & beneficiary"
+                    + " PMB accounts have been updated.");
+            LOGGER.info(" The account balance of both sender & beneficiary"
+                    + " PMB accounts have been updated.");
+            return response;
+        } catch (Exception e) {
+            LOGGER.info("An exception occurs during the update of an account"
+                    + " balance. Currently, both sender & user accounts are not"
+                    + " up to date of this transfer.");
+            response.concat(
+                    " But an exception occurs during the update of sender or"
+                            + " beneficiary account balance");
+            return response;
+        }
     }
 
 }

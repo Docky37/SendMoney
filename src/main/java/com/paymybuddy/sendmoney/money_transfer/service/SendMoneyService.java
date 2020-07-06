@@ -22,7 +22,7 @@ public interface SendMoneyService {
      * @param orderDTO
      * @return a String response starting with status like 201...
      */
-    String send(OrderDTO orderDTO);
+    Transfer send(OrderDTO orderDTO);
 
     /**
      * This method is responsible of the update of both sender and beneficiary
@@ -31,6 +31,13 @@ public interface SendMoneyService {
      * @param transfer
      * @return a boolean (true if operation succeeds)
      */
-    boolean saveTransaction(Transfer transfer);
+    String saveTransaction(Transfer transfer);
+
+    /**
+     * Getter of response.
+     * 
+     * @return a String, the service response message.
+     */
+    String getResponse();
 
 }

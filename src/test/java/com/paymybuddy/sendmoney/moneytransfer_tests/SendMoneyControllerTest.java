@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.paymybuddy.sendmoney.money_transfer.model.OrderDTO;
+import com.paymybuddy.sendmoney.money_transfer.model.Transfer;
 import com.paymybuddy.sendmoney.money_transfer.service.SendMoneyService;
 import com.paymybuddy.sendmoney.security.util.EmailRetrieve;
 
@@ -55,7 +56,9 @@ public class SendMoneyControllerTest {
     public void givenAValidOrderDTO_whenSend_thenCreated() throws Exception {
         given(emailRetrieve.getEmail()).willReturn("logged.user@pmb.com");
         given(sendMoneyService.send(any(OrderDTO.class)))
-                .willReturn("201 Created - Transfer done & saved.");
+                .willReturn(new Transfer());
+        given(sendMoneyService.saveTransaction(any(Transfer.class)))
+                .willReturn("201 Created");
         mvc.perform(MockMvcRequestBuilders.post("/send-money")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"email\":\"my.beneficiary@pmb.fr\","

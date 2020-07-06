@@ -2,6 +2,7 @@ package com.paymybuddy.sendmoney.money_transfer.model.mapping;
 
 import org.springframework.stereotype.Component;
 
+import com.paymybuddy.sendmoney.PmbConstants;
 import com.paymybuddy.sendmoney.money_transfer.model.Transfer;
 import com.paymybuddy.sendmoney.money_transfer.model.TransferDTO;
 
@@ -10,19 +11,7 @@ import com.paymybuddy.sendmoney.money_transfer.model.TransferDTO;
  */
 @Component
 public class TransferMapping {
-
     /**
-     * This constant defines the value of the fee rate of PMB transfer.
-     */
-    public static final double FEE_RATE = 0.005; // 0.5%
-    
-    /**
-    /**
-     * This constant contains the value of 100.
-     */
-    public static final double CENT = 100;
-    
-   /**
      * This method create a Transfer entity object and fill its fields with the
      * values carried by the given transferDTO object.
      *
@@ -37,7 +26,8 @@ public class TransferMapping {
         transfer.setPmbAccountBeneficiary(
                 transferDTO.getPmbAccountBeneficiary());
         transfer.setAmount(transferDTO.getAmount());
-        transfer.setFee(Math.rint(transfer.getAmount()*FEE_RATE*CENT)/CENT);
+        transfer.setFee(Math.rint(transfer.getAmount() * PmbConstants.FEE_RATE
+                * PmbConstants.CENT) / PmbConstants.CENT);
         return transfer;
     }
 

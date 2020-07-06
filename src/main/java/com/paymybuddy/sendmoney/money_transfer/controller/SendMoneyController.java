@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.paymybuddy.sendmoney.money_transfer.model.OrderDTO;
+import com.paymybuddy.sendmoney.money_transfer.model.Transfer;
 import com.paymybuddy.sendmoney.money_transfer.service.SendMoneyService;
 import com.paymybuddy.sendmoney.security.util.EmailRetrieve;
 
@@ -42,7 +43,14 @@ public class SendMoneyController {
     public ResponseEntity<Object> sendMoney(
             @RequestBody final OrderDTO orderDTO) {
         orderDTO.setSender(emailRetrieve.getEmail());
-        String response = sendMoneyService.send(orderDTO);
+        Transfer transfer = sendMoneyService.send(orderDTO);
+        String response;
+        if (transfer != null) {
+            response = sendMoneyService.saveTransaction(transfer);
+        } else {
+            response = sendMoneyService.getResponse();
+        }
+
         if (response.contains("201")) {
             return new ResponseEntity<Object>(response, new HttpHeaders(),
                     HttpStatus.CREATED);

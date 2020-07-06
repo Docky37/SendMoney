@@ -41,9 +41,16 @@ public class Transfer {
      * The transfer transaction date equal to the creation date of the
      * transfertDTO instance.
      */
-    @Getter
     @Setter
     private Date transactionDate;
+
+    /**
+     * Getter of transactionDate.
+     */
+    public Date getTransactionDate() {
+        Date dateClone = (Date) transactionDate.clone();
+        return dateClone;
+    }
 
     /**
      * The transaction field contains the type of money transaction: Deposit,

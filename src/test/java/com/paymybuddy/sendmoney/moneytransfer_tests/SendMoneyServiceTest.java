@@ -4,6 +4,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Date;
 import java.util.TreeSet;
 
 import static org.mockito.Mockito.times;
@@ -73,6 +74,7 @@ public class SendMoneyServiceTest {
         pmbAccountBeneficiary.setAccountBalance(350.00D);
         pmbAccountBeneficiary.setOwner(beneficiary);
 
+        transfer.setTransactionDate(new Date());
         transfer.setAmount(100D);
         transfer.setFee(0.5D);
         transfer.setPmbAccountBeneficiary(pmbAccountBeneficiary);
