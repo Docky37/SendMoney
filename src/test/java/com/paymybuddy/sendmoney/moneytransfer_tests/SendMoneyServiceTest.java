@@ -86,7 +86,7 @@ public class SendMoneyServiceTest {
         given(pmbAccountRepository.findByOwnerEmail(anyString()))
                 .willReturn(pmbAccountSender, pmbAccountBeneficiary);
         given(transferMapping.convertToEntity(any(TransferDTO.class)))
-                .willReturn(new Transfer());
+                .willReturn(transfer);
         // WHEN
         sendMoneyService.send(orderDTO);
         // THEN
@@ -104,9 +104,9 @@ public class SendMoneyServiceTest {
         // WHEN
         sendMoneyService.saveTransaction(transfer);
         // THEN
-        assertThat(pmbAccountSender.getAccountBalance()).isEqualTo(399.50);
-        //verify(transferRepository).save(any(Transfer.class));
-        //verify(pmbAccountRepository, times(2)).save(any(PmbAccount.class));
+        assertThat(pmbAccountSender.getAccountBalance()).isEqualTo(399.50D);
+        assertThat(pmbAccountBeneficiary.getAccountBalance()).isEqualTo(450D);
+        verify(pmbAccountRepository, times(2)).save(any(PmbAccount.class));
     }
 
 }
