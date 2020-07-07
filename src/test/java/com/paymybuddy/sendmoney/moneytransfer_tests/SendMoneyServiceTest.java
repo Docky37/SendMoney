@@ -79,7 +79,8 @@ public class SendMoneyServiceTest {
         transfer.setFee(0.5D);
         transfer.setPmbAccountBeneficiary(pmbAccountBeneficiary);
         transfer.setPmbAccountSender(pmbAccountSender);
-    }
+        transfer.setValueDate(new Date());
+   }
 
     @Test // With a valid orderDTO
     public void givenAnOrderDTO_whenSend_thenTransferIsAdded()

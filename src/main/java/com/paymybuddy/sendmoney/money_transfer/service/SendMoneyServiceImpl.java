@@ -91,8 +91,9 @@ public class SendMoneyServiceImpl implements SendMoneyService {
             return null;
         }
         LOGGER.debug("Beneficiary is well connected to user!");
-        TransferDTO transferDTO = new TransferDTO(new Date(), "Sending",
+        TransferDTO transferDTO = new TransferDTO(null, "Sending",
                 pmbAccountSender, pmbAccountBeneficiary, orderDTO.getAmount());
+        transferDTO.setTransactionDate(new Date());
         LOGGER.debug("transferDTO = {}", transferDTO.toString());
         Transfer transfer = transferMapping.convertToEntity(transferDTO);
         LOGGER.debug("transfer = {}", transfer.toString());
@@ -122,16 +123,16 @@ public class SendMoneyServiceImpl implements SendMoneyService {
         try {
             pmbAccountRepository.save(senderAccount);
             pmbAccountRepository.save(beneficiaryAccount);
-            response.concat(" The account balance of both sender & beneficiary"
+            response = response.concat(" The account balance of both sender & "
                     + " PMB accounts have been updated.");
-            LOGGER.info(" The account balance of both sender & beneficiary"
-                    + " PMB accounts have been updated.");
+            LOGGER.info(" The account balance of both sender & "
+                    + "beneficiary PMB accounts have been updated.");
             return response;
         } catch (Exception e) {
             LOGGER.info("An exception occurs during the update of an account"
                     + " balance. Currently, both sender & user accounts are not"
                     + " up to date of this transfer.");
-            response.concat(
+            response = response.concat(
                     " But an exception occurs during the update of sender or"
                             + " beneficiary account balance");
             return response;

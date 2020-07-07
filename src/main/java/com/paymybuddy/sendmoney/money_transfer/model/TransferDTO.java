@@ -27,7 +27,6 @@ public class TransferDTO {
      * The transferDTO transaction date equal to the creation date of the
      * instance.
      */
-    @Getter
     private Date transactionDate;
 
     /**
@@ -54,5 +53,24 @@ public class TransferDTO {
      */
     @Getter
     private Double amount;
+
+    /**
+     * Getter of transactionDate.
+     *
+     * @return a Date
+     */
+    public Date getTransactionDate() {
+        Date dateClone = transactionDate;
+        return dateClone;
+    }
+
+    /**
+     * Setter of transactionDate.
+     *
+     * @param pTransactionDate
+     */
+    public void setTransactionDate(final Date pTransactionDate) {
+        transactionDate = (Date) pTransactionDate.clone();
+    }
 
 }

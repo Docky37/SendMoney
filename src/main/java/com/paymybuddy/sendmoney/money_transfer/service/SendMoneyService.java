@@ -35,7 +35,7 @@ public interface SendMoneyService {
 
     /**
      * Getter of response.
-     * 
+     *
      * @return a String, the service response message.
      */
     String getResponse();

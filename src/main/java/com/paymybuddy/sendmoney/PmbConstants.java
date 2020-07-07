@@ -16,5 +16,9 @@ public final class PmbConstants {
      */
     public static final double CENT = 100;
 
-
+    /**
+     * Empty constructor.
+     */
+    private PmbConstants() {
+    }
 }

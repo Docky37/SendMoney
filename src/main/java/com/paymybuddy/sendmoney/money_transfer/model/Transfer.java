@@ -41,16 +41,7 @@ public class Transfer {
      * The transfer transaction date equal to the creation date of the
      * transfertDTO instance.
      */
-    @Setter
     private Date transactionDate;
-
-    /**
-     * Getter of transactionDate.
-     */
-    public Date getTransactionDate() {
-        Date dateClone = (Date) transactionDate.clone();
-        return dateClone;
-    }
 
     /**
      * The transaction field contains the type of money transaction: Deposit,
@@ -102,8 +93,44 @@ public class Transfer {
      * This valueDate is set just after the transaction becomes effective in
      * both sender & beneficiary accounts.
      */
-    @Getter
-    @Setter
     private Date valueDate;
+
+    /**
+     * Getter of transactionDate.
+     *
+     * @return a Date
+     */
+    public Date getTransactionDate() {
+        Date dateClone = (Date) transactionDate.clone();
+        return dateClone;
+    }
+
+    /**
+     * Setter of transactionDate.
+     *
+     * @param pTransactionDate
+     */
+    public void setTransactionDate(final Date pTransactionDate) {
+        transactionDate = (Date) pTransactionDate.clone();
+    }
+
+    /**
+     * Getter of transactionDate.
+     *
+     * @return a Date
+     */
+    public Date getValueDate() {
+        Date dateClone = (Date) valueDate.clone();
+        return dateClone;
+    }
+
+    /**
+     * Setter of transactionDate.
+     *
+     * @param pValueDate
+     */
+    public void setValueDate(final Date pValueDate) {
+        valueDate = (Date) pValueDate.clone();
+    }
 
 }

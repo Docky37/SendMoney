@@ -6,7 +6,7 @@ package com.paymybuddy.sendmoney.moneyaccounts.exception;
  *
  * @author Thierry SCHREINER
  */
-public class UserWithoutPmbAccountException extends Throwable {
+public class UserWithoutPmbAccountException extends Exception {
 
     /**
      * Generated serial version ID.
