@@ -1,7 +1,6 @@
-#Pay My Buddy - v0.4
+# Pay My Buddy - v0.4
 
-
-###Infos
+### Infos
 
 author: Thierry 'Docky' SCHREINER - DA Java student - Open ClassRooms
 
