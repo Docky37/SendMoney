@@ -1,15 +1,26 @@
-#Pay My Buddy - v0.3
+#Pay My Buddy - v0.4
+
 
 ###Infos
+
 author: Thierry 'Docky' SCHREINER - DA Java student - Open ClassRooms
 
 mentored by: Yann 'Monsieur Plus' IRRILO
 
-release date: 26/06/2020
+release date: 07/07/2020
 
 
 ### Content
 
+The v0.4 release adds the Money transfer functionality with a POST request
+(/sendMoney), using an orderDTO:
+ 
+    {
+        "beneficiary":"Daniel.Craig@JamesBond.fr",
+        "amount":350
+    }
+
+Previous version content:
 - Authentication that provides a Json Web Token (activity period 20 minutes).
 - GET - http://localhost:8080/welcome
 - Sign-up endpoint -> POST - http://localhost:8080/registration
@@ -89,12 +100,12 @@ set next_val = 29;
         -- encrypted --
         -password
     }
-    Left to right direction
-    Buddy "many" o-- "   many" Buddy : < has connection
     class PmbAccount  {
         -accountNumber
         -accountBalance
     }
+    Left to right direction
+    PmbAccount "many" o-- "  many" PmbAccount : < has connection
     Buddy "1  " --  "1" PmbAccount : > has
     class BankAccount {
         -- encrypted --
@@ -137,17 +148,17 @@ set next_val = 29;
         -- encrypted --
         -password: String
     }
-    Left to right direction
-    Buddy "many" o-- "   many" Buddy : < has connection
     class PmbAccount  {
-        -accountNumber: Integer
-        -accountOwner: Integer
-        -accountBalance: BigDecimal
+        -accountNumber: integer
+        -accountOwner: integer
+        -accountBalance: double
     }
+    Left to right direction
+    PmbAccount "many" o-- "many " PmbAccount : < has connection
     Buddy "1  " --  "1" PmbAccount : > has
     class BankAccount {
         -- encrypted --
-        -iban: Integer
+        -iban: String
         -swift: String
     }
     Buddy "1" --  "1  " BankAccount : > has
@@ -155,20 +166,16 @@ set next_val = 29;
     class Transfer {
         -valueDate: LocalDateTime
         -description: String
-        -fromPmbAccount: Integer
-        -toPMBAccount: Integer
-        -bankAccount: Integer
-        -amount: BigDecimal
-        -fee: BigDecimal
+        -fromPmbAccount: long
+        -toPMBAccount: long
+        -bankAccount: long
+        -amount: double
+        -fee: double
     }
     PmbAccount "0..1" --  "*" Transfer : < from account
     PmbAccount " 0..1" --  "*" Transfer : < to account
     BankAccount "0..1  " --  "*" Transfer : < from/to bank account
-    class Billing {
-        -valueDate: LocalDateTime
-        -fee: BigDecimal
-    }
-    Transfer "1" *--> "0..1" Billing
+
     
     @enduml
     ```
