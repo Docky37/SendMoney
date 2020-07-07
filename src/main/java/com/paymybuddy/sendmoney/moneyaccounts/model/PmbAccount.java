@@ -66,7 +66,7 @@ public class PmbAccount implements Comparable<PmbAccount> {
      * The join table used to make connections.
      */
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "connection", joinColumns = @JoinColumn(name = "me_id"),
+    @JoinTable(name = "connect", joinColumns = @JoinColumn(name = "me_id"),
         inverseJoinColumns = @JoinColumn(name = "beneficiary_id"))
     @Getter
     @Setter
