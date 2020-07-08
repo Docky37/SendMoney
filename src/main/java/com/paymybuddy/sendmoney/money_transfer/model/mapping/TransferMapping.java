@@ -35,6 +35,13 @@ public class TransferMapping {
         return transfer;
     }
 
+    /**
+     * Method that maps a list of Transfer to a list of GetTransferDTO, using
+     * the mapTransferToDTO method for each Transfer of the list.
+     *
+     * @param transferList
+     * @return a List<GetTransferDTO>
+     */
     public List<GetTransferDTO> mapTransferListToDTO(
             final List<Transfer> transferList) {
         List<GetTransferDTO> transfertDTOList = new ArrayList<GetTransferDTO>();
@@ -47,8 +54,10 @@ public class TransferMapping {
     }
 
     /**
+     * Method that maps a Transfer object to a GetTransferDTO object.
+     *
      * @param transfer
-     * @return
+     * @return a GetTransferDTO
      */
     private GetTransferDTO mapTransferToDTO(final Transfer transfer) {
         // TODO Auto-generated method stub

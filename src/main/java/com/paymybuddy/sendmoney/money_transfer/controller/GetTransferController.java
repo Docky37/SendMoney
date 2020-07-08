@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.paymybuddy.sendmoney.money_transfer.controller;
 
 import java.util.List;
@@ -31,6 +28,11 @@ public class GetTransferController {
     @Autowired
     private EmailRetrieve emailRetrieve;
 
+    /**
+     * Get html Request that returns the list user's money transfers.
+     *
+     * @return a List<GetTransferDTO>
+     */
     @GetMapping("/transfer")
     public List<GetTransferDTO> getTransfer() {
         String email = emailRetrieve.getEmail();

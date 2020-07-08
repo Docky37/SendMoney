@@ -8,7 +8,7 @@ import lombok.Setter;
 /**
  * @author Thierry SCHREINER
  */
-public class GetTransferDTO extends OrderDTO{
+public class GetTransferDTO extends OrderDTO {
 
     /**
      * This valueDate is set just after the transaction becomes effective in
@@ -23,14 +23,13 @@ public class GetTransferDTO extends OrderDTO{
     @Getter
     @Setter
     private String transaction;
-    
+
     /**
      * The fee of the transaction.
      */
     @Getter
     @Setter
     private double fee;
-
 
     /**
      * Getter of valueDate.
@@ -52,7 +51,7 @@ public class GetTransferDTO extends OrderDTO{
     }
 
     /**
-     * 
+     * Empty constructor.
      */
     public GetTransferDTO() {
         super();

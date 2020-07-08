@@ -11,7 +11,7 @@ import com.paymybuddy.sendmoney.money_transfer.model.mapping.TransferMapping;
 import com.paymybuddy.sendmoney.money_transfer.repository.TransferRepository;
 
 /**
- * 
+ * @{inheritDoc}
  *
  * @author Thierry SCHREINER
  */
@@ -19,18 +19,20 @@ import com.paymybuddy.sendmoney.money_transfer.repository.TransferRepository;
 public class GetTransferServiceImpl implements GetTransferService {
 
     /**
-     * 
+     * Declare a Spring autowired TransferRepository instance.
      */
     @Autowired
-    TransferRepository transferRepository;
-    
+    private TransferRepository transferRepository;
+
     /**
-     * 
+     * Declare a Spring autowired TransferMapping instance.
      */
     @Autowired
-    TransferMapping transferMapping;
-    
+    private TransferMapping transferMapping;
+
     /**
+     * @{inheritDoc}
+     *
      * @return a GetTransferDTO object
      */
     @Override
