@@ -2,6 +2,7 @@ package com.paymybuddy.sendmoney.moneytransfer_tests;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.never;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
@@ -60,6 +61,8 @@ public class SendMoneyServiceTest {
     }
     static OrderDTO orderDTO = new OrderDTO(beneficiary.getEmail(), 100D,
             sender.getEmail());
+    static OrderDTO orderDTO2 = new OrderDTO(beneficiary.getEmail(), 500D,
+            sender.getEmail());
     static PmbAccount pmbAccountSender = new PmbAccount();
     static PmbAccount pmbAccountBeneficiary = new PmbAccount();
     static Transfer transfer = new Transfer();
@@ -98,7 +101,24 @@ public class SendMoneyServiceTest {
         verify(transferRepository).save(any(Transfer.class));
         // verify(pmbAccountRepository, times(2)).save(any(PmbAccount.class));
     }
-
+    
+    @Test // With insufficient account balance
+    public void givenBadOrderDTO_whenSend_thenStatus400()
+            throws Exception, UserWithoutPmbAccountException {
+        // GIVEN
+        given(pmbAccountRepository.findByOwnerEmail(anyString()))
+                .willReturn(pmbAccountSender, pmbAccountBeneficiary);
+        given(transferMapping.convertToEntity(any(TransferDTO.class)))
+                .willReturn(transfer);
+        // WHEN
+        sendMoneyService.send(orderDTO2);
+        // THEN
+        verify(pmbAccountRepository).findByOwnerEmail(anyString());
+        verify(transferMapping, never()).convertToEntity(any(TransferDTO.class));
+        verify(transferRepository, never()).save(any(Transfer.class));
+        // verify(pmbAccountRepository, times(2)).save(any(PmbAccount.class));
+    }
+    
     @Test // With a valid orderDTO
     public void givenATransfer_whenSaveTransaction_thenAccountUpdated()
             throws Exception {
