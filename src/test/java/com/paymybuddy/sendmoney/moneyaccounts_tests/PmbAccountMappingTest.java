@@ -1,10 +1,5 @@
 package com.paymybuddy.sendmoney.moneyaccounts_tests;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-
-import java.util.TreeSet;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +10,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccountDTO;
 import com.paymybuddy.sendmoney.moneyaccounts.repository.PmbAccountRepository;
-import com.paymybuddy.sendmoney.moneyaccounts.service.PmbAccountService;
 import com.paymybuddy.sendmoney.moneyaccounts.util.PmbAccountMapping;
 import com.paymybuddy.sendmoney.security.model.Buddy;
 import com.paymybuddy.sendmoney.security.repository.UserRepository;

@@ -59,23 +59,34 @@ public class SendMoneyServiceTest {
     static {
         beneficiary.setEmail("beneficiary@pmb.com");
     }
+    static Buddy beneficiary2 = new Buddy();
+    static {
+        beneficiary2.setEmail("toto@pmb.com");
+    }
     static OrderDTO orderDTO = new OrderDTO(beneficiary.getEmail(), 100D,
             sender.getEmail());
     static OrderDTO orderDTO2 = new OrderDTO(beneficiary.getEmail(), 500D,
             sender.getEmail());
+    static OrderDTO orderDTO3 = new OrderDTO(beneficiary2.getEmail(), 100D,
+            sender.getEmail());
     static PmbAccount pmbAccountSender = new PmbAccount();
     static PmbAccount pmbAccountBeneficiary = new PmbAccount();
+    static PmbAccount pmbAccountBeneficiary2 = new PmbAccount();
     static Transfer transfer = new Transfer();
     static {
+        pmbAccountBeneficiary.setPmbAccountNumber("PMB0000015");
+        pmbAccountBeneficiary.setAccountBalance(350.00D);
+        pmbAccountBeneficiary.setOwner(beneficiary);
+
         pmbAccountSender.setPmbAccountNumber("PMB0000007");
         pmbAccountSender.setAccountBalance(500.00D);
         pmbAccountSender.setOwner(sender);
         pmbAccountSender.setConnections(new TreeSet<PmbAccount>());
         pmbAccountSender.getConnections().add(pmbAccountBeneficiary);
 
-        pmbAccountBeneficiary.setPmbAccountNumber("PMB0000015");
-        pmbAccountBeneficiary.setAccountBalance(350.00D);
-        pmbAccountBeneficiary.setOwner(beneficiary);
+        pmbAccountBeneficiary2.setPmbAccountNumber("PMB0000018");
+        pmbAccountBeneficiary2.setAccountBalance(550.00D);
+        pmbAccountBeneficiary2.setOwner(beneficiary2);
 
         transfer.setTransactionDate(new Date());
         transfer.setAmount(100D);
@@ -99,7 +110,6 @@ public class SendMoneyServiceTest {
         verify(pmbAccountRepository, times(2)).findByOwnerEmail(anyString());
         verify(transferMapping).convertToEntity(any(TransferDTO.class));
         verify(transferRepository).save(any(Transfer.class));
-        // verify(pmbAccountRepository, times(2)).save(any(PmbAccount.class));
     }
     
     @Test // With insufficient account balance
@@ -116,7 +126,22 @@ public class SendMoneyServiceTest {
         verify(pmbAccountRepository).findByOwnerEmail(anyString());
         verify(transferMapping, never()).convertToEntity(any(TransferDTO.class));
         verify(transferRepository, never()).save(any(Transfer.class));
-        // verify(pmbAccountRepository, times(2)).save(any(PmbAccount.class));
+    }
+    
+    @Test // With a non connected beneficiary
+    public void givenNonConnectedBeneficiaryBadOrderDTO_whenSend_thenStatus400()
+            throws Exception, UserWithoutPmbAccountException {
+        // GIVEN
+        given(pmbAccountRepository.findByOwnerEmail(anyString()))
+                .willReturn(pmbAccountSender, pmbAccountBeneficiary2);
+        given(transferMapping.convertToEntity(any(TransferDTO.class)))
+                .willReturn(transfer);
+        // WHEN
+        sendMoneyService.send(orderDTO3);
+        // THEN
+        verify(pmbAccountRepository, times(2)).findByOwnerEmail(anyString());
+        verify(transferMapping, never()).convertToEntity(any(TransferDTO.class));
+        verify(transferRepository, never()).save(any(Transfer.class));
     }
     
     @Test // With a valid orderDTO

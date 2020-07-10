@@ -49,11 +49,12 @@ public class TransferMappingTest {
         pmbAccountSender.setAccountBalance(500.00D);
         pmbAccountSender.setOwner(sender);
         pmbAccountSender.setConnections(new TreeSet<PmbAccount>());
-        pmbAccountSender.getConnections().add(pmbAccountBeneficiary);
 
         pmbAccountBeneficiary.setPmbAccountNumber("PMB0000015");
         pmbAccountBeneficiary.setAccountBalance(350.00D);
         pmbAccountBeneficiary.setOwner(beneficiary);
+        
+        pmbAccountSender.getConnections().add(pmbAccountBeneficiary);
    }
    static TransferDTO transferDTO = new TransferDTO(transactionDate, "Sending",
             pmbAccountSender, pmbAccountBeneficiary, 100D);

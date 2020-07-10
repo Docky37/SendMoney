@@ -67,10 +67,10 @@ public class PmbAccount implements Comparable<PmbAccount> {
      */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "connect", joinColumns = @JoinColumn(name = "me_id"),
-        inverseJoinColumns = @JoinColumn(name = "beneficiary_id"))
+    inverseJoinColumns = @JoinColumn(name = "beneficiary_id"))
     @Getter
     @Setter
-    private Set<PmbAccount> connections = new TreeSet<PmbAccount>();
+    private Set<PmbAccount> connections = new TreeSet<>();
 
     /**
      * This method is used to add a PmbAccount in the Set<PmbAccount> field
@@ -87,8 +87,8 @@ public class PmbAccount implements Comparable<PmbAccount> {
      */
     @Override
     public int compareTo(final PmbAccount o) {
-        // TODO Auto-generated method stub
-        return 0;
+        int comp = pmbAccountNumber.compareTo(o.pmbAccountNumber);
+        return comp;
     }
 
 }
