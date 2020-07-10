@@ -73,8 +73,8 @@ public class SendMoneyServiceImpl implements SendMoneyService {
 
         PmbAccount pmbAccountSender = pmbAccountRepository
                 .findByOwnerEmail(orderDTO.getSender());
-        if (pmbAccountSender.getAccountBalance() < 1
-                + PmbConstants.FEE_RATE * orderDTO.getAmount()) {
+        if (pmbAccountSender.getAccountBalance() < (1
+                + PmbConstants.FEE_RATE) * orderDTO.getAmount()) {
             response = "400 Bad Request - "
                     + "Insufficient funds on PMB account for this transfer!";
             LOGGER.info(response);

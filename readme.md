@@ -1,6 +1,8 @@
 #Pay My Buddy - v0.4
 
+
 ###Infos
+
 author: Thierry 'Docky' SCHREINER - DA Java student - Open ClassRooms
 
 mentored by: Yann 'Monsieur Plus' IRRILO
@@ -10,8 +12,8 @@ release date: 07/07/2020
 
 ### Content
 
-This v.04 release adds the Money transfer functionality with a POST request
-(/sendMoney), using an orderDTO:
+The v0.4 release adds the Money transfer functionality with a POST request
+feature_getTransfer (/sendMoney), using an orderDTO:
  
     {
         "beneficiary":"Daniel.Craig@JamesBond.fr",

@@ -18,7 +18,7 @@ public class PmbAccountMapping {
 
     /**
      * Mapping method used to create a new Data Transfer Object and set its
-     * fields with data comming from the given PmbAccount parameter.
+     * fields with data coming from the given PmbAccount parameter.
      *
      * @param pmbAccount
      * @return a PmbAccountDTO object

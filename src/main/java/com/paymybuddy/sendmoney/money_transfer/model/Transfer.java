@@ -115,7 +115,7 @@ public class Transfer {
     }
 
     /**
-     * Getter of transactionDate.
+     * Getter of valueDate.
      *
      * @return a Date
      */
@@ -125,7 +125,7 @@ public class Transfer {
     }
 
     /**
-     * Setter of transactionDate.
+     * Setter of valueDate.
      *
      * @param pValueDate
      */
