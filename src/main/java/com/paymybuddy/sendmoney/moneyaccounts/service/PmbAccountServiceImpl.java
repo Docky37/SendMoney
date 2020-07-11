@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount;
+import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccountDTO;
 import com.paymybuddy.sendmoney.moneyaccounts.repository.PmbAccountRepository;
+import com.paymybuddy.sendmoney.moneyaccounts.util.PmbAccountMapping;
 import com.paymybuddy.sendmoney.security.model.Buddy;
 
 /**
@@ -21,23 +23,38 @@ public class PmbAccountServiceImpl implements PmbAccountService {
     private PmbAccountRepository pmbAccountRepository;
 
     /**
+     * Autowired PmbAccountMapping instance used to convert a PmbAccount object
+     * to a pmbAccountDTO object.
+     */
+    @Autowired
+    private PmbAccountMapping pmbAccountMapping;
+
+    /**
      * {@inheritDoc}.
      */
     @Override
-    public PmbAccount savePmbAccount(final Buddy buddy) {
+    public PmbAccountDTO savePmbAccount(final Buddy buddy) {
 
-        PmbAccount pmbAccount = new PmbAccount();
+        PmbAccount pmbAccount = pmbAccountRepository
+                .findByOwnerEmail(buddy.getEmail());
+        if (pmbAccount != null) {
+            return null;
+        }
+        pmbAccount = new PmbAccount();
         pmbAccount
                 .setPmbAccountNumber(pmbAccountNumberGenerator(buddy.getId()));
         pmbAccount.setOwner(buddy);
 
         pmbAccountRepository.save(pmbAccount);
 
-        return pmbAccount;
+        PmbAccountDTO pmbAccountDTO = pmbAccountMapping
+                .mapPmbAccountToDTO(pmbAccount);
+
+        return pmbAccountDTO;
     }
 
     /**
-     * This method has responsibility to generate the pmb account number of a
+     * This method has responsibility to generate the PMB account number of a
      * new buddy, number in relation with its owner id.
      *
      * @param buddyId

@@ -1,6 +1,6 @@
 package com.paymybuddy.sendmoney.moneyaccounts.service;
 
-import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount;
+import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccountDTO;
 import com.paymybuddy.sendmoney.security.model.Buddy;
 
 /**
@@ -17,6 +17,6 @@ public interface PmbAccountService {
      * @param buddy (the owner of the PmbAccount)
      * @return a PmbAccount object
      */
-    PmbAccount savePmbAccount(Buddy buddy);
+    PmbAccountDTO savePmbAccount(Buddy buddy);
 
 }
