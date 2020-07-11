@@ -11,6 +11,10 @@ INSERT INTO buddy VALUES(8,1,1,1,"Daniel.Craig@JamesBond.fr",1,"Daniel","CRAIG",
 INSERT INTO buddy VALUES(9,1,1,1,"E.T@ET.com",1,"E","T","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
 INSERT INTO buddy VALUES(10,1,1,1,"Thierry.Schreiner@hotmail.fr",1,"Thierry","SCHREINER","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
 
+-- and a user account for the SendMoney application:
+INSERT INTO buddy VALUES(36,1,1,1,"send.money@pmb.com",1,"SendMoney","PMB","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
+
+
 INSERT INTO role VALUES(789654, "USER");
 INSERT INTO role VALUES(987123654, "ADMIN");
 
@@ -24,7 +28,9 @@ VALUES (1,789654),
 (7,789654),
 (8,789654),
 (9,789654),
-(10,987123654);
+(10,987123654),	-- admin account for "Thierry.Schreiner@hotmail.fr"
+(36,987123654); -- admin account for "send.money@pmb.com" (the user account of SendMoney application)
+
 
 INSERT INTO bank_account (id,iban,swift,owner)
 VALUES (11,"FR3330002005ALPACINO0000Z25","CRLYFRPPXXX",1),
@@ -35,7 +41,9 @@ VALUES (11,"FR3330002005ALPACINO0000Z25","CRLYFRPPXXX",1),
 (16,"FR3330002005DUSTINHOFFMAN25","CRLYFRPPXXX",6),
 (17,"FR3330002005JPBELMONDO00Z25","CRLYFRPPXXX",7),
 (18,"FR3330002005DANIELCRAIG0Z25","CRLYFRPPXXX",8),
-(19,"FR3330002005ET0000000000Z25","CRLYFRPPXXX",9);
+(19,"FR3330002005ET0000000000Z25","CRLYFRPPXXX",9),
+(37,"FR333-PMB-BANK-ACCOUNT--PMB","CRLYFRPPXXX",36);	-- Application bank account ***************
+
 
 INSERT INTO pmb_account (id,account_balance,pmb_account_number,owner)
 VALUES (20,777,"PMB0000020",1),
@@ -46,7 +54,8 @@ VALUES (20,777,"PMB0000020",1),
 (25,300,"PMB0000025",6),
 (26,2500,"PMB0000026",7),
 (27,749,"PMB0000027",8),
-(28,963,"PMB0000028",9);
+(28,963,"PMB0000028",9),
+(38,2595.50,"PMB--APPLI",36);	-- Application PMB account ***************
 
 INSERT INTO connect VALUES(20, 22),
 (20, 24),
@@ -56,13 +65,13 @@ INSERT INTO connect VALUES(20, 22),
 (23, 28);
 
 -- (id, amount, fee, isEffective, transactionDate, valueDate, pmb-account-beneficiary, pmb-account-sender, transaction) 
-INSERT INTO transfer VALUES(29, 350, 1.75, 0, 'Sending', '2020-07-02 23:21:17.858000', '2020-07-02 23:21:18.858000', 27, 20),
-(30, 50, 0.25, 0, 'Sending', '2020-06-08 23:21:17.858000', '2020-06-08 23:21:18.858000', 24, 20),
-(31, 80, 0.40, 0, 'Sending', '2020-06-12 08:21:18.858000', '2020-06-12 08:21:20.858000', 24, 20),
-(32, 150, 1.75, 0, 'Sending', '2020-06-07 20:01:17.858000', '2020-06-07 20:01:18.858000', 22, 23),
-(33, 250, 1.75, 0, 'Sending', '2020-06-12 23:21:57.858000', '2020-06-12 23:22:00.858000', 25, 23),
-(34, 40, 1.75, 0, 'Sending', '2020-06-28 15:11:23.858000', '2020-06-28 15:11:24.858000', 22, 23),
-(35, 25, 1.75, 0, 'Sending', '2020-07-02 03:51:27.858000', '2020-07-02 03:51:29.858000', 28, 23);
+INSERT INTO transfer VALUES(29, 350, 1.75, 1, 'Sending', '2020-07-02 23:21:17.858000', '2020-07-02 23:21:18.858000', 27, 20),
+(30, 50, 0.25, 1, 'Sending', '2020-06-08 23:21:17.858000', '2020-06-08 23:21:18.858000', 24, 20),
+(31, 80, 0.40, 1, 'Sending', '2020-06-12 08:21:18.858000', '2020-06-12 08:21:20.858000', 24, 20),
+(32, 150, 1.75, 1, 'Sending', '2020-06-07 20:01:17.858000', '2020-06-07 20:01:18.858000', 22, 23),
+(33, 250, 1.75, 1, 'Sending', '2020-06-12 23:21:57.858000', '2020-06-12 23:22:00.858000', 25, 23),
+(34, 40, 1.75, 1, 'Sending', '2020-06-28 15:11:23.858000', '2020-06-28 15:11:24.858000', 22, 23),
+(35, 25, 1.75, 1, 'Sending', '2020-07-02 03:51:27.858000', '2020-07-02 03:51:29.858000', 28, 23);
 
 update hibernate_sequence
-set next_val = 36;
+set next_val = 39;
