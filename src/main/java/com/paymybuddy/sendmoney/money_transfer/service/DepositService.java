@@ -18,10 +18,18 @@ public class DepositService {
     }
 
     /**
-     * @param any
-     * @return
+     * @param deposit
+     * @return a String
      */
     public String saveTransaction(Transfer deposit) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @return
+     */
+    public String getResponse() {
         // TODO Auto-generated method stub
         return null;
     }

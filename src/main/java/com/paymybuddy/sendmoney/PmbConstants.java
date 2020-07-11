@@ -12,9 +12,15 @@ public final class PmbConstants {
     public static final double FEE_RATE = 0.005; // 0.5%
 
     /**
-     * /** This constant contains the value of 100, use to round operations.
+     * This constant contains the value of 100, use to round operations.
      */
     public static final double CENT = 100;
+    
+    /**
+     * This constant contains the email of the SendMoney application.
+     */
+    public static final String SEND_MONEY_EMAIL = "send.money@pmb.com";
+    
 
     /**
      * Empty constructor.
