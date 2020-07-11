@@ -4,6 +4,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.paymybuddy.sendmoney.security.model.Buddy;
+
 /**
  * This class allows us to get the e-mail address of the current logged user.
  *
@@ -22,6 +24,18 @@ public class EmailRetrieve {
         Object principal = SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
         return ((UserDetails) principal).getUsername();
+    }
+
+    /**
+     * This method retrieve the current logged user.
+     *
+     * @return a Buddy
+     */
+    public Buddy getBuddy() {
+        Object principal = SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+        return ((Buddy) principal);
+
     }
 
 }
