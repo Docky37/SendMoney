@@ -6,32 +6,23 @@ import com.paymybuddy.sendmoney.money_transfer.model.Transfer;
 /**
  * @author Thierry SCHREINER
  */
-public class DepositService {
+public interface DepositService {
 
     /**
      * @param any
      * @return
      */
-    public Transfer send(OrderDTO any) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    public Transfer send(OrderDTO any);
 
     /**
      * @param deposit
      * @return a String
      */
-    public String saveTransaction(Transfer deposit) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    public String saveTransaction(Transfer deposit);
 
     /**
      * @return
      */
-    public String getResponse() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    public String getResponse();
 
 }
