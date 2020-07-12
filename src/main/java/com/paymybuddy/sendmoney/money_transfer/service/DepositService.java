@@ -9,20 +9,26 @@ import com.paymybuddy.sendmoney.money_transfer.model.Transfer;
 public interface DepositService {
 
     /**
-     * @param any
-     * @return
+     * The send method creates a money Transfer from an orderDTO.
+     *
+     * @param orderDTO
+     * @return a Tranfer object
      */
-    public Transfer send(OrderDTO any);
+    Transfer send(OrderDTO orderDTO);
 
     /**
+     * The saveTransaction method performs the update of PmbAccounts from a
+     * Transfer object.
+     *
      * @param deposit
      * @return a String
      */
-    public String saveTransaction(Transfer deposit);
+    String saveTransaction(Transfer deposit);
 
     /**
-     * @return
+     * Getter of Response field.
+     * @return a String
      */
-    public String getResponse();
+    String getResponse();
 
 }

@@ -61,6 +61,9 @@ public class DepositServiceImpl implements DepositService {
         return response;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Transfer send(final OrderDTO orderDTO) {
 
@@ -81,8 +84,11 @@ public class DepositServiceImpl implements DepositService {
         return savedTransfer;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String saveTransaction(Transfer deposit) {
+    public String saveTransaction(final Transfer deposit) {
         // TODO Auto-generated method stub
         return null;
     }
