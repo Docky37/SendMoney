@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccountDTO;
@@ -18,7 +18,7 @@ import com.paymybuddy.sendmoney.security.repository.UserRepository;
  * 
  * @author Thierry SCHREINER
  */
-@SpringBootTest("PmbAccountMapping.class")
+@SpringJUnitConfig(value=PmbAccountMapping.class)
 public class PmbAccountMappingTest {
 
     @Autowired

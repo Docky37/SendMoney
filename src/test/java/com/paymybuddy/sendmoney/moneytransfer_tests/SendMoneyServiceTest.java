@@ -1,21 +1,22 @@
 package com.paymybuddy.sendmoney.moneytransfer_tests;
 
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.never;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.Date;
 import java.util.TreeSet;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.anyString;
-
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.paymybuddy.sendmoney.money_transfer.model.OrderDTO;
 import com.paymybuddy.sendmoney.money_transfer.model.Transfer;
@@ -23,6 +24,7 @@ import com.paymybuddy.sendmoney.money_transfer.model.TransferDTO;
 import com.paymybuddy.sendmoney.money_transfer.model.mapping.TransferMapping;
 import com.paymybuddy.sendmoney.money_transfer.repository.TransferRepository;
 import com.paymybuddy.sendmoney.money_transfer.service.SendMoneyService;
+import com.paymybuddy.sendmoney.money_transfer.service.SendMoneyServiceImpl;
 import com.paymybuddy.sendmoney.moneyaccounts.exception.UserWithoutPmbAccountException;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount;
 import com.paymybuddy.sendmoney.moneyaccounts.repository.PmbAccountRepository;
@@ -32,7 +34,7 @@ import com.paymybuddy.sendmoney.security.model.Buddy;
 /**
  * @author Thierry SCHREINER
  */
-@SpringBootTest("SendMoneyServiceImpl.class")
+@SpringJUnitConfig(value=SendMoneyServiceImpl.class)
 public class SendMoneyServiceTest {
 
     @Autowired

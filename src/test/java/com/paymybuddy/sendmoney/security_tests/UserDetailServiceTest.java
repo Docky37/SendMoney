@@ -11,17 +11,18 @@ import static org.mockito.BDDMockito.given;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.paymybuddy.sendmoney.security.model.Buddy;
 import com.paymybuddy.sendmoney.security.repository.RoleRepository;
 import com.paymybuddy.sendmoney.security.repository.UserRepository;
+import com.paymybuddy.sendmoney.security.service.UserDetailsServiceImpl;
 
-@SpringBootTest("userDetailsServiceImpl.class")
+@SpringJUnitConfig(value=UserDetailsServiceImpl.class)
 public class UserDetailServiceTest {
 
     @Autowired

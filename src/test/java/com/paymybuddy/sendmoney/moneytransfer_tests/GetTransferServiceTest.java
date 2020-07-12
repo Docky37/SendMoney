@@ -12,20 +12,21 @@ import static org.mockito.Mockito.anyString;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.paymybuddy.sendmoney.money_transfer.model.GetTransferDTO;
 import com.paymybuddy.sendmoney.money_transfer.model.Transfer;
 import com.paymybuddy.sendmoney.money_transfer.model.mapping.TransferMapping;
 import com.paymybuddy.sendmoney.money_transfer.repository.TransferRepository;
 import com.paymybuddy.sendmoney.money_transfer.service.GetTransferService;
+import com.paymybuddy.sendmoney.money_transfer.service.GetTransferServiceImpl;
 import com.paymybuddy.sendmoney.moneyaccounts.util.PmbAccountMapping;
 
 /**
  * @author Thierry SCHREINER
  */
-@SpringBootTest("GetTransferServiceImpl.class")
+@SpringJUnitConfig(value=GetTransferServiceImpl.class)
 public class GetTransferServiceTest {
 
     @Autowired

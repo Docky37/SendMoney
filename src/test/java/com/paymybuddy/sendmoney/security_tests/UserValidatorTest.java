@@ -10,8 +10,8 @@ import static org.mockito.BDDMockito.given;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import com.paymybuddy.sendmoney.security.model.Buddy;
@@ -19,7 +19,7 @@ import com.paymybuddy.sendmoney.security.model.UserDTO;
 import com.paymybuddy.sendmoney.security.service.UserService;
 import com.paymybuddy.sendmoney.security.validator.UserValidator;
 
-@SpringBootTest("UserValidator.class")
+@SpringJUnitConfig(value=UserValidator.class)
 public class UserValidatorTest {
 
     @Autowired

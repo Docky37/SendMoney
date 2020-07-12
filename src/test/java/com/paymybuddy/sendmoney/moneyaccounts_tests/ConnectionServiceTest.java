@@ -15,11 +15,12 @@ import static org.mockito.Mockito.times;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.paymybuddy.sendmoney.moneyaccounts.repository.PmbAccountRepository;
 import com.paymybuddy.sendmoney.moneyaccounts.service.ConnectionService;
+import com.paymybuddy.sendmoney.moneyaccounts.service.ConnectionServiceImpl;
 import com.paymybuddy.sendmoney.moneyaccounts.util.PmbAccountMapping;
 import com.paymybuddy.sendmoney.security.model.Buddy;
 import com.paymybuddy.sendmoney.security.util.EmailRetrieve;
@@ -31,7 +32,7 @@ import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccountDTO;
  * @author Thierry SCHREINER
  *
  */
-@SpringBootTest("ConnectionServiceImpl.class")
+@SpringJUnitConfig(value=ConnectionServiceImpl.class)
 public class ConnectionServiceTest {
 
     @Autowired

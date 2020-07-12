@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.paymybuddy.sendmoney.moneytransfer_tests;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,7 +9,7 @@ import java.util.TreeSet;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.paymybuddy.sendmoney.money_transfer.model.GetTransferDTO;
 import com.paymybuddy.sendmoney.money_transfer.model.Transfer;
@@ -24,7 +21,7 @@ import com.paymybuddy.sendmoney.security.model.Buddy;
 /**
  * @author Thierry SCHREINER
  */
-@SpringBootTest("TransferMapping.class")
+@SpringJUnitConfig(value=TransferMapping.class)
 public class TransferMappingTest {
 
     @Autowired

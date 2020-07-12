@@ -7,12 +7,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.Date;
-import java.util.TreeSet;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.paymybuddy.sendmoney.PmbConstants;
 import com.paymybuddy.sendmoney.money_transfer.model.OrderDTO;
@@ -21,6 +21,8 @@ import com.paymybuddy.sendmoney.money_transfer.model.TransferDTO;
 import com.paymybuddy.sendmoney.money_transfer.model.mapping.TransferMapping;
 import com.paymybuddy.sendmoney.money_transfer.repository.TransferRepository;
 import com.paymybuddy.sendmoney.money_transfer.service.DepositService;
+import com.paymybuddy.sendmoney.money_transfer.service.DepositServiceImpl;
+import com.paymybuddy.sendmoney.money_transfer.service.SendMoneyServiceImpl;
 import com.paymybuddy.sendmoney.moneyaccounts.exception.UserWithoutPmbAccountException;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount;
 import com.paymybuddy.sendmoney.moneyaccounts.repository.PmbAccountRepository;
@@ -30,7 +32,7 @@ import com.paymybuddy.sendmoney.security.model.Buddy;
 /**
  * @author Thierry SCHREINER
  */
-@SpringBootTest("DepositServiceImpl.class")
+@SpringJUnitConfig(value=DepositServiceImpl.class)
 public class DepositServiceTest {
     @Autowired
     private DepositService depositService;
