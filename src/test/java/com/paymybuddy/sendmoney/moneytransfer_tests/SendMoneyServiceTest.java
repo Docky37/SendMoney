@@ -12,10 +12,8 @@ import java.util.Date;
 import java.util.TreeSet;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.paymybuddy.sendmoney.money_transfer.model.OrderDTO;
@@ -65,6 +63,10 @@ public class SendMoneyServiceTest {
     static {
         beneficiary2.setEmail("toto@pmb.com");
     }
+    static Buddy appli = new Buddy();
+    static {
+        appli.setEmail("send.money@pmb.com");
+    }
     static OrderDTO orderDTO = new OrderDTO(beneficiary.getEmail(), 100D,
             sender.getEmail());
     static OrderDTO orderDTO2 = new OrderDTO(beneficiary.getEmail(), 500D,
@@ -74,6 +76,7 @@ public class SendMoneyServiceTest {
     static PmbAccount pmbAccountSender = new PmbAccount();
     static PmbAccount pmbAccountBeneficiary = new PmbAccount();
     static PmbAccount pmbAccountBeneficiary2 = new PmbAccount();
+    static PmbAccount pmbAppliAccount = new PmbAccount();
     static Transfer transfer = new Transfer();
     static {
         pmbAccountBeneficiary.setPmbAccountNumber("PMB0000015");
@@ -90,7 +93,12 @@ public class SendMoneyServiceTest {
         pmbAccountBeneficiary2.setAccountBalance(550.00D);
         pmbAccountBeneficiary2.setOwner(beneficiary2);
 
+        pmbAppliAccount.setPmbAccountNumber("PMB--APPLI");
+        pmbAppliAccount.setAccountBalance(2000.00D);
+        pmbAppliAccount.setOwner(appli);
+
         transfer.setTransactionDate(new Date());
+        transfer.setTransaction("Sending");
         transfer.setAmount(100D);
         transfer.setFee(0.5D);
         transfer.setPmbAccountBeneficiary(pmbAccountBeneficiary);
@@ -150,13 +158,14 @@ public class SendMoneyServiceTest {
     public void givenATransfer_whenSaveTransaction_thenAccountUpdated()
             throws Exception {
         // GIVEN
-
+        given(pmbAccountRepository.findByOwnerEmail(anyString())).willReturn(pmbAppliAccount);
         // WHEN
         sendMoneyService.saveTransaction(transfer);
         // THEN
         assertThat(pmbAccountSender.getAccountBalance()).isEqualTo(399.50D);
         assertThat(pmbAccountBeneficiary.getAccountBalance()).isEqualTo(450D);
-        verify(pmbAccountRepository, times(2)).save(any(PmbAccount.class));
+        assertThat(pmbAppliAccount.getAccountBalance()).isEqualTo(2000.50D); 
+        verify(pmbAccountRepository, times(3)).save(any(PmbAccount.class));
     }
 
 }
