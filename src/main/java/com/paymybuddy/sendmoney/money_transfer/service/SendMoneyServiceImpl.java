@@ -110,23 +110,24 @@ public class SendMoneyServiceImpl implements SendMoneyService {
     @Override
     @Transactional
     public String saveTransaction(final Transfer transfer) {
+        LOGGER.debug("transfer = {}", transfer.toString());
         PmbAccount senderAccount = transfer.getPmbAccountSender();
         senderAccount.setAccountBalance(senderAccount.getAccountBalance()
-                - transfer.getAmount() - transfer.getFee());
-        LOGGER.info("sender AccountBalance = {}",
+                - (1 + PmbConstants.FEE_RATE) * transfer.getAmount());
+        LOGGER.debug("sender AccountBalance = {}",
                 senderAccount.getAccountBalance());
 
         PmbAccount beneficiaryAccount = transfer.getPmbAccountBeneficiary();
         beneficiaryAccount.setAccountBalance(
                 beneficiaryAccount.getAccountBalance() + transfer.getAmount());
-        LOGGER.info("beneficiary AccountBalance = {}",
+        LOGGER.debug("beneficiary AccountBalance = {}",
                 beneficiaryAccount.getAccountBalance());
 
         PmbAccount pmbAppliAccount = pmbAccountRepository
                 .findByOwnerEmail(PmbConstants.SEND_MONEY_EMAIL);
         pmbAppliAccount.setAccountBalance(
                 pmbAppliAccount.getAccountBalance() + transfer.getFee());
-        LOGGER.info("pmbAppliAccount AccountBalance = {}",
+        LOGGER.debug("pmbAppliAccount AccountBalance = {}",
                 pmbAppliAccount.getAccountBalance());
 
         try {

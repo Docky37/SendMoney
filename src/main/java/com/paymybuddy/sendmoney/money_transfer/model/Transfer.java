@@ -120,6 +120,9 @@ public class Transfer {
      * @return a Date
      */
     public Date getValueDate() {
+        if (valueDate == null) {
+            return null;
+        }
         Date dateClone = (Date) valueDate.clone();
         return dateClone;
     }
