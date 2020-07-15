@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.paymybuddy.sendmoney.money_transfer.model.OrderDTO;
 import com.paymybuddy.sendmoney.money_transfer.model.Transfer;
@@ -66,7 +67,6 @@ public class DepositServiceImpl implements DepositService {
      */
     @Override
     public Transfer send(final OrderDTO orderDTO) {
-
         PmbAccount pmbAccountSender = pmbAccountRepository
                 .findByOwnerEmail(orderDTO.getSender());
         PmbAccount pmbAccountBeneficiary = pmbAccountRepository
@@ -75,6 +75,7 @@ public class DepositServiceImpl implements DepositService {
                 pmbAccountSender, pmbAccountBeneficiary, orderDTO.getAmount());
         transferDTO.setTransactionDate(new Date());
         LOGGER.debug("transferDTO = {}", transferDTO.toString());
+
         Transfer transfer = transferMapping.convertToEntity(transferDTO);
         LOGGER.debug("transfer = {}", transfer.toString());
         Transfer savedTransfer = transferRepository.save(transfer);
@@ -88,9 +89,38 @@ public class DepositServiceImpl implements DepositService {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public String saveTransaction(final Transfer deposit) {
-        // TODO Auto-generated method stub
-        return null;
+
+        PmbAccount beneficiaryAccount = deposit.getPmbAccountBeneficiary();
+        beneficiaryAccount.setAccountBalance(
+                beneficiaryAccount.getAccountBalance() + deposit.getAmount());
+        LOGGER.info("beneficiary AccountBalance = {}",
+                beneficiaryAccount.getAccountBalance());
+
+        PmbAccount pmbAppliAccount = deposit.getPmbAccountSender();
+        pmbAppliAccount.setAccountBalance(
+                pmbAppliAccount.getAccountBalance() - deposit.getAmount());
+        LOGGER.info("pmbAppliAccount AccountBalance = {}",
+                pmbAppliAccount.getAccountBalance());
+
+        try {
+            pmbAccountRepository.save(beneficiaryAccount);
+            pmbAccountRepository.save(pmbAppliAccount);
+            response = response.concat(" The account balance of your & "
+                    + " PMB account has been updated.");
+            LOGGER.info(" The account balance of both appli & "
+                    + "beneficiary PMB accounts have been updated.");
+            return response;
+        } catch (RuntimeException e) {
+            LOGGER.info("An exception occurs during the update of an account"
+                    + " balance. Currently, both sender & user accounts are not"
+                    + " up to date of this transfer.");
+            response = response.concat(
+                    " But an exception occurs during the update of sender or"
+                            + " beneficiary account balance");
+            return response;
+        }
     }
 
 }
