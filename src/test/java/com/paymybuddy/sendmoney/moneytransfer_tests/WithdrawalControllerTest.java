@@ -63,7 +63,7 @@ public class WithdrawalControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andReturn();
 
-         verify(withdrawalService).send(any(OrderDTO.class));
+        verify(withdrawalService).send(any(OrderDTO.class));
 
     }
 

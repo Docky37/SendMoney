@@ -116,6 +116,7 @@ public class WithdrawalServiceTest {
         List<PmbAccount> arguments = argument.getAllValues();
         assertThat(arguments.get(0).getAccountBalance()).isEqualTo(2100.5D);
         assertThat(arguments.get(1).getAccountBalance()).isEqualTo(56.5D);
+        verify(transferRepository).save(any(Transfer.class));
     }
 
     @Test // With exception

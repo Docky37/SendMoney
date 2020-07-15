@@ -129,11 +129,14 @@ public class SendMoneyServiceImpl implements SendMoneyService {
                 pmbAppliAccount.getAccountBalance() + transfer.getFee());
         LOGGER.debug("pmbAppliAccount AccountBalance = {}",
                 pmbAppliAccount.getAccountBalance());
+        transfer.setEffective(true);
+        transfer.setValueDate(new Date());
 
         try {
             pmbAccountRepository.save(senderAccount);
             pmbAccountRepository.save(beneficiaryAccount);
             pmbAccountRepository.save(pmbAppliAccount);
+            transferRepository.save(transfer);
             response = response.concat(" The account balance of both sender & "
                     + " PMB accounts have been updated.");
             LOGGER.info(" The account balance of both sender & "

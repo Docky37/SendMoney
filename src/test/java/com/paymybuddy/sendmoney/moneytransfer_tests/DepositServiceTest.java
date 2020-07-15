@@ -117,6 +117,7 @@ public class DepositServiceTest {
         List<PmbAccount> arguments = argument.getAllValues();
         assertThat(arguments.get(0).getAccountBalance()).isEqualTo(157D);
         assertThat(arguments.get(1).getAccountBalance()).isEqualTo(1900D);
+        verify(transferRepository).save(any(Transfer.class));
     }
 
     @Test // With exception

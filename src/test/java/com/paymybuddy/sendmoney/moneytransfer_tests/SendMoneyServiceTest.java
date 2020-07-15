@@ -166,6 +166,7 @@ public class SendMoneyServiceTest {
         assertThat(pmbAccountBeneficiary.getAccountBalance()).isEqualTo(450D);
         assertThat(pmbAppliAccount.getAccountBalance()).isEqualTo(2000.50D); 
         verify(pmbAccountRepository, times(3)).save(any(PmbAccount.class));
+        verify(transferRepository).save(any(Transfer.class));
     }
 
 }

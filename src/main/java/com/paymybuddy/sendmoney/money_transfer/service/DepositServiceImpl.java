@@ -103,11 +103,14 @@ public class DepositServiceImpl implements DepositService {
                 pmbAppliAccount.getAccountBalance() - deposit.getAmount());
         LOGGER.info("pmbAppliAccount AccountBalance = {}",
                 pmbAppliAccount.getAccountBalance());
+        deposit.setEffective(true);
+        deposit.setValueDate(new Date());
 
         try {
             pmbAccountRepository.save(beneficiaryAccount);
             pmbAccountRepository.save(pmbAppliAccount);
-            response = response.concat(" The account balance of your & "
+            transferRepository.save(deposit);
+            response = response.concat(" The account balance of your"
                     + " PMB account has been updated.");
             LOGGER.info(" The account balance of both appli & "
                     + "beneficiary PMB accounts have been updated.");
@@ -118,7 +121,9 @@ public class DepositServiceImpl implements DepositService {
                     + " up to date of this transfer.");
             response = response.concat(
                     " But an exception occurs during the update of sender or"
-                            + " beneficiary account balance");
+                            + " beneficiary account balance. Currently,"
+                            + " both sender & user accounts are not"
+                            + " up to date of this transfer.");
             return response;
         }
     }

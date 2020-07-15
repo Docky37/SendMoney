@@ -27,7 +27,7 @@ public class WithdrawalController {
 
     /**
      * The Post html request sendMoney method allows logged user to order a
-     * a Withdrawal (a transfer from his PmbAccount to his bankAccount.)
+     * a Withdrawal (a transfer from his PmbAccount to his bankAccount).
      *
      * @param orderDTO
      * @return a ResponseEntity<Object>

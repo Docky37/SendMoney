@@ -95,10 +95,13 @@ public class WithdrawalServiceImpl implements WithdrawalService {
                 - withdrawal.getAmount() - withdrawal.getFee());
         LOGGER.info("pmbAppliAccount AccountBalance = {}",
                 pmbAppliAccount.getAccountBalance());
+        withdrawal.setEffective(true);
+        withdrawal.setValueDate(new Date());
 
         try {
             pmbAccountRepository.save(beneficiaryAccount);
             pmbAccountRepository.save(pmbAppliAccount);
+            transferRepository.save(withdrawal);
             response = response.concat(" The account balance of your & "
                     + " PMB account has been updated.");
             LOGGER.info(" The account balance of both appli & "

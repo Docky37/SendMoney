@@ -14,21 +14,22 @@ public interface WithdrawalService {
      * @param orderDTO
      * @return a Transfer object
      */
-    Transfer send(final OrderDTO orderDTO);
+    Transfer send(OrderDTO orderDTO);
 
     /**
      * The saveTransaction method performs the update of PmbAccounts from a
      * Transfer object.
      *
-     * @param withdrawal  a Transfer object
+     * @param withdrawal a Transfer object
      * @return a String
      */
-    String saveTransaction(final Transfer withdrawal);
+    String saveTransaction(Transfer withdrawal);
 
     /**
      * Getter of response.
+     * 
      * @return a String
      */
-    public String getResponse();
+    String getResponse();
 
 }
