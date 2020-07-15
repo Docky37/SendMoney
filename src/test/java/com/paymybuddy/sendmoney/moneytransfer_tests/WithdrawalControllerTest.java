@@ -55,7 +55,7 @@ public class WithdrawalControllerTest {
                 .willReturn(new Transfer());
         given(withdrawalService.saveTransaction(any(Transfer.class)))
                 .willReturn("201 Created");
-        mvc.perform(MockMvcRequestBuilders.post("/pmb-adm/deposit")
+        mvc.perform(MockMvcRequestBuilders.post("/withdrawal")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"email\":\"my.beneficiary@pmb.fr\","
                         + "\"amount\":100.00}"))
