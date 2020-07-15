@@ -35,7 +35,8 @@ public class WithdrawalController {
     @PostMapping("/withdrawal")
     public ResponseEntity<Object> sendMoney(
             @RequestBody final OrderDTO orderDTO) {
-        orderDTO.setSender(PmbConstants.SEND_MONEY_EMAIL);
+        orderDTO.setSender(orderDTO.getBeneficiary());
+        orderDTO.setBeneficiary(PmbConstants.SEND_MONEY_EMAIL);
         Transfer transfer = withdrawalService.send(orderDTO);
         String response;
         if (transfer != null) {
