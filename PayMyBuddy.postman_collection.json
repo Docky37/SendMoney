@@ -1,0 +1,462 @@
+{
+	"info": {
+		"_postman_id": "a45a2ba9-e6f7-4f29-9f68-e0521ae15cfd",
+		"name": "PayMyBuddy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Security",
+			"item": [
+				{
+					"name": "http://localhost:8080/authenticate (Admin application account)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"Thierry.Schreiner@hotmail.fr\",\n    \"password\":\"1231231\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/authenticate (Jean Gabin)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"Jean.Gabin@PatheCinema.fr\",\n    \"password\":\"1231231\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/authenticate (Al Pacino)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"Jean.Gabin@PatheCinema.fr\",\n    \"password\":\"1231231\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/authenticate (Daniel Craig)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"Daniel.Craig@JamesBond.fr\",\n    \"password\":\"1231231\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/authenticate (Angelina Jolie)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"Jean.Gabin@PatheCinema.fr\",\n    \"password\":\"1231231\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\":\"Yo\",\r\n    \"lastName\":\"Yo\",\r\n    \"email\":\"YoYo@mail.fr\",\r\n    \"password\":\"1231231\",\r\n    \"confirmPassword\":\"1231231\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/registration",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/welcome",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUaGllcnJ5LlNjaHJlaW5lckBob3RtYWlsLmZyIiwiZXhwIjoxNTkyNzgwMjM3LCJpYXQiOjE1OTI3NzY2Mzd9.1XKwV1luM9zFiI1-RhUqumZXUBgeeGUACCHNoZC4kmk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"Thierry.Schreiner@hotmail.fr\",\r\n    \"password\":\"1231231\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/welcome",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"welcome"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Bank & PMB accounts",
+			"item": [
+				{
+					"name": "http://localhost:8080/bank-account",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbC5QYWNpbm9ASG9sbHl3b29kLmNvbSIsImV4cCI6MTU5MzEyNjMzMCwiaWF0IjoxNTkzMTI2MDMwfQ.4Be-TNmMZKteGpp1kILh6ZAACWOX9AK5L5wF_z6lFr0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ibanCode\":\"FR3330002005ETYOYO000000Z25\",\r\n    \"swift\":\"CRLYFRPPXXX\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/bank-account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bank-account"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Connection",
+			"item": [
+				{
+					"name": "http://localhost:8080/connection",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbC5QYWNpbm9ASG9sbHl3b29kLmNvbSIsImV4cCI6MTU5MzY0MDMzNSwiaWF0IjoxNTkzNjM5MTM1fQ.t49rY_UIpw4Cs8IaWiMdphORktXPEMouzMgTBAbor54",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"Daniel.Craig@JamesBond.fr\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/connection",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"connection"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/connection",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbC5QYWNpbm9ASG9sbHl3b29kLmNvbSIsImV4cCI6MTU5MzY0MDk2MCwiaWF0IjoxNTkzNjM5NzYwfQ.WDaqUNJoEHn2on11sFXRb7Ku75c5oimIfwQKBerRHhw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/connection",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"connection"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/connection/Daniel.Craig@JamesBond.fr",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbC5QYWNpbm9ASG9sbHl3b29kLmNvbSIsImV4cCI6MTU5MzQyOTgzOCwiaWF0IjoxNTkzNDI4NjM4fQ.XjaGJvXF5AVmdgCbIRh-Z_Y6Mr--FUAI29TeRuiQ6TE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/connection/Daniel.Craig@JamesBond.fr",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"connection",
+								"Daniel.Craig@JamesBond.fr"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Transfer",
+			"item": [
+				{
+					"name": "http://localhost:8080//pmb-adm/deposit",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbC5QYWNpbm9ASG9sbHl3b29kLmNvbSIsImV4cCI6MTU5NDU5NjUxNCwiaWF0IjoxNTk0NTk1MzE0fQ.nePVX-ZK9x0RSfVZJlNCPqGsLyqKfKV1yEcpyCQ9bRw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"my.beneficiary@pmb.fr\",\r\n    \"amount\":100.00}\r\n)",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080//pmb-adm/deposit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"",
+								"pmb-adm",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/send-money",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbC5QYWNpbm9ASG9sbHl3b29kLmNvbSIsImV4cCI6MTU5MzY0MDMzNSwiaWF0IjoxNTkzNjM5MTM1fQ.t49rY_UIpw4Cs8IaWiMdphORktXPEMouzMgTBAbor54",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"beneficiary\":\"Angelina.Jolie@Ocean11.cine\",\r\n    \"amount\":150,\r\n    \"sender\":\"Al.Pacino@Hollywood.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/send-money",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"send-money"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/withdrawal",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKZWFuLkdhYmluQFBhdGhlQ2luZW1hLmZyIiwiZXhwIjoxNTk0ODU2NjY2LCJpYXQiOjE1OTQ4NTU0NjZ9.AdgVgLnmM4d7R7cisN1bz8lUD-krrHxV7P38KowHpMg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"beneficiary\":\"Jean.Gabin@PatheCinema.fr\",\r\n    \"amount\":100.00}\r\n)",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/withdrawal",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"withdrawal"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
