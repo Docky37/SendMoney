@@ -12,7 +12,7 @@ CREATE TABLE `buddy` (
   `enabled` bit(1) NOT NULL,
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
+  `password` binary(60) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -81,19 +81,25 @@ CREATE TABLE `hibernate_sequence` (
   `next_val` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO buddy VALUES(1,1,1,1,"Al.Pacino@Hollywood.com",1,"Al","PACINO","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(2,1,1,1,"Jean.Gabin@PatheCinema.fr",1,"Jean","GABIN","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(3,1,1,1,"Kevin.Spacey@Holliwood.com",1,"Kevin","SPACEY","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(4,1,1,1,"Brad.Pitt@Ocean11.cine",1,"Brad","PITT","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(5,1,1,1,"Angelina.Jolie@Ocean11.cine",1,"Angelina","JOLIE","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(6,1,1,1,"Dustin.Hoffman@Hollywood.com",1,"Dustin","HOFFMANN","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(7,1,1,1,"Bebel@Belmondo.fr",1,"Jean-Paul","BELMONDO","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(8,1,1,1,"Daniel.Craig@JamesBond.fr",1,"Daniel","CRAIG","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(9,1,1,1,"E.T@ET.com",1,"E","T","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(10,1,1,1,"Thierry.Schreiner@hotmail.fr",1,"Thierry","SCHREINER","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
+insert into hibernate_sequence VALUE (1);
+insert into hibernate_sequence VALUE (1);
+insert into hibernate_sequence VALUE (1);
+insert into hibernate_sequence VALUE (1);
+insert into hibernate_sequence VALUE (1);
+
+INSERT INTO buddy VALUES(1,1,1,1,"Al.Pacino@Hollywood.com",1,"Al","PACINO","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(2,1,1,1,"Jean.Gabin@PatheCinema.fr",1,"Jean","GABIN","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(3,1,1,1,"Kevin.Spacey@Holliwood.com",1,"Kevin","SPACEY","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(4,1,1,1,"Brad.Pitt@Ocean11.cine",1,"Brad","PITT","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(5,1,1,1,"Angelina.Jolie@Ocean11.cine",1,"Angelina","JOLIE","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(6,1,1,1,"Dustin.Hoffman@Hollywood.com",1,"Dustin","HOFFMANN","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(7,1,1,1,"Bebel@Belmondo.fr",1,"Jean-Paul","BELMONDO","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(8,1,1,1,"Daniel.Craig@JamesBond.fr",1,"Daniel","CRAIG","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(9,1,1,1,"E.T@ET.com",1,"E","T","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(10,1,1,1,"Thierry.Schreiner@hotmail.fr",1,"Thierry","SCHREINER","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
 
 -- and a user account for the SendMoney application:
-INSERT INTO buddy VALUES(36,1,1,1,"send.money@pmb.com",1,"SendMoney","PMB","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
+INSERT INTO buddy VALUES(36,1,1,1,"send.money@pmb.com",1,"SendMoney","PMB","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
 
 
 INSERT INTO role VALUES(789654, "USER");
@@ -152,11 +158,13 @@ INSERT INTO transfer VALUES(29, 350, 1.75, 1, 'Sending', '2020-07-02 23:21:17.85
 (32, 150, 0.75, 1, 'Sending', '2020-06-07 20:01:17.858000', '2020-06-07 20:01:18.858000', 22, 23),
 (33, 250, 1.25, 1, 'Sending', '2020-06-12 23:21:57.858000', '2020-06-12 23:22:00.858000', 25, 23),
 (34, 40, 0.20, 1, 'Sending', '2020-06-28 15:11:23.858000', '2020-06-28 15:11:24.858000', 22, 23),
-(35, 25, 0.12, 1, 'Sending', '2020-07-02 03:51:27.858000', '2020-07-02 03:51:29.858000', 28, 23),
-(39, 100, 0, 0, 'Deposit', '2020-07-02 03:51:27.858000', '', 11, 37);
+(35, 25, 0.12, 1, 'Sending', '2020-07-02 03:51:27.858000', '2020-07-02 03:51:29.858000', 28, 23);
 
-update hibernate_sequence
-set next_val = 40;
+UPDATE hibernate_sequence
+SET next_val = 101;
+
+-- ------------------------------------------------------------------------------------------------
+
 USE pmb_sendmoney_test;
 
 CREATE TABLE `buddy` (
@@ -168,7 +176,7 @@ CREATE TABLE `buddy` (
   `enabled` bit(1) NOT NULL,
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
+  `password` binary(60) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -237,19 +245,25 @@ CREATE TABLE `hibernate_sequence` (
   `next_val` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO buddy VALUES(1,1,1,1,"Al.Pacino@Hollywood.com",1,"Al","PACINO","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(2,1,1,1,"Jean.Gabin@PatheCinema.fr",1,"Jean","GABIN","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(3,1,1,1,"Kevin.Spacey@Holliwood.com",1,"Kevin","SPACEY","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(4,1,1,1,"Brad.Pitt@Ocean11.cine",1,"Brad","PITT","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(5,1,1,1,"Angelina.Jolie@Ocean11.cine",1,"Angelina","JOLIE","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(6,1,1,1,"Dustin.Hoffman@Hollywood.com",1,"Dustin","HOFFMANN","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(7,1,1,1,"Bebel@Belmondo.fr",1,"Jean-Paul","BELMONDO","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(8,1,1,1,"Daniel.Craig@JamesBond.fr",1,"Daniel","CRAIG","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(9,1,1,1,"E.T@ET.com",1,"E","T","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
-INSERT INTO buddy VALUES(10,1,1,1,"Thierry.Schreiner@hotmail.fr",1,"Thierry","SCHREINER","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
+insert into hibernate_sequence VALUE (1);
+insert into hibernate_sequence VALUE (1);
+insert into hibernate_sequence VALUE (1);
+insert into hibernate_sequence VALUE (1);
+insert into hibernate_sequence VALUE (1);
+
+INSERT INTO buddy VALUES(1,1,1,1,"Al.Pacino@Hollywood.com",1,"Al","PACINO","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(2,1,1,1,"Jean.Gabin@PatheCinema.fr",1,"Jean","GABIN","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(3,1,1,1,"Kevin.Spacey@Holliwood.com",1,"Kevin","SPACEY","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(4,1,1,1,"Brad.Pitt@Ocean11.cine",1,"Brad","PITT","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(5,1,1,1,"Angelina.Jolie@Ocean11.cine",1,"Angelina","JOLIE","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(6,1,1,1,"Dustin.Hoffman@Hollywood.com",1,"Dustin","HOFFMANN","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(7,1,1,1,"Bebel@Belmondo.fr",1,"Jean-Paul","BELMONDO","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(8,1,1,1,"Daniel.Craig@JamesBond.fr",1,"Daniel","CRAIG","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(9,1,1,1,"E.T@ET.com",1,"E","T","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
+INSERT INTO buddy VALUES(10,1,1,1,"Thierry.Schreiner@hotmail.fr",1,"Thierry","SCHREINER","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
 
 -- and a user account for the SendMoney application:
-INSERT INTO buddy VALUES(36,1,1,1,"send.money@pmb.com",1,"SendMoney","PMB","$2a$10$Hthi7BOT2.Ez1nQkrf56.Ozia.pJRWNXnRtgf0gekoqn1qHxT0pIi");
+INSERT INTO buddy VALUES(36,1,1,1,"send.money@pmb.com",1,"SendMoney","PMB","$2a$10$hb87OnOgcnDz6V.GA2J.sOP2sCSbPaADxRh6PnA1HM3qUqV.Got8i");
 
 
 INSERT INTO role VALUES(789654, "USER");
@@ -308,8 +322,9 @@ INSERT INTO transfer VALUES(29, 350, 1.75, 1, 'Sending', '2020-07-02 23:21:17.85
 (32, 150, 0.75, 1, 'Sending', '2020-06-07 20:01:17.858000', '2020-06-07 20:01:18.858000', 22, 23),
 (33, 250, 1.25, 1, 'Sending', '2020-06-12 23:21:57.858000', '2020-06-12 23:22:00.858000', 25, 23),
 (34, 40, 0.20, 1, 'Sending', '2020-06-28 15:11:23.858000', '2020-06-28 15:11:24.858000', 22, 23),
-(35, 25, 0.12, 1, 'Sending', '2020-07-02 03:51:27.858000', '2020-07-02 03:51:29.858000', 28, 23),
-(39, 100, 0, 0, 'Deposit', '2020-07-02 03:51:27.858000', '', 11, 37);
+(35, 25, 0.12, 1, 'Sending', '2020-07-02 03:51:27.858000', '2020-07-02 03:51:29.858000', 28, 23);
 
-update hibernate_sequence
-set next_val = 40;
+UPDATE hibernate_sequence
+SET next_val = 101;
+
+COMMIT;
