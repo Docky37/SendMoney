@@ -40,7 +40,7 @@ public class SaveTransactionIT {
 
     @Autowired
     private SendMoneyService sendMoneyService;
-    
+
     @Autowired
     private PmbAccountRepository pmbAccountRepository;
 
@@ -80,14 +80,13 @@ public class SaveTransactionIT {
             throws Exception {
         // GIVEN
         System.out.println(transfer.toString());
-        
+
         // WHEN
         sendMoneyService.saveTransaction(transfer);
         // THEN
         PmbAccount checkPmbAccountSender = pmbAccountRepository
                 .findByOwnerEmail("Daniel.Craig@JamesBond.fr");
-        assertThat(checkPmbAccountSender.getAccountBalance())
-                .isEqualTo(648.5);
+        assertThat(checkPmbAccountSender.getAccountBalance()).isEqualTo(648.5);
         PmbAccount checkPmbAccountBeneficiary = pmbAccountRepository
                 .findByOwnerEmail("Al.Pacino@Hollywood.com");
         assertThat(checkPmbAccountBeneficiary.getAccountBalance())
@@ -103,14 +102,13 @@ public class SaveTransactionIT {
         // GIVEN
         transfer.getPmbAccountSender().setId(-1);
         // WHEN
-        assertThrows(UnexpectedRollbackException.class, () -> {
+        assertThrows(Exception.class, () -> {
             depositService.saveTransaction(transfer);
         });
         // THEN
         PmbAccount checkPmbAccountSender = pmbAccountRepository
                 .findByOwnerEmail("Daniel.Craig@JamesBond.fr");
-        assertThat(checkPmbAccountSender.getAccountBalance())
-                .isEqualTo(749D);
+        assertThat(checkPmbAccountSender.getAccountBalance()).isEqualTo(749D);
         PmbAccount checkPmbAccountBeneficiary = pmbAccountRepository
                 .findByOwnerEmail("Al.Pacino@Hollywood.com");
         assertThat(checkPmbAccountBeneficiary.getAccountBalance())
@@ -143,7 +141,7 @@ public class SaveTransactionIT {
         // GIVEN
         deposit.getPmbAccountSender().setId(-1);
         // WHEN
-        assertThrows(UnexpectedRollbackException.class, () -> {
+        assertThrows(Exception.class, () -> {
             depositService.saveTransaction(deposit);
         });
         // THEN
