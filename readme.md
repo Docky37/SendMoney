@@ -1,4 +1,4 @@
-#Pay My Buddy - v1.0
+#Pay My Buddy - v1.1
 
 
 ###Infos
@@ -7,14 +7,12 @@ author: Thierry 'Docky' SCHREINER - DA Java student - Open ClassRooms
 
 mentored by: Yann 'Monsieur Plus' IRRILO
 
-release date: 16/07/2020
+release date: July, 17th 2020
 
 
 ### Content
 
-The v1.0 release adds Money deposit and withdrawal functionalities with the same
-orderDTO.
-Deposit POST request on /pmb-adm/deposit need an admin logged user.
+The v1.1 fix the credentials kill problem after a SQL export/import due to a character encoding trouble by replacing password VARCHAR type by BINARY(60) type in buddy table.
 
 Previous version content:
 - Authentication that provides a Json Web Token (activity period 20 minutes).
@@ -32,6 +30,8 @@ feature_getTransfer (/sendMoney), using an orderDTO:
         "amount":350
     }
 
+- v1.0 release adds Money deposit and withdrawal functionalities with the same
+orderDTO. Deposit POST request on /pmb-adm/deposit need an admin logged user.
 
 
 
@@ -48,7 +48,7 @@ Application uses mySQL 8.0 with user 'root' and password 'rootroot'.
 ### Conceptual Model
 
 
-<div hidden>
+<!--
 
 	```
 	@startuml firstDiagram
@@ -86,7 +86,7 @@ Application uses mySQL 8.0 with user 'root' and password 'rootroot'.
 	@enduml
 	```
 	
-</div>
+-->
 
 ![](firstDiagram.png)	
 
@@ -96,7 +96,7 @@ Application uses mySQL 8.0 with user 'root' and password 'rootroot'.
 ### Logical Model
 
 
-<div hidden>
+<!--
 
     ```
     @startuml logicalDiagram
@@ -139,7 +139,7 @@ Application uses mySQL 8.0 with user 'root' and password 'rootroot'.
     @enduml
     ```
     
-</div>
+-->
 
 ![](logicalDiagram.png)   
 
