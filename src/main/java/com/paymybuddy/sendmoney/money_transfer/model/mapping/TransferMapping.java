@@ -1,5 +1,6 @@
 package com.paymybuddy.sendmoney.money_transfer.model.mapping;
 
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +31,8 @@ public class TransferMapping {
         transfer.setPmbAccountBeneficiary(
                 transferDTO.getPmbAccountBeneficiary());
         transfer.setAmount(transferDTO.getAmount());
-        transfer.setFee(Math.rint(transfer.getAmount() * PmbConstants.FEE_RATE
-                * PmbConstants.CENT) / PmbConstants.CENT);
+        transfer.setFee(transfer.getAmount().multiply(PmbConstants.FEE_RATE)
+                .setScale(2, RoundingMode.HALF_EVEN));
         return transfer;
     }
 

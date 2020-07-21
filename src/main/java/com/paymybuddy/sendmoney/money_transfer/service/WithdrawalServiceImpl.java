@@ -86,13 +86,14 @@ public class WithdrawalServiceImpl implements WithdrawalService {
         PmbAccount beneficiaryAccount = withdrawal.getPmbAccountBeneficiary();
         beneficiaryAccount
                 .setAccountBalance(beneficiaryAccount.getAccountBalance()
-                        + withdrawal.getAmount() + withdrawal.getFee());
+                        .add(withdrawal.getAmount()).add(withdrawal.getFee()));
         LOGGER.info("beneficiary AccountBalance = {}",
                 beneficiaryAccount.getAccountBalance());
 
         PmbAccount pmbAppliAccount = withdrawal.getPmbAccountSender();
         pmbAppliAccount.setAccountBalance(pmbAppliAccount.getAccountBalance()
-                - withdrawal.getAmount() - withdrawal.getFee());
+                .subtract(withdrawal.getAmount())
+                .subtract(withdrawal.getFee()));
         LOGGER.info("pmbAppliAccount AccountBalance = {}",
                 pmbAppliAccount.getAccountBalance());
         withdrawal.setEffective(true);

@@ -1,5 +1,7 @@
 package com.paymybuddy.sendmoney.money_transfer.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.Set;
 
@@ -73,8 +75,9 @@ public class SendMoneyServiceImpl implements SendMoneyService {
 
         PmbAccount pmbAccountSender = pmbAccountRepository
                 .findByOwnerEmail(orderDTO.getSender());
-        if (pmbAccountSender.getAccountBalance() < (1 + PmbConstants.FEE_RATE)
-                * orderDTO.getAmount()) {
+        if (pmbAccountSender.getAccountBalance()
+                .compareTo((BigDecimal.ONE.add(PmbConstants.FEE_RATE))
+                        .multiply(orderDTO.getAmount())) < 0) {
             response = "400 Bad Request - "
                     + "Insufficient funds on PMB account for this transfer!";
             LOGGER.info(response);
@@ -113,20 +116,24 @@ public class SendMoneyServiceImpl implements SendMoneyService {
         LOGGER.debug("transfer = {}", transfer.toString());
         PmbAccount senderAccount = transfer.getPmbAccountSender();
         senderAccount.setAccountBalance(senderAccount.getAccountBalance()
-                - (1 + PmbConstants.FEE_RATE) * transfer.getAmount());
+                .subtract(BigDecimal.ONE.add(PmbConstants.FEE_RATE)
+                        .multiply(transfer.getAmount()))
+                .setScale(2, RoundingMode.HALF_EVEN));
+
         LOGGER.debug("sender AccountBalance = {}",
                 senderAccount.getAccountBalance());
 
         PmbAccount beneficiaryAccount = transfer.getPmbAccountBeneficiary();
         beneficiaryAccount.setAccountBalance(
-                beneficiaryAccount.getAccountBalance() + transfer.getAmount());
+                beneficiaryAccount.getAccountBalance().add(transfer.getAmount())
+                        .setScale(2, RoundingMode.HALF_EVEN));
         LOGGER.debug("beneficiary AccountBalance = {}",
                 beneficiaryAccount.getAccountBalance());
 
         PmbAccount pmbAppliAccount = pmbAccountRepository
                 .findByOwnerEmail(PmbConstants.SEND_MONEY_EMAIL);
-        pmbAppliAccount.setAccountBalance(
-                pmbAppliAccount.getAccountBalance() + transfer.getFee());
+        pmbAppliAccount.setAccountBalance(pmbAppliAccount.getAccountBalance()
+                .add(transfer.getFee()).setScale(2, RoundingMode.HALF_EVEN));
         LOGGER.debug("pmbAppliAccount AccountBalance = {}",
                 pmbAppliAccount.getAccountBalance());
         transfer.setEffective(true);

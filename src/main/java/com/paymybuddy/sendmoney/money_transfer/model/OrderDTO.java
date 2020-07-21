@@ -1,5 +1,7 @@
 package com.paymybuddy.sendmoney.money_transfer.model;
 
+import java.math.BigDecimal;
+
 import org.springframework.stereotype.Component;
 
 import lombok.AllArgsConstructor;
@@ -30,7 +32,7 @@ public class OrderDTO {
      */
     @Getter
     @Setter
-    private double amount;
+    private BigDecimal amount;
 
     /**
      * The email address of the transfer sender.

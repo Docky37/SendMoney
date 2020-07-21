@@ -1,5 +1,6 @@
 package com.paymybuddy.sendmoney.moneyaccounts.model;
 
+import java.math.BigDecimal;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -51,7 +52,7 @@ public class PmbAccount implements Comparable<PmbAccount> {
      */
     @Getter
     @Setter
-    private Double accountBalance;
+    private BigDecimal accountBalance;
 
     /**
      * The buddy who is the owner of this bank account.

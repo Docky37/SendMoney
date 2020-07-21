@@ -27,7 +27,7 @@ public interface WithdrawalService {
 
     /**
      * Getter of response.
-     * 
+     *
      * @return a String
      */
     String getResponse();

@@ -1,5 +1,6 @@
 package com.paymybuddy.sendmoney.money_transfer.service;
 
+import java.math.RoundingMode;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -94,13 +95,15 @@ public class DepositServiceImpl implements DepositService {
 
         PmbAccount beneficiaryAccount = deposit.getPmbAccountBeneficiary();
         beneficiaryAccount.setAccountBalance(
-                beneficiaryAccount.getAccountBalance() + deposit.getAmount());
+                beneficiaryAccount.getAccountBalance().add(deposit.getAmount())
+                        .setScale(2, RoundingMode.HALF_EVEN));
         LOGGER.info("beneficiary AccountBalance = {}",
                 beneficiaryAccount.getAccountBalance());
 
         PmbAccount pmbAppliAccount = deposit.getPmbAccountSender();
-        pmbAppliAccount.setAccountBalance(
-                pmbAppliAccount.getAccountBalance() - deposit.getAmount());
+        pmbAppliAccount.setAccountBalance(pmbAppliAccount.getAccountBalance()
+                .subtract(deposit.getAmount())
+                .setScale(2, RoundingMode.HALF_EVEN));
         LOGGER.info("pmbAppliAccount AccountBalance = {}",
                 pmbAppliAccount.getAccountBalance());
         deposit.setEffective(true);

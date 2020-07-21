@@ -1,5 +1,6 @@
 package com.paymybuddy.sendmoney.money_transfer.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import lombok.Getter;
@@ -29,7 +30,7 @@ public class GetTransferDTO extends OrderDTO {
      */
     @Getter
     @Setter
-    private double fee;
+    private BigDecimal fee;
 
     /**
      * Getter of valueDate.

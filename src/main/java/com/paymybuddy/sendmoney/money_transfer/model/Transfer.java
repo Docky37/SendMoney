@@ -1,5 +1,6 @@
 package com.paymybuddy.sendmoney.money_transfer.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -72,14 +73,14 @@ public class Transfer {
      */
     @Getter
     @Setter
-    private double amount;
+    private BigDecimal amount;
 
     /**
      * The fee of the transaction.
      */
     @Getter
     @Setter
-    private double fee;
+    private BigDecimal fee;
 
     /**
      * This boolean value (false per default) will be set to true when the

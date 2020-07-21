@@ -1,5 +1,6 @@
 package com.paymybuddy.sendmoney.money_transfer.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
@@ -52,7 +53,7 @@ public class TransferDTO {
      * The amount of the transaction.
      */
     @Getter
-    private Double amount;
+    private BigDecimal amount;
 
     /**
      * Getter of transactionDate.
