@@ -3,6 +3,7 @@ package com.paymybuddy.sendmoney.moneytransfer_tests;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +27,7 @@ import com.paymybuddy.sendmoney.moneyaccounts.util.PmbAccountMapping;
 /**
  * @author Thierry SCHREINER
  */
-@SpringJUnitConfig(value=GetTransferServiceImpl.class)
+@SpringJUnitConfig(value = GetTransferServiceImpl.class)
 public class GetTransferServiceTest {
 
     @Autowired
@@ -45,8 +46,8 @@ public class GetTransferServiceTest {
     static List<Transfer> transferList = new ArrayList<Transfer>();
     static {
         transfer.setTransactionDate(new Date());
-        transfer.setAmount(100D);
-        transfer.setFee(0.5D);
+        transfer.setAmount(new BigDecimal("100"));
+        transfer.setFee(new BigDecimal("0.5"));
         transferList.add(transfer);
     }
 

@@ -7,6 +7,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
+import com.paymybuddy.sendmoney.PmbConstants;
 import com.paymybuddy.sendmoney.money_transfer.model.OrderDTO;
 import com.paymybuddy.sendmoney.money_transfer.model.Transfer;
 import com.paymybuddy.sendmoney.money_transfer.model.TransferDTO;
@@ -59,8 +61,8 @@ public class DepositServiceTest {
     static {
         appli.setEmail("send.money@pmb.com");
     }
-    static OrderDTO orderDTO = new OrderDTO(beneficiary.getEmail(), 100D,
-            appli.getEmail());
+    static OrderDTO orderDTO = new OrderDTO(beneficiary.getEmail(),
+            PmbConstants.HUNDRED, appli.getEmail());
     static PmbAccount pmbAccountBeneficiary = new PmbAccount();
     static PmbAccount pmbAppliAccount = new PmbAccount();
     static Transfer transfer = new Transfer();
@@ -73,8 +75,8 @@ public class DepositServiceTest {
         pmbAppliAccount.setOwner(appli);
 
         transfer.setTransactionDate(new Date());
-        transfer.setAmount(100D);
-        transfer.setFee(0D);
+        transfer.setAmount(PmbConstants.HUNDRED);
+        transfer.setFee(BigDecimal.ZERO);
         transfer.setPmbAccountBeneficiary(pmbAccountBeneficiary);
         transfer.setPmbAccountSender(pmbAppliAccount);
         transfer.setValueDate(new Date());
@@ -82,8 +84,8 @@ public class DepositServiceTest {
 
     @BeforeEach
     private void init() {
-        pmbAccountBeneficiary.setAccountBalance(57D);
-        pmbAppliAccount.setAccountBalance(2000.00D);
+        pmbAccountBeneficiary.setAccountBalance(new BigDecimal("57"));
+        pmbAppliAccount.setAccountBalance(new BigDecimal("2000"));
     }
 
     @Test // With a valid orderDTO
@@ -115,8 +117,10 @@ public class DepositServiceTest {
                 .forClass(PmbAccount.class);
         verify(pmbAccountRepository, times(2)).save(argument.capture());
         List<PmbAccount> arguments = argument.getAllValues();
-        assertThat(arguments.get(0).getAccountBalance()).isEqualTo(157D);
-        assertThat(arguments.get(1).getAccountBalance()).isEqualTo(1900D);
+        assertThat(arguments.get(0).getAccountBalance())
+                .isEqualTo(new BigDecimal("157.00"));
+        assertThat(arguments.get(1).getAccountBalance())
+                .isEqualTo(new BigDecimal("1900.00"));
         verify(transferRepository).save(any(Transfer.class));
     }
 
@@ -135,8 +139,10 @@ public class DepositServiceTest {
                 .forClass(PmbAccount.class);
         verify(pmbAccountRepository, times(2)).save(argument.capture());
         List<PmbAccount> arguments = argument.getAllValues();
-        assertThat(arguments.get(0).getAccountBalance()).isEqualTo(157D);
-        assertThat(arguments.get(1).getAccountBalance()).isEqualTo(1900D);
+        assertThat(arguments.get(0).getAccountBalance())
+                .isEqualTo(new BigDecimal("157.00"));
+        assertThat(arguments.get(1).getAccountBalance())
+                .isEqualTo(new BigDecimal("1900.00"));
     }
 
 }

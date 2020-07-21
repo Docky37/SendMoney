@@ -3,6 +3,7 @@ package com.paymybuddy.sendmoney.moneytransfer_tests;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.UnexpectedRollbackException;
 
 import com.paymybuddy.sendmoney.money_transfer.model.Transfer;
 import com.paymybuddy.sendmoney.money_transfer.service.DepositService;
@@ -51,25 +51,25 @@ public class SaveTransactionIT {
     void init() {
         PmbAccount pmbAccountSender = pmbAccountRepository
                 .findByOwnerEmail("Daniel.Craig@JamesBond.fr");
-        pmbAccountSender.setAccountBalance(749D);
+        pmbAccountSender.setAccountBalance(new BigDecimal("749"));
         pmbAccountRepository.save(pmbAccountSender);
         PmbAccount pmbAccountBeneficiary = pmbAccountRepository
                 .findByOwnerEmail("Al.Pacino@Hollywood.com");
-        pmbAccountBeneficiary.setAccountBalance(777D);
+        pmbAccountBeneficiary.setAccountBalance(new BigDecimal("777"));
         pmbAccountRepository.save(pmbAccountBeneficiary);
         PmbAccount pmbAppliAccount = pmbAccountRepository
                 .findByOwnerEmail("send.money@pmb.com");
-        pmbAppliAccount.setAccountBalance(2000.00D);
+        pmbAppliAccount.setAccountBalance(new BigDecimal("2000"));
         pmbAccountRepository.save(pmbAppliAccount);
         transfer.setTransactionDate(new Date());
-        transfer.setAmount(100D);
-        transfer.setFee(0.5D);
+        transfer.setAmount(new BigDecimal("100"));
+        transfer.setFee(new BigDecimal("0.5"));
         transfer.setPmbAccountBeneficiary(pmbAccountBeneficiary);
         transfer.setPmbAccountSender(pmbAccountSender);
 
         deposit.setTransactionDate(new Date());
-        deposit.setAmount(100D);
-        deposit.setFee(0D);
+        deposit.setAmount(new BigDecimal("100"));
+        deposit.setFee(BigDecimal.ZERO);
         deposit.setPmbAccountBeneficiary(pmbAccountBeneficiary);
         deposit.setPmbAccountSender(pmbAppliAccount);
 
@@ -86,14 +86,16 @@ public class SaveTransactionIT {
         // THEN
         PmbAccount checkPmbAccountSender = pmbAccountRepository
                 .findByOwnerEmail("Daniel.Craig@JamesBond.fr");
-        assertThat(checkPmbAccountSender.getAccountBalance()).isEqualTo(648.5);
+        assertThat(checkPmbAccountSender.getAccountBalance())
+                .isEqualTo(new BigDecimal("648.5"));
         PmbAccount checkPmbAccountBeneficiary = pmbAccountRepository
                 .findByOwnerEmail("Al.Pacino@Hollywood.com");
         assertThat(checkPmbAccountBeneficiary.getAccountBalance())
-                .isEqualTo(877.0);
+                .isEqualTo(new BigDecimal("877"));
         PmbAccount checkPmbAppliAccount = pmbAccountRepository
                 .findByOwnerEmail("send.money@pmb.com");
-        assertThat(checkPmbAppliAccount.getAccountBalance()).isEqualTo(2000.5);
+        assertThat(checkPmbAppliAccount.getAccountBalance())
+                .isEqualTo(new BigDecimal("2000.5"));
     }
 
     @Test // Saving transfer transaction fails.
@@ -108,14 +110,16 @@ public class SaveTransactionIT {
         // THEN
         PmbAccount checkPmbAccountSender = pmbAccountRepository
                 .findByOwnerEmail("Daniel.Craig@JamesBond.fr");
-        assertThat(checkPmbAccountSender.getAccountBalance()).isEqualTo(749D);
+        assertThat(checkPmbAccountSender.getAccountBalance())
+                .isEqualTo(new BigDecimal("749"));
         PmbAccount checkPmbAccountBeneficiary = pmbAccountRepository
                 .findByOwnerEmail("Al.Pacino@Hollywood.com");
         assertThat(checkPmbAccountBeneficiary.getAccountBalance())
                 .isEqualTo(777.0);
         PmbAccount checkPmbAppliAccount = pmbAccountRepository
                 .findByOwnerEmail("send.money@pmb.com");
-        assertThat(checkPmbAppliAccount.getAccountBalance()).isEqualTo(2000.0);
+        assertThat(checkPmbAppliAccount.getAccountBalance())
+                .isEqualTo(new BigDecimal("2000"));
     }
 
     @Test // Saving deposit transaction succeeds.
@@ -129,10 +133,11 @@ public class SaveTransactionIT {
         PmbAccount checkPmbAccountBeneficiary = pmbAccountRepository
                 .findByOwnerEmail("Al.Pacino@Hollywood.com");
         assertThat(checkPmbAccountBeneficiary.getAccountBalance())
-                .isEqualTo(877.0);
+                .isEqualTo(new BigDecimal("877"));
         PmbAccount checkPmbAppliAccount = pmbAccountRepository
                 .findByOwnerEmail("send.money@pmb.com");
-        assertThat(checkPmbAppliAccount.getAccountBalance()).isEqualTo(1900.0);
+        assertThat(checkPmbAppliAccount.getAccountBalance())
+                .isEqualTo(new BigDecimal("1900"));
     }
 
     @Test // Saving deposit transaction fails.
@@ -148,10 +153,11 @@ public class SaveTransactionIT {
         PmbAccount checkPmbAccountBeneficiary = pmbAccountRepository
                 .findByOwnerEmail("Al.Pacino@Hollywood.com");
         assertThat(checkPmbAccountBeneficiary.getAccountBalance())
-                .isEqualTo(777.0);
+                .isEqualTo(new BigDecimal("777"));
         PmbAccount checkPmbAppliAccount = pmbAccountRepository
                 .findByOwnerEmail("send.money@pmb.com");
-        assertThat(checkPmbAppliAccount.getAccountBalance()).isEqualTo(2000.0);
+        assertThat(checkPmbAppliAccount.getAccountBalance())
+                .isEqualTo(new BigDecimal("2000"));
     }
 
 }

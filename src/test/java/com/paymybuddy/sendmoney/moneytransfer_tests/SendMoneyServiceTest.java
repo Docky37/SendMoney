@@ -8,6 +8,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.TreeSet;
 
@@ -32,7 +33,7 @@ import com.paymybuddy.sendmoney.security.model.Buddy;
 /**
  * @author Thierry SCHREINER
  */
-@SpringJUnitConfig(value=SendMoneyServiceImpl.class)
+@SpringJUnitConfig(value = SendMoneyServiceImpl.class)
 public class SendMoneyServiceTest {
 
     @Autowired
@@ -67,12 +68,12 @@ public class SendMoneyServiceTest {
     static {
         appli.setEmail("send.money@pmb.com");
     }
-    static OrderDTO orderDTO = new OrderDTO(beneficiary.getEmail(), 100D,
-            sender.getEmail());
-    static OrderDTO orderDTO2 = new OrderDTO(beneficiary.getEmail(), 500D,
-            sender.getEmail());
-    static OrderDTO orderDTO3 = new OrderDTO(beneficiary2.getEmail(), 100D,
-            sender.getEmail());
+    static OrderDTO orderDTO = new OrderDTO(beneficiary.getEmail(),
+            new BigDecimal("100"), sender.getEmail());
+    static OrderDTO orderDTO2 = new OrderDTO(beneficiary.getEmail(),
+            new BigDecimal("500"), sender.getEmail());
+    static OrderDTO orderDTO3 = new OrderDTO(beneficiary2.getEmail(),
+            new BigDecimal("100"), sender.getEmail());
     static PmbAccount pmbAccountSender = new PmbAccount();
     static PmbAccount pmbAccountBeneficiary = new PmbAccount();
     static PmbAccount pmbAccountBeneficiary2 = new PmbAccount();
@@ -80,31 +81,31 @@ public class SendMoneyServiceTest {
     static Transfer transfer = new Transfer();
     static {
         pmbAccountBeneficiary.setPmbAccountNumber("PMB0000015");
-        pmbAccountBeneficiary.setAccountBalance(350.00D);
+        pmbAccountBeneficiary.setAccountBalance(new BigDecimal("350"));
         pmbAccountBeneficiary.setOwner(beneficiary);
 
         pmbAccountSender.setPmbAccountNumber("PMB0000007");
-        pmbAccountSender.setAccountBalance(500.00D);
+        pmbAccountSender.setAccountBalance(new BigDecimal("500"));
         pmbAccountSender.setOwner(sender);
         pmbAccountSender.setConnections(new TreeSet<PmbAccount>());
         pmbAccountSender.getConnections().add(pmbAccountBeneficiary);
 
         pmbAccountBeneficiary2.setPmbAccountNumber("PMB0000018");
-        pmbAccountBeneficiary2.setAccountBalance(550.00D);
+        pmbAccountBeneficiary2.setAccountBalance(new BigDecimal("550"));
         pmbAccountBeneficiary2.setOwner(beneficiary2);
 
         pmbAppliAccount.setPmbAccountNumber("PMB--APPLI");
-        pmbAppliAccount.setAccountBalance(2000.00D);
+        pmbAppliAccount.setAccountBalance(new BigDecimal("2000"));
         pmbAppliAccount.setOwner(appli);
 
         transfer.setTransactionDate(new Date());
         transfer.setTransaction("Sending");
-        transfer.setAmount(100D);
-        transfer.setFee(0.5D);
+        transfer.setAmount(new BigDecimal("100"));
+        transfer.setFee(new BigDecimal("0.5"));
         transfer.setPmbAccountBeneficiary(pmbAccountBeneficiary);
         transfer.setPmbAccountSender(pmbAccountSender);
         transfer.setValueDate(new Date());
-   }
+    }
 
     @Test // With a valid orderDTO
     public void givenAnOrderDTO_whenSend_thenTransferIsAdded()
@@ -121,7 +122,7 @@ public class SendMoneyServiceTest {
         verify(transferMapping).convertToEntity(any(TransferDTO.class));
         verify(transferRepository).save(any(Transfer.class));
     }
-    
+
     @Test // With insufficient account balance
     public void givenBadOrderDTO_whenSend_thenStatus400()
             throws Exception, UserWithoutPmbAccountException {
@@ -134,10 +135,11 @@ public class SendMoneyServiceTest {
         sendMoneyService.send(orderDTO2);
         // THEN
         verify(pmbAccountRepository).findByOwnerEmail(anyString());
-        verify(transferMapping, never()).convertToEntity(any(TransferDTO.class));
+        verify(transferMapping, never())
+                .convertToEntity(any(TransferDTO.class));
         verify(transferRepository, never()).save(any(Transfer.class));
     }
-    
+
     @Test // With a non connected beneficiary
     public void givenNonConnectedBeneficiaryBadOrderDTO_whenSend_thenStatus400()
             throws Exception, UserWithoutPmbAccountException {
@@ -150,21 +152,26 @@ public class SendMoneyServiceTest {
         sendMoneyService.send(orderDTO3);
         // THEN
         verify(pmbAccountRepository, times(2)).findByOwnerEmail(anyString());
-        verify(transferMapping, never()).convertToEntity(any(TransferDTO.class));
+        verify(transferMapping, never())
+                .convertToEntity(any(TransferDTO.class));
         verify(transferRepository, never()).save(any(Transfer.class));
     }
-    
+
     @Test // With a valid orderDTO
     public void givenATransfer_whenSaveTransaction_thenAccountUpdated()
             throws Exception {
         // GIVEN
-        given(pmbAccountRepository.findByOwnerEmail(anyString())).willReturn(pmbAppliAccount);
+        given(pmbAccountRepository.findByOwnerEmail(anyString()))
+                .willReturn(pmbAppliAccount);
         // WHEN
         sendMoneyService.saveTransaction(transfer);
         // THEN
-        assertThat(pmbAccountSender.getAccountBalance()).isEqualTo(399.50D);
-        assertThat(pmbAccountBeneficiary.getAccountBalance()).isEqualTo(450D);
-        assertThat(pmbAppliAccount.getAccountBalance()).isEqualTo(2000.50D); 
+        assertThat(pmbAccountSender.getAccountBalance())
+                .isEqualTo(new BigDecimal("399.50"));
+        assertThat(pmbAccountBeneficiary.getAccountBalance())
+                .isEqualTo(new BigDecimal("450.00"));
+        assertThat(pmbAppliAccount.getAccountBalance())
+                .isEqualTo(new BigDecimal("2000.50"));
         verify(pmbAccountRepository, times(3)).save(any(PmbAccount.class));
         verify(transferRepository).save(any(Transfer.class));
     }

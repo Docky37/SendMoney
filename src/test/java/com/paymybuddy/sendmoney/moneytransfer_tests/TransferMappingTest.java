@@ -2,6 +2,7 @@ package com.paymybuddy.sendmoney.moneytransfer_tests;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,29 +44,29 @@ public class TransferMappingTest {
     static Date transactionDate = new Date();
     static {
         pmbAccountSender.setPmbAccountNumber("PMB0000007");
-        pmbAccountSender.setAccountBalance(500.00D);
+        pmbAccountSender.setAccountBalance(new BigDecimal("500.00"));
         pmbAccountSender.setOwner(sender);
         pmbAccountSender.setConnections(new TreeSet<PmbAccount>());
 
         pmbAccountBeneficiary.setPmbAccountNumber("PMB0000015");
-        pmbAccountBeneficiary.setAccountBalance(350.00D);
+        pmbAccountBeneficiary.setAccountBalance(new BigDecimal("350.00"));
         pmbAccountBeneficiary.setOwner(beneficiary);
         
         pmbAccountSender.getConnections().add(pmbAccountBeneficiary);
    }
    static TransferDTO transferDTO = new TransferDTO(transactionDate, "Sending",
-            pmbAccountSender, pmbAccountBeneficiary, 100D);
+            pmbAccountSender, pmbAccountBeneficiary, new BigDecimal("100.00"));
    static List<Transfer> transferList = new ArrayList<Transfer>();
    static {
        transfer.setTransactionDate(transactionDate);
-       transfer.setAmount(100D);
-       transfer.setFee(0.5D);
+       transfer.setAmount(new BigDecimal("100.00"));
+       transfer.setFee(new BigDecimal("0.5"));
        transfer.setPmbAccountBeneficiary(pmbAccountBeneficiary);
        transfer.setPmbAccountSender(pmbAccountSender);
        transfer.setValueDate(transactionDate);
        transfer2.setTransactionDate(transactionDate);
-       transfer2.setAmount(200D);
-       transfer2.setFee(1D);
+       transfer2.setAmount(new BigDecimal("200.00"));
+       transfer2.setFee(new BigDecimal("1.00"));
        transfer2.setPmbAccountBeneficiary(pmbAccountBeneficiary);
        transfer2.setPmbAccountSender(pmbAccountSender);
        transfer2.setValueDate(transactionDate);
@@ -81,7 +82,7 @@ public class TransferMappingTest {
         Transfer transfer = transferMapping.convertToEntity(transferDTO);
         // THEN
         assertThat(transfer.getTransactionDate()).isEqualTo(transactionDate);
-        assertThat(transfer.getFee()).isEqualTo(0.5D);
+        assertThat(transfer.getFee()).isEqualTo(new BigDecimal("0.50"));
         assertThat(transfer.getTransaction()).isEqualTo("Sending");
     }
     
@@ -93,9 +94,9 @@ public class TransferMappingTest {
         List<GetTransferDTO> transfertDTOList = transferMapping.mapTransferListToDTO(transferList);
         // THEN
         assertThat(transfertDTOList.size()).isEqualTo(2);
-        assertThat(transfertDTOList.get(0).getAmount()).isEqualTo(100D);
-        assertThat(transfertDTOList.get(1).getAmount()).isEqualTo(200D);
-        assertThat(transfertDTOList.get(1).getFee()).isEqualTo(1D);
+        assertThat(transfertDTOList.get(0).getAmount()).isEqualTo(new BigDecimal("100.00"));
+        assertThat(transfertDTOList.get(1).getAmount()).isEqualTo(new BigDecimal("200.00"));
+        assertThat(transfertDTOList.get(1).getFee()).isEqualTo(new BigDecimal("1.00"));
         
     }
 

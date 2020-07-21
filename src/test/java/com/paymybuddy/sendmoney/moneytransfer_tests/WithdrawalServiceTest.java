@@ -7,6 +7,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -59,8 +60,8 @@ public class WithdrawalServiceTest {
     static {
         appli.setEmail("send.money@pmb.com");
     }
-    static OrderDTO orderDTO = new OrderDTO(appli.getEmail(), 100D,
-            sender.getEmail());
+    static OrderDTO orderDTO = new OrderDTO(appli.getEmail(),
+            new BigDecimal("100.00"), sender.getEmail());
     static PmbAccount pmbAccountSender = new PmbAccount();
     static PmbAccount pmbAppliAccount = new PmbAccount();
     static Transfer transfer = new Transfer();
@@ -72,8 +73,8 @@ public class WithdrawalServiceTest {
         pmbAppliAccount.setOwner(appli);
 
         transfer.setTransactionDate(new Date());
-        transfer.setAmount(100D);
-        transfer.setFee(0.5D);
+        transfer.setAmount(new BigDecimal("100.00"));
+        transfer.setFee(new BigDecimal("0.5"));
         transfer.setPmbAccountBeneficiary(pmbAppliAccount);
         transfer.setPmbAccountSender(pmbAccountSender);
         transfer.setValueDate(new Date());
@@ -81,8 +82,8 @@ public class WithdrawalServiceTest {
 
     @BeforeEach
     private void init() {
-        pmbAccountSender.setAccountBalance(157D);
-        pmbAppliAccount.setAccountBalance(2000.00D);
+        pmbAccountSender.setAccountBalance(new BigDecimal("157.00"));
+        pmbAppliAccount.setAccountBalance(new BigDecimal("2000.00"));
     }
 
     @Test // With a valid orderDTO
@@ -114,8 +115,10 @@ public class WithdrawalServiceTest {
                 .forClass(PmbAccount.class);
         verify(pmbAccountRepository, times(2)).save(argument.capture());
         List<PmbAccount> arguments = argument.getAllValues();
-        assertThat(arguments.get(0).getAccountBalance()).isEqualTo(2100.5D);
-        assertThat(arguments.get(1).getAccountBalance()).isEqualTo(56.5D);
+        assertThat(arguments.get(0).getAccountBalance())
+                .isEqualTo(new BigDecimal("2100.50"));
+        assertThat(arguments.get(1).getAccountBalance())
+                .isEqualTo(new BigDecimal("56.50"));
         verify(transferRepository).save(any(Transfer.class));
     }
 
@@ -134,8 +137,10 @@ public class WithdrawalServiceTest {
                 .forClass(PmbAccount.class);
         verify(pmbAccountRepository, times(2)).save(argument.capture());
         List<PmbAccount> arguments = argument.getAllValues();
-        assertThat(arguments.get(0).getAccountBalance()).isEqualTo(2100.5D);
-        assertThat(arguments.get(1).getAccountBalance()).isEqualTo(56.5D);
+        assertThat(arguments.get(0).getAccountBalance())
+                .isEqualTo(new BigDecimal("2100.50"));
+        assertThat(arguments.get(1).getAccountBalance())
+                .isEqualTo(new BigDecimal("56.50"));
     }
 
 }
