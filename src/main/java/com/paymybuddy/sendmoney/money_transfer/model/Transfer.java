@@ -3,6 +3,7 @@ package com.paymybuddy.sendmoney.money_transfer.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -73,6 +74,7 @@ public class Transfer {
      */
     @Getter
     @Setter
+    @Column(columnDefinition = "DECIMAL(5,2)")
     private BigDecimal amount;
 
     /**
@@ -80,6 +82,7 @@ public class Transfer {
      */
     @Getter
     @Setter
+    @Column(columnDefinition = "DECIMAL(3,2)")
     private BigDecimal fee;
 
     /**

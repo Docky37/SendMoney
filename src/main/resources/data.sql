@@ -43,7 +43,7 @@ CREATE TABLE `bank_account` (
 
 CREATE TABLE `pmb_account` (
   `id` bigint NOT NULL,
-  `account_balance` double DEFAULT NULL,
+  `account_balance` decimal(7,2) DEFAULT NULL,
   `pmb_account_number` varchar(255) DEFAULT NULL,
   `owner` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -62,8 +62,8 @@ CREATE TABLE `connect` (
 
 CREATE TABLE `transfer` (
   `id` bigint NOT NULL,
-  `amount` double NOT NULL,
-  `fee` double NOT NULL,
+  `amount` decimal(5,2) NOT NULL,
+  `fee` decimal(3,2) NOT NULL,
   `is_effective` bit(1) NOT NULL,
   `transaction` varchar(255) DEFAULT NULL,
   `transaction_date` datetime(6) DEFAULT NULL,
@@ -133,15 +133,15 @@ VALUES (11,"FR3330002005ALPACINO0000Z25","CRLYFRPPXXX",1),
 
 
 INSERT INTO pmb_account (id,account_balance,pmb_account_number,owner)
-VALUES (20,777,"PMB0000020",1),
-(21,250,"PMB0000021",2),
-(22,500,"PMB0000022",3),
-(23,1000,"PMB0000023",4),
-(24,260,"PMB0000024",5),
-(25,300,"PMB0000025",6),
-(26,2500,"PMB0000026",7),
-(27,749,"PMB0000027",8),
-(28,963,"PMB0000028",9),
+VALUES (20,777.00,"PMB0000020",1),
+(21,250.00,"PMB0000021",2),
+(22,500.50,"PMB0000022",3),
+(23,1000.00,"PMB0000023",4),
+(24,260.00,"PMB0000024",5),
+(25,300.00,"PMB0000025",6),
+(26,2500.00,"PMB0000026",7),
+(27,749.00,"PMB0000027",8),
+(28,963.00,"PMB0000028",9),
 (38,2595.50,"PMB--APPLI",36);	-- Application PMB account ***************
 
 INSERT INTO connect VALUES(20, 22),
@@ -207,7 +207,7 @@ CREATE TABLE `bank_account` (
 
 CREATE TABLE `pmb_account` (
   `id` bigint NOT NULL,
-  `account_balance` double DEFAULT NULL,
+  `account_balance` decimal(7,2) DEFAULT NULL,
   `pmb_account_number` varchar(255) DEFAULT NULL,
   `owner` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -226,8 +226,8 @@ CREATE TABLE `connect` (
 
 CREATE TABLE `transfer` (
   `id` bigint NOT NULL,
-  `amount` double NOT NULL,
-  `fee` double NOT NULL,
+  `amount` decimal(5,2) NOT NULL,
+  `fee` decimal(3,2) NOT NULL,
   `is_effective` bit(1) NOT NULL,
   `transaction` varchar(255) DEFAULT NULL,
   `transaction_date` datetime(6) DEFAULT NULL,
@@ -297,15 +297,15 @@ VALUES (11,"FR3330002005ALPACINO0000Z25","CRLYFRPPXXX",1),
 
 
 INSERT INTO pmb_account (id,account_balance,pmb_account_number,owner)
-VALUES (20,777,"PMB0000020",1),
-(21,250,"PMB0000021",2),
-(22,500,"PMB0000022",3),
-(23,1000,"PMB0000023",4),
-(24,260,"PMB0000024",5),
-(25,300,"PMB0000025",6),
-(26,2500,"PMB0000026",7),
-(27,749,"PMB0000027",8),
-(28,963,"PMB0000028",9),
+VALUES (20,777.00,"PMB0000020",1),
+(21,250.00,"PMB0000021",2),
+(22,500.50,"PMB0000022",3),
+(23,1000.00,"PMB0000023",4),
+(24,260.00,"PMB0000024",5),
+(25,300.00,"PMB0000025",6),
+(26,2500.00,"PMB0000026",7),
+(27,749.00,"PMB0000027",8),
+(28,963.00,"PMB0000028",9),
 (38,2595.50,"PMB--APPLI",36);	-- Application PMB account ***************
 
 INSERT INTO connect VALUES(20, 22),
