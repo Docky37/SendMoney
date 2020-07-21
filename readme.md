@@ -1,4 +1,4 @@
-#Pay My Buddy - v1.1
+#Pay My Buddy - v1.2
 
 
 ###Infos
@@ -7,12 +7,12 @@ author: Thierry 'Docky' SCHREINER - DA Java student - Open ClassRooms
 
 mentored by: Yann 'Monsieur Plus' IRRILO
 
-release date: July, 17th 2020
+release date: July, 22th 2020
 
 
 ### Content
 
-The v1.1 fix the credentials kill problem after a SQL export/import due to a character encoding trouble by replacing password VARCHAR type by BINARY(60) type in buddy table.
+The v1.2 use BigDecimal for money value (and decimal in database field.
 
 Previous version content:
 - Authentication that provides a Json Web Token (activity period 20 minutes).
@@ -32,6 +32,7 @@ feature_getTransfer (/sendMoney), using an orderDTO:
 
 - v1.0 release adds Money deposit and withdrawal functionalities with the same
 orderDTO. Deposit POST request on /pmb-adm/deposit need an admin logged user.
+- v1.1 fixes the credentials kill problem after a SQL export/import due to a character encoding trouble by replacing password VARCHAR type by BINARY(60) type in buddy table.
 
 
 
