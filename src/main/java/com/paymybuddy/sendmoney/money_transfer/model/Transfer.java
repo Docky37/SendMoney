@@ -54,6 +54,14 @@ public class Transfer {
     private String transaction;
 
     /**
+     * The description field is a free text field that allows user to write a
+     * short description of the transfer.
+     */
+    @Getter
+    @Setter
+    private String description;
+
+    /**
      * The PmBAccount of the transaction sender.
      */
     @Getter

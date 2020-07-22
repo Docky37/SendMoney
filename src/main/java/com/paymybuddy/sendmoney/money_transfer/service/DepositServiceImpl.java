@@ -73,7 +73,8 @@ public class DepositServiceImpl implements DepositService {
         PmbAccount pmbAccountBeneficiary = pmbAccountRepository
                 .findByOwnerEmail(orderDTO.getBeneficiary());
         TransferDTO transferDTO = new TransferDTO(null, "Deposit",
-                pmbAccountSender, pmbAccountBeneficiary, orderDTO.getAmount());
+                orderDTO.getDescription(), pmbAccountSender,
+                pmbAccountBeneficiary, orderDTO.getAmount());
         transferDTO.setTransactionDate(new Date());
         LOGGER.debug("transferDTO = {}", transferDTO.toString());
 

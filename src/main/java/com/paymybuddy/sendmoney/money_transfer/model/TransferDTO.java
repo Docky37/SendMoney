@@ -10,6 +10,7 @@ import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -35,7 +36,16 @@ public class TransferDTO {
      * Sending or Withdrawal.
      */
     @Getter
+    @Setter
     private String transaction;
+
+    /**
+     * The description field is a free text field that allows user to write a
+     * short description of the transfer.
+     */
+    @Getter
+    @Setter
+    private String description;
 
     /**
      * The PmBAccount of the transaction sender.

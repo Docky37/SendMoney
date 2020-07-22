@@ -41,4 +41,11 @@ public class OrderDTO {
     @Setter
     private String sender;
 
+    /**
+     * The description field is a free text field that allows user to write a
+     * short description of the transfer.
+     */
+    @Getter
+    @Setter
+    private String description;
 }

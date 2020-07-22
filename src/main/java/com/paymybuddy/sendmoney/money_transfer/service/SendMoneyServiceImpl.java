@@ -95,7 +95,8 @@ public class SendMoneyServiceImpl implements SendMoneyService {
         }
         LOGGER.debug("Beneficiary is well connected to user!");
         TransferDTO transferDTO = new TransferDTO(null, "Sending",
-                pmbAccountSender, pmbAccountBeneficiary, orderDTO.getAmount());
+                orderDTO.getDescription(), pmbAccountSender,
+                pmbAccountBeneficiary, orderDTO.getAmount());
         transferDTO.setTransactionDate(new Date());
         LOGGER.debug("transferDTO = {}", transferDTO.toString());
         Transfer transfer = transferMapping.convertToEntity(transferDTO);

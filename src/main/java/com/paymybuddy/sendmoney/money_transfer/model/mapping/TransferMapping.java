@@ -27,6 +27,7 @@ public class TransferMapping {
         Transfer transfer = new Transfer();
         transfer.setTransactionDate(transferDTO.getTransactionDate());
         transfer.setTransaction(transferDTO.getTransaction());
+        transfer.setDescription(transferDTO.getDescription());
         transfer.setPmbAccountSender(transferDTO.getPmbAccountSender());
         transfer.setPmbAccountBeneficiary(
                 transferDTO.getPmbAccountBeneficiary());
@@ -65,6 +66,7 @@ public class TransferMapping {
         GetTransferDTO transferDTO = new GetTransferDTO();
         transferDTO.setValueDate(transfer.getValueDate());
         transferDTO.setTransaction(transfer.getTransaction());
+        transferDTO.setDescription(transfer.getDescription());
         transferDTO.setAmount(transfer.getAmount());
         transferDTO.setFee(transfer.getFee());
         transferDTO.setBeneficiary(
