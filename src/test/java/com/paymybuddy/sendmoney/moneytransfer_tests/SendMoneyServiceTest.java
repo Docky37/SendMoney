@@ -69,11 +69,11 @@ public class SendMoneyServiceTest {
         appli.setEmail("send.money@pmb.com");
     }
     static OrderDTO orderDTO = new OrderDTO(beneficiary.getEmail(),
-            new BigDecimal("100"), sender.getEmail());
+            new BigDecimal("100"), sender.getEmail(), "Transfer test 1");
     static OrderDTO orderDTO2 = new OrderDTO(beneficiary.getEmail(),
-            new BigDecimal("500"), sender.getEmail());
+            new BigDecimal("500"), sender.getEmail(), "Transfer test 2");
     static OrderDTO orderDTO3 = new OrderDTO(beneficiary2.getEmail(),
-            new BigDecimal("100"), sender.getEmail());
+            new BigDecimal("100"), sender.getEmail(), "Transfer test 3");
     static PmbAccount pmbAccountSender = new PmbAccount();
     static PmbAccount pmbAccountBeneficiary = new PmbAccount();
     static PmbAccount pmbAccountBeneficiary2 = new PmbAccount();
@@ -100,6 +100,7 @@ public class SendMoneyServiceTest {
 
         transfer.setTransactionDate(new Date());
         transfer.setTransaction("Sending");
+        transfer.setDescription("Transfer Test");
         transfer.setAmount(new BigDecimal("100"));
         transfer.setFee(new BigDecimal("0.5"));
         transfer.setPmbAccountBeneficiary(pmbAccountBeneficiary);

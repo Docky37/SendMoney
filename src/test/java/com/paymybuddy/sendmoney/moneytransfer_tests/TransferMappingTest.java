@@ -22,12 +22,12 @@ import com.paymybuddy.sendmoney.security.model.Buddy;
 /**
  * @author Thierry SCHREINER
  */
-@SpringJUnitConfig(value=TransferMapping.class)
+@SpringJUnitConfig(value = TransferMapping.class)
 public class TransferMappingTest {
 
     @Autowired
     TransferMapping transferMapping;
-    
+
     // Test Data ************************************************
     static Buddy sender = new Buddy();
     static {
@@ -51,28 +51,29 @@ public class TransferMappingTest {
         pmbAccountBeneficiary.setPmbAccountNumber("PMB0000015");
         pmbAccountBeneficiary.setAccountBalance(new BigDecimal("350.00"));
         pmbAccountBeneficiary.setOwner(beneficiary);
-        
+
         pmbAccountSender.getConnections().add(pmbAccountBeneficiary);
-   }
-   static TransferDTO transferDTO = new TransferDTO(transactionDate, "Sending",
-            pmbAccountSender, pmbAccountBeneficiary, new BigDecimal("100.00"));
-   static List<Transfer> transferList = new ArrayList<Transfer>();
-   static {
-       transfer.setTransactionDate(transactionDate);
-       transfer.setAmount(new BigDecimal("100.00"));
-       transfer.setFee(new BigDecimal("0.5"));
-       transfer.setPmbAccountBeneficiary(pmbAccountBeneficiary);
-       transfer.setPmbAccountSender(pmbAccountSender);
-       transfer.setValueDate(transactionDate);
-       transfer2.setTransactionDate(transactionDate);
-       transfer2.setAmount(new BigDecimal("200.00"));
-       transfer2.setFee(new BigDecimal("1.00"));
-       transfer2.setPmbAccountBeneficiary(pmbAccountBeneficiary);
-       transfer2.setPmbAccountSender(pmbAccountSender);
-       transfer2.setValueDate(transactionDate);
-       transferList.add(transfer);
-       transferList.add(transfer2);
-   }
+    }
+    static TransferDTO transferDTO = new TransferDTO(transactionDate, "Sending",
+            "Test", pmbAccountSender, pmbAccountBeneficiary,
+            new BigDecimal("100.00"));
+    static List<Transfer> transferList = new ArrayList<Transfer>();
+    static {
+        transfer.setTransactionDate(transactionDate);
+        transfer.setAmount(new BigDecimal("100.00"));
+        transfer.setFee(new BigDecimal("0.5"));
+        transfer.setPmbAccountBeneficiary(pmbAccountBeneficiary);
+        transfer.setPmbAccountSender(pmbAccountSender);
+        transfer.setValueDate(transactionDate);
+        transfer2.setTransactionDate(transactionDate);
+        transfer2.setAmount(new BigDecimal("200.00"));
+        transfer2.setFee(new BigDecimal("1.00"));
+        transfer2.setPmbAccountBeneficiary(pmbAccountBeneficiary);
+        transfer2.setPmbAccountSender(pmbAccountSender);
+        transfer2.setValueDate(transactionDate);
+        transferList.add(transfer);
+        transferList.add(transfer2);
+    }
 
     @Test // convertToEntity(transferDTO)
     public void givenATransferDTO_whenConvertToEntity_thenTransferIsCreated()
@@ -85,19 +86,23 @@ public class TransferMappingTest {
         assertThat(transfer.getFee()).isEqualTo(new BigDecimal("0.50"));
         assertThat(transfer.getTransaction()).isEqualTo("Sending");
     }
-    
+
     @Test // convertToEntity(transferDTO)
     public void givenATransferList_whenMapToDTO_thenGetTransferDTOListIsCreated()
             throws Exception {
         // GIVEN
         // WHEN
-        List<GetTransferDTO> transfertDTOList = transferMapping.mapTransferListToDTO(transferList);
+        List<GetTransferDTO> transfertDTOList = transferMapping
+                .mapTransferListToDTO(transferList);
         // THEN
         assertThat(transfertDTOList.size()).isEqualTo(2);
-        assertThat(transfertDTOList.get(0).getAmount()).isEqualTo(new BigDecimal("100.00"));
-        assertThat(transfertDTOList.get(1).getAmount()).isEqualTo(new BigDecimal("200.00"));
-        assertThat(transfertDTOList.get(1).getFee()).isEqualTo(new BigDecimal("1.00"));
-        
+        assertThat(transfertDTOList.get(0).getAmount())
+                .isEqualTo(new BigDecimal("100.00"));
+        assertThat(transfertDTOList.get(1).getAmount())
+                .isEqualTo(new BigDecimal("200.00"));
+        assertThat(transfertDTOList.get(1).getFee())
+                .isEqualTo(new BigDecimal("1.00"));
+
     }
 
 }

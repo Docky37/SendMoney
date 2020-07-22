@@ -62,7 +62,7 @@ public class DepositServiceTest {
         appli.setEmail("send.money@pmb.com");
     }
     static OrderDTO orderDTO = new OrderDTO(beneficiary.getEmail(),
-            PmbConstants.HUNDRED, appli.getEmail());
+            new BigDecimal("100.00"), appli.getEmail(), "Deposit test");
     static PmbAccount pmbAccountBeneficiary = new PmbAccount();
     static PmbAccount pmbAppliAccount = new PmbAccount();
     static Transfer transfer = new Transfer();
@@ -77,6 +77,7 @@ public class DepositServiceTest {
         transfer.setTransactionDate(new Date());
         transfer.setAmount(PmbConstants.HUNDRED);
         transfer.setFee(BigDecimal.ZERO);
+        transfer.setDescription("Deposit test");
         transfer.setPmbAccountBeneficiary(pmbAccountBeneficiary);
         transfer.setPmbAccountSender(pmbAppliAccount);
         transfer.setValueDate(new Date());

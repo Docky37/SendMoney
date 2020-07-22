@@ -61,7 +61,7 @@ public class WithdrawalServiceTest {
         appli.setEmail("send.money@pmb.com");
     }
     static OrderDTO orderDTO = new OrderDTO(appli.getEmail(),
-            new BigDecimal("100.00"), sender.getEmail());
+            new BigDecimal("100.00"), sender.getEmail(),"Test");
     static PmbAccount pmbAccountSender = new PmbAccount();
     static PmbAccount pmbAppliAccount = new PmbAccount();
     static Transfer transfer = new Transfer();
