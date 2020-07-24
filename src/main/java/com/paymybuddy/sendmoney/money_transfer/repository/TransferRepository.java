@@ -20,9 +20,9 @@ public interface TransferRepository extends JpaRepository<Transfer, Long> {
      * @return a List<Transfer> object
      */
     @Query("SELECT t FROM Transfer t"
-            + " RIGHT JOIN t.pmbAccountSender p"
-            + " INNER JOIN p.owner b"
-            + " WHERE b.email = :email"
+            + " RIGHT JOIN t.pmbAccountSender p INNER JOIN p.owner b"
+            + " RIGHT JOIN t.pmbAccountBeneficiary p2 INNER JOIN p2.owner b2"
+            + " WHERE b.email = :email OR b2.email = :email" 
             + " ORDER BY t.valueDate DESC")
     List<Transfer> findByEmail(String email);
 
