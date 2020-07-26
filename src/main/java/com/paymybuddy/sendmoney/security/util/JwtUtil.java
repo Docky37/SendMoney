@@ -28,7 +28,7 @@ public class JwtUtil {
     /**
      * The token period of validity in milliseconds.
      */
-    private static final  int VALIDITY_PERIOD_MILLISECONDS = 1200000; // 20 min
+    private static final  int VALIDITY_PERIOD_MILLISECONDS = 3600000; // 60 min
 
     /**
      * This method extract the username of the token.
