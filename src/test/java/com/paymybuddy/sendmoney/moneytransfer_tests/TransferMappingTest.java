@@ -16,6 +16,7 @@ import com.paymybuddy.sendmoney.money_transfer.model.GetTransferDTO;
 import com.paymybuddy.sendmoney.money_transfer.model.Transfer;
 import com.paymybuddy.sendmoney.money_transfer.model.TransferDTO;
 import com.paymybuddy.sendmoney.money_transfer.model.mapping.TransferMapping;
+import com.paymybuddy.sendmoney.moneyaccounts.model.BankAccount;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount;
 import com.paymybuddy.sendmoney.security.model.Buddy;
 
@@ -42,6 +43,8 @@ public class TransferMappingTest {
     static Transfer transfer = new Transfer();
     static Transfer transfer2 = new Transfer();
     static Date transactionDate = new Date();
+    static BankAccount bankAcc = new BankAccount();
+
     static {
         pmbAccountSender.setPmbAccountNumber("PMB0000007");
         pmbAccountSender.setAccountBalance(new BigDecimal("500.00"));
@@ -53,6 +56,10 @@ public class TransferMappingTest {
         pmbAccountBeneficiary.setOwner(beneficiary);
 
         pmbAccountSender.getConnections().add(pmbAccountBeneficiary);
+
+        bankAcc.setIban("FR3330002005500000157841Z25");
+        bankAcc.setSwift("CRLYFRPPXXX");
+        bankAcc.setOwner(beneficiary);
     }
     static TransferDTO transferDTO = new TransferDTO(transactionDate, "Sending",
             "Test", pmbAccountSender, pmbAccountBeneficiary,
@@ -67,12 +74,13 @@ public class TransferMappingTest {
         transfer.setPmbAccountSender(pmbAccountSender);
         transfer.setValueDate(transactionDate);
         transfer2.setTransactionDate(transactionDate);
-        transfer2.setTransaction("Sending");
+        transfer2.setTransaction("Withdrawal");
         transfer2.setAmount(new BigDecimal("200.00"));
         transfer2.setFee(new BigDecimal("1.00"));
         transfer2.setPmbAccountBeneficiary(pmbAccountBeneficiary);
         transfer2.setPmbAccountSender(pmbAccountSender);
         transfer2.setValueDate(transactionDate);
+        transfer2.setBankAccountBeneficiary(bankAcc);
         transferList.add(transfer);
         transferList.add(transfer2);
     }
@@ -94,16 +102,18 @@ public class TransferMappingTest {
             throws Exception {
         // GIVEN
         // WHEN
-        List<GetTransferDTO> transfertDTOList = transferMapping
+        List<GetTransferDTO> transferDTOList = transferMapping
                 .mapTransferListToDTO(transferList);
         // THEN
-        assertThat(transfertDTOList.size()).isEqualTo(2);
-        assertThat(transfertDTOList.get(0).getAmount())
+        assertThat(transferDTOList.size()).isEqualTo(2);
+        assertThat(transferDTOList.get(0).getAmount())
                 .isEqualTo(new BigDecimal("100.00"));
-        assertThat(transfertDTOList.get(1).getAmount())
+        assertThat(transferDTOList.get(1).getAmount())
                 .isEqualTo(new BigDecimal("200.00"));
-        assertThat(transfertDTOList.get(1).getFee())
+        assertThat(transferDTOList.get(1).getFee())
                 .isEqualTo(new BigDecimal("1.00"));
+        assertThat(transferDTOList.get(1).getBankAccountIban())
+                .isEqualTo("FR3330002005500000157841Z25");
 
     }
 
