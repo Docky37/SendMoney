@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
+ * This Data Transfer Object is used as response of users'html GET request on
+ * /transfer and administrators'html GET request on /pmb-adm/transfer.
+ *
  * @author Thierry SCHREINER
  */
 public class GetTransferDTO extends OrderDTO {
@@ -41,6 +44,22 @@ public class GetTransferDTO extends OrderDTO {
         Date dateClone = (Date) valueDate.clone();
         return dateClone;
     }
+
+    /**
+     * The BankBAccount IBAN of the transaction beneficiary, only used for
+     * withdrawal.
+     */
+    @Getter
+    @Setter
+    private String bankAccountIban;
+
+    /**
+     * The BankBAccount SWIFT of the transaction beneficiary, only used for
+     * withdrawal.
+     */
+    @Getter
+    @Setter
+    private String bankAccountSwift;
 
     /**
      * Setter of valueDate.

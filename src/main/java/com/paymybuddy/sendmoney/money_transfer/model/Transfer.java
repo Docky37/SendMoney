@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.paymybuddy.sendmoney.moneyaccounts.model.BankAccount;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount;
 
 import lombok.Getter;
@@ -76,6 +77,15 @@ public class Transfer {
     @Setter
     @OneToOne
     private PmbAccount pmbAccountBeneficiary;
+
+    /**
+     * The BankBAccount of the transaction beneficiary, only used for
+     * withdrawal.
+     */
+    @Getter
+    @Setter
+    @OneToOne
+    private BankAccount bankAccountBeneficiary;
 
     /**
      * The amount of the transaction.
