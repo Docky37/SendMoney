@@ -78,7 +78,9 @@ public class Buddy implements UserDetails {
      * The join table used to map buddy and its roles.
      */
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "buddy_role", joinColumns = @JoinColumn(name = "buddy_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "buddy_role",
+        joinColumns = @JoinColumn(name = "buddy_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id"))
     @Getter
     @Setter
     private Set<Role> roles;

@@ -22,8 +22,6 @@ import com.paymybuddy.sendmoney.moneyaccounts.repository.PmbAccountRepository;
 
 /**
  * {@inheritDoc}.
- *
- * @author Thierry SCHREINER
  */
 @Service
 public class SendMoneyServiceImpl implements SendMoneyService {
