@@ -14,4 +14,12 @@ import com.paymybuddy.sendmoney.moneyaccounts.model.BankAccount;
 public interface BankAccountRepository
         extends JpaRepository<BankAccount, Long> {
 
+    /**
+     * Find a BankAccount by the email address of its owner.
+     *
+     * @param eMail
+     * @return a PmbAccount instance
+     */
+    BankAccount findByOwnerEmail(String eMail);
+
 }
