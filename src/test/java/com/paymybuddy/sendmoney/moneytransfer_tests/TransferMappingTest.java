@@ -60,12 +60,14 @@ public class TransferMappingTest {
     static List<Transfer> transferList = new ArrayList<Transfer>();
     static {
         transfer.setTransactionDate(transactionDate);
+        transfer.setTransaction("Sending");
         transfer.setAmount(new BigDecimal("100.00"));
         transfer.setFee(new BigDecimal("0.5"));
         transfer.setPmbAccountBeneficiary(pmbAccountBeneficiary);
         transfer.setPmbAccountSender(pmbAccountSender);
         transfer.setValueDate(transactionDate);
         transfer2.setTransactionDate(transactionDate);
+        transfer2.setTransaction("Sending");
         transfer2.setAmount(new BigDecimal("200.00"));
         transfer2.setFee(new BigDecimal("1.00"));
         transfer2.setPmbAccountBeneficiary(pmbAccountBeneficiary);
