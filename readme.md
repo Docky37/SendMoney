@@ -1,4 +1,4 @@
-#Pay My Buddy - v1.2
+#Pay My Buddy - v1.3
 
 
 ###Infos
@@ -7,12 +7,18 @@ author: Thierry 'Docky' SCHREINER - DA Java student - Open ClassRooms
 
 mentored by: Yann 'Monsieur Plus' IRRILO
 
-release date: July, 22th 2020
+release date: July, 27th 2020
 
 
 ### Content
 
-The v1.2 use BigDecimal for money value (and decimal in database field.
+The v1.3 version :
+- add description field for all money transfer,
+- modify@Query of List<Transfer> findByEmail(String email) to get received transfers too
+- improve the security of the dataBase,
+- add Beneficiary firstName & lastName in GetTransferDTO
+- update diagrams in readme.md,
+- improve sql scripts.
 
 Previous version content:
 - Authentication that provides a Json Web Token (activity period 20 minutes).
@@ -33,16 +39,21 @@ feature_getTransfer (/sendMoney), using an orderDTO:
 - v1.0 release adds Money deposit and withdrawal functionalities with the same
 orderDTO. Deposit POST request on /pmb-adm/deposit need an admin logged user.
 - v1.1 fixes the credentials kill problem after a SQL export/import due to a character encoding trouble by replacing password VARCHAR type by BINARY(60) type in buddy table.
-
+- v1.2 use BigDecimal for money value (and decimal in database field.
 
 
 ### Database
 
-The file data.sql (in sendmoney/src/main/resources) contains sql instructions 
-to create both prod and test databases, their tables and some data.
+The file **schema.sql** (in sendmoney/src/main/resources) contains sql instructions 
+to create both prod and test databases and mandatory data.
+The file **data.sql** (in sendmoney/src/main/resources) contains sql instructions 
+to create some data for demonstration.
 
-Application uses mySQL 8.0 with user 'root' and password 'rootroot'.
+Application uses mySQL 8.0.
 
+SendMoneyApplication deal with prod database called 'pmb_sendmoney' by credentials stored in IDE environment variables (**PMB_DB_USER = pmb-sendmoney-user**  and  **PMB_DB_PASSWORD= PazfWort_X72020!**)
+
+The pmb_sendmoney_test database use other credentials (testeur / 1231231).
 
 
 
