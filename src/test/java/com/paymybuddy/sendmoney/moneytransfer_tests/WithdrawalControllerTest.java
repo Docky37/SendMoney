@@ -64,7 +64,25 @@ public class WithdrawalControllerTest {
                 .andReturn();
 
         verify(withdrawalService).send(any(OrderDTO.class));
+    }
 
+    @Test // PostMapping("/withdrawal")
+    public void givenAnInvalidOrderDTO_whenSend_thenWithdrawalIsCreated()
+            throws Exception {
+        given(withdrawalService.send(any(OrderDTO.class)))
+                .willReturn(null);
+        given(withdrawalService.getResponse()).willReturn("400 Bad Request");
+        given(withdrawalService.saveTransaction(any(Transfer.class)))
+                .willReturn("201 Created");
+        mvc.perform(MockMvcRequestBuilders.post("/withdrawal")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\":\"my.beneficiary@pmb.fr\","
+                        + "\"amount\":100.00}"))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn();
+
+        verify(withdrawalService).send(any(OrderDTO.class));
     }
 
 }

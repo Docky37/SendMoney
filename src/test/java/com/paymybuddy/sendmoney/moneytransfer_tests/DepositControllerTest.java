@@ -67,4 +67,22 @@ public class DepositControllerTest {
 
     }
 
+    @Test // PostMapping("/pmb-adm/deposit")
+    public void givenAnInvalidOrderDTO_whenSend_thenBadRequest()
+            throws Exception {
+        given(depositService.send(any(OrderDTO.class)))
+                .willReturn(null);
+        given(depositService.getResponse()).willReturn("400 Bad Request");
+        mvc.perform(MockMvcRequestBuilders.post("/pmb-adm/deposit")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\":\"my.beneficiary@pmb.fr\","
+                        + "\"amount\":100.00}"))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn();
+
+         verify(depositService).send(any(OrderDTO.class));
+
+    }
+
 }

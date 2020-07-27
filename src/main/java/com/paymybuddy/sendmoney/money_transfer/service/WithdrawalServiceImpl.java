@@ -1,5 +1,6 @@
 package com.paymybuddy.sendmoney.money_transfer.service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -7,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.paymybuddy.sendmoney.PmbConstants;
 import com.paymybuddy.sendmoney.money_transfer.model.OrderDTO;
 import com.paymybuddy.sendmoney.money_transfer.model.Transfer;
 import com.paymybuddy.sendmoney.money_transfer.model.TransferDTO;
@@ -61,6 +63,15 @@ public class WithdrawalServiceImpl implements WithdrawalService {
     public Transfer send(final OrderDTO orderDTO) {
         PmbAccount pmbAccountSender = pmbAccountRepository
                 .findByOwnerEmail(orderDTO.getSender());
+        if (pmbAccountSender.getAccountBalance()
+                .compareTo((BigDecimal.ONE.add(PmbConstants.FEE_RATE))
+                        .multiply(orderDTO.getAmount())) < 0) {
+            response = "400 Bad Request - "
+                    + "Insufficient funds on PMB account for this transfer!";
+            LOGGER.info(response);
+            return null;
+        }
+        LOGGER.debug("Sufficient account balance.");
         PmbAccount pmbAccountBeneficiary = pmbAccountRepository
                 .findByOwnerEmail(orderDTO.getBeneficiary());
         TransferDTO transferDTO = new TransferDTO(null, "Withdrawal",

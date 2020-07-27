@@ -71,4 +71,22 @@ public class SendMoneyControllerTest {
         verify(sendMoneyService).send(any(OrderDTO.class));
     }
 
+    @Test // PostMapping("/send-money")
+    public void givenAnInvalidOrderDTO_whenSend_thenBadRequest() throws Exception {
+        given(emailRetrieve.getEmail()).willReturn("logged.user@pmb.com");
+        given(sendMoneyService.send(any(OrderDTO.class)))
+                .willReturn(null);
+        given(sendMoneyService.getResponse()).willReturn("400 Bad Request");
+        mvc.perform(MockMvcRequestBuilders.post("/send-money")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\":\"my.beneficiary@pmb.fr\","
+                        + "\"amount\":100.00}"))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn();
+
+        verify(emailRetrieve).getEmail();
+        verify(sendMoneyService).send(any(OrderDTO.class));
+    }
+
 }
