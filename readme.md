@@ -44,105 +44,93 @@ to create both prod and test databases, their tables and some data.
 Application uses mySQL 8.0 with user 'root' and password 'rootroot'.
 
 
- 
-
-### Conceptual Model
 
 
-<!--
-
-	```
-	@startuml firstDiagram
-    class Buddy  {
-        -firstName
-        -lastName
-        -eMail
-        -- encrypted --
-        -password
-    }
-    class PmbAccount  {
-        -accountNumber
-        -accountBalance
-    }
-    Left to right direction
-    PmbAccount "many" o-- "  many" PmbAccount : < has connection
-    Buddy "1  " --  "1" PmbAccount : > has
-    class BankAccount {
-        -- encrypted --
-        -iban
-        -swift
-    }
-    Buddy "1" --  "1  " BankAccount : > has
-     
-    class Transfer {
-        -valueDate
-        -description
-        -amount
-        -fee
-    }
-    PmbAccount "0..1" --  "*" Transfer : < from account
-    PmbAccount " 0..1" --  "*" Transfer : < to account
-    BankAccount "0..1  " --  "*" Transfer : < from/to bank account
-    
-	@enduml
-	```
-	
--->
-
-![](firstDiagram.png)	
-
-
-
-
-### Logical Model
+### Class diagram
 
 
 <!--
 
     ```
-    @startuml logicalDiagram
-    class Buddy  {
-        -firstName: String
-        -lastName: String
-        -eMail: String
+    @startuml classDiagram
+    class Buddy{
+    -{static}long serialVersionUID
+    -Long id
+    -String firstName
+    -String lastName
+    -String email
+    -Set<Role> roles
+    -boolean accountNonExpired
+    -boolean accountNonLocked
+    -boolean credentialsNonExpired
+    -boolean enabled
         -- encrypted --
-        -password: String
+    -String password
+    --
     }
-    class PmbAccount  {
-        -accountNumber: integer
-        -accountOwner: integer
-        -accountBalance: double
+    interface UserDetails [[java:org.springframework.security.core.userdetails.UserDetails]] {
     }
+    UserDetails <|.. Buddy
+
+
+    class Role {
+        -Long id
+        -String name
+    }
+
+    Buddy "*" --> "*" Role
+
+    class PmbAccount [[java:com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount]] {
+        -long id
+        -String pmbAccountNumber
+        -BigDecimal accountBalance
+        -Buddy owner
+    }
+    class PmbAccount [[java:com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount]] {
+    }
+    PmbAccount "*" --> "*" PmbAccount : connections
+    interface "Comparable<PmbAccount>" as Comparable_PmbAccount_ {
+    }
+    Comparable_PmbAccount_ <|.. PmbAccount
+
     Left to right direction
-    PmbAccount "many" o-- "many " PmbAccount : < has connection
     Buddy "1  " --  "1" PmbAccount : > has
+    
+    
     class BankAccount {
-        -- encrypted --
-        -iban: String
-        -swift: String
+        -long id
+        -String iban
+        -String swift
+        -Buddy owner
     }
+
+
     Buddy "1" --  "1  " BankAccount : > has
      
     class Transfer {
-        -valueDate: LocalDateTime
-        -description: String
-        -fromPmbAccount: long
-        -toPMBAccount: long
-        -bankAccount: long
-        -amount: double
-        -fee: double
+        -Long id
+        -Date transactionDate
+        -String transaction
+        -String description
+        -PmbAccount pmbAccountSender
+        -PmbAccount pmbAccountBeneficiary
+        -BankAccount bankAccountBeneficiary
+        -BigDecimal amount
+        -BigDecimal fee
+        -boolean isEffective
+        -Date valueDate
     }
-    PmbAccount "0..1" --  "*" Transfer : < from account
-    PmbAccount " 0..1" --  "*" Transfer : < to account
-    BankAccount "0..1  " --  "*" Transfer : < from/to bank account
-
     
+    PmbAccount "1" --  "*" Transfer : < from account
+    PmbAccount "1" --  "*" Transfer : < to account
+    BankAccount "0..1  " --  "*" Transfer : < from/to bank account
+   
     @enduml
     ```
     
 -->
 
-![](logicalDiagram.png)   
+![](classDiagram.png)   
 
 
 

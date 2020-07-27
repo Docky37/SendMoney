@@ -1,0 +1,4 @@
+<map id="classDiagram_map" name="classDiagram_map">
+<area shape="rect" id="id1" href="java:org.springframework.security.core.userdetails.UserDetails" title="java:org.springframework.security.core.userdetails.UserDetails" alt="" coords="6,244,102,292"/>
+<area shape="rect" id="id2" href="java:com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount" title="java:com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount" alt="" coords="436,71,595,174"/>
+</map>
