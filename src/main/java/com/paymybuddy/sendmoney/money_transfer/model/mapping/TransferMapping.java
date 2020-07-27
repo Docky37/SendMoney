@@ -71,13 +71,17 @@ public class TransferMapping {
         transferDTO.setFee(transfer.getFee());
         transferDTO.setBeneficiary(
                 transfer.getPmbAccountBeneficiary().getOwner().getEmail());
+        transferDTO.setBeneficiaryFirstName(
+                transfer.getPmbAccountBeneficiary().getOwner().getFirstName());
+        transferDTO.setBeneficiaryLastName(
+                transfer.getPmbAccountBeneficiary().getOwner().getLastName());
         if (transferDTO.getTransaction().contentEquals("Withdrawal")) {
             transferDTO.setBankAccountIban(
-                        transfer.getBankAccountBeneficiary().getIban());
+                    transfer.getBankAccountBeneficiary().getIban());
             transferDTO.setBankAccountSwift(
                     transfer.getBankAccountBeneficiary().getSwift());
         }
-            transferDTO.setSender(
+        transferDTO.setSender(
                 transfer.getPmbAccountSender().getOwner().getEmail());
         return transferDTO;
     }

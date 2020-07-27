@@ -46,6 +46,20 @@ public class GetTransferDTO extends OrderDTO {
     }
 
     /**
+     * The first name of the transfer beneficiary.
+     */
+    @Getter
+    @Setter
+    private String beneficiaryFirstName;
+
+    /**
+     * The last name of the transfer beneficiary.
+     */
+    @Getter
+    @Setter
+    private String beneficiaryLastName;
+
+    /**
      * The BankBAccount IBAN of the transaction beneficiary, only used for
      * withdrawal.
      */
