@@ -29,13 +29,11 @@ Previous version content:
 - See list of connections -> GET - http://localhost:8080/connection
 - Remove a connection -> DELETE - http://localhost:8080/connection/{email}
 - v0.4 release adds the Money transfer functionality with a POST request
-feature_getTransfer (/sendMoney), using an orderDTO:
- 
+feature_getTransfer (/sendMoney), using an orderDTO: 
     {
         "beneficiary":"Daniel.Craig@JamesBond.fr",
         "amount":350
     }
-
 - v1.0 release adds Money deposit and withdrawal functionalities with the same
 orderDTO. Deposit POST request on /pmb-adm/deposit need an admin logged user.
 - v1.1 fixes the credentials kill problem after a SQL export/import due to a character encoding trouble by replacing password VARCHAR type by BINARY(60) type in buddy table.
@@ -79,34 +77,29 @@ The pmb_sendmoney_test database use other credentials (testeur / 1231231).
     -String password
     --
     }
-    interface UserDetails [[java:org.springframework.security.core.userdetails.UserDetails]] {
+    interface UserDetails {
     }
     UserDetails <|.. Buddy
-
 
     class Role {
         -Long id
         -String name
     }
 
-    Buddy "*" --> "*" Role
+    Buddy "*" -- "*" Role
 
-    class PmbAccount [[java:com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount]] {
+    class PmbAccount {
         -long id
         -String pmbAccountNumber
         -BigDecimal accountBalance
         -Buddy owner
     }
-    class PmbAccount [[java:com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount]] {
-    }
-    PmbAccount "*" --> "*" PmbAccount : connections
+    PmbAccount "*" -- "*" PmbAccount : connections
     interface "Comparable<PmbAccount>" as Comparable_PmbAccount_ {
     }
     Comparable_PmbAccount_ <|.. PmbAccount
-
     Left to right direction
-    Buddy "1  " --  "1" PmbAccount : > has
-    
+    Buddy "0..1  " *--  "1" PmbAccount : > has    
     
     class BankAccount {
         -long id
@@ -114,9 +107,7 @@ The pmb_sendmoney_test database use other credentials (testeur / 1231231).
         -String swift
         -Buddy owner
     }
-
-
-    Buddy "1" --  "1  " BankAccount : > has
+    Buddy "0..1" *--  "1  " BankAccount : > has
      
     class Transfer {
         -Long id
