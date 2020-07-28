@@ -12,6 +12,7 @@ release date: July, 27th 2020
 
 ### Content
 
+The v1.31 version just improve class diagram and fix troubles in the readme.md file.
 The v1.3 version :
 - add description field for all money transfer,
 - modify@Query of List<Transfer> findByEmail(String email) to get received transfers too
