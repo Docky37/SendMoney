@@ -43,7 +43,7 @@ public class Buddy implements UserDetails {
     @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     /**
      * The Buddy's first name.

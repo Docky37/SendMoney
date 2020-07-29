@@ -25,7 +25,7 @@ public class Role {
     @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private long id;
 
     /**
      * The role name.

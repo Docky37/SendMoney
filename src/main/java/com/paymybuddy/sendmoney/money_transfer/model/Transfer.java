@@ -38,7 +38,7 @@ public class Transfer {
     @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     /**
      * The transfer transaction date equal to the creation date of the
