@@ -65,7 +65,7 @@ The pmb_sendmoney_test database use other credentials (testeur / 1231231).
     @startuml classDiagram
     class Buddy{
     -{static}long serialVersionUID
-    -Long id
+    -long id
     -String firstName
     -String lastName
     -String email
@@ -83,7 +83,7 @@ The pmb_sendmoney_test database use other credentials (testeur / 1231231).
     UserDetails <|.. Buddy
 
     class Role {
-        -Long id
+        -long id
         -String name
     }
 
@@ -111,7 +111,7 @@ The pmb_sendmoney_test database use other credentials (testeur / 1231231).
     Buddy "0..1" *--  "1  " BankAccount : > has
      
     class Transfer {
-        -Long id
+        -long id
         -Date transactionDate
         -String transaction
         -String description
@@ -126,7 +126,7 @@ The pmb_sendmoney_test database use other credentials (testeur / 1231231).
     
     PmbAccount "1" --  "*" Transfer : < from account
     PmbAccount "1" --  "*" Transfer : < to account
-    BankAccount "0..1  " --  "*" Transfer : < from/to bank account
+    BankAccount "0..1  " --  "*" Transfer : < to bank account
    
     @enduml
     ```
