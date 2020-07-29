@@ -29,7 +29,8 @@ public class PmbAccountMapping {
         myPmbAccountDTO.setOwnerMail(pmbAccount.getOwner().getEmail());
         myPmbAccountDTO.setConnections(new TreeSet<String>());
         for (PmbAccount connection : pmbAccount.getConnections()) {
-            myPmbAccountDTO.addConnection(connection.getOwner().getEmail());
+            myPmbAccountDTO.addConnection(connection.getOwner().getFirstName()
+                    + " " + connection.getOwner().getLastName());
         }
 
         return myPmbAccountDTO;

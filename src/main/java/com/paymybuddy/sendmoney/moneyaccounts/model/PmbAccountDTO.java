@@ -34,20 +34,21 @@ public class PmbAccountDTO {
     private String ownerMail;
 
     /**
-     * The list of connections of the PMB account Number.
+     * The list of the PmbAccount connected to this PMB account. Each connection
+     * is identified by the full name of the account owner.
      */
     @Getter
     @Setter
     private Set<String> connections = new TreeSet<String>();
 
     /**
-     * This method is used to add a email in the Set<String> field
-     * (named 'connections') of the logged user's PmbAccountDTO.
+     * This method is used to add a fullName in the Set<String> field (named
+     * 'connections') of the logged user's PmbAccountDTO.
      *
      * @param email
      */
-    public void addConnection(final String email) {
-        this.connections.add(email);
+    public void addConnection(final String fullName) {
+        this.connections.add(fullName);
     }
 
 }
