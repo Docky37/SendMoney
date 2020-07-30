@@ -9,7 +9,6 @@ import static org.mockito.BDDMockito.given;
 import static org.junit.Assert.assertEquals;
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -17,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
+import com.paymybuddy.sendmoney.moneyaccounts.model.AccountBalanceDTO;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccountDTO;
 import com.paymybuddy.sendmoney.moneyaccounts.repository.PmbAccountRepository;
@@ -91,6 +91,26 @@ public class PmbAccountServiceTest {
         verify(pmbAccountRepository).findByOwnerEmail(buddy.getEmail());
         assertThat(pmbAccountDTO).isNull();
         verify(pmbAccountRepository, never()).save(any(PmbAccount.class));
+    }
+
+    @Test
+    public void givenABuddy_whenGetAccountBalance_thenReturnsAccountBalanceDTO()
+            throws Exception {
+        // GIVEN
+        Buddy buddy = new Buddy();
+        buddy.setFirstName("First");
+        buddy.setLastName("LAST");
+        buddy.setEmail("service.test@test.fr");
+        given(pmbAccountRepository.findByOwnerEmail(anyString()))
+                .willReturn(new PmbAccount());
+        given(pmbAccountMapping.mapAccountBalanceDTO(any(PmbAccount.class)))
+                .willReturn(new AccountBalanceDTO());
+        // WHEN
+        AccountBalanceDTO accountBalanceDTO = pmbAccountService
+                .getAccountBalance(buddy);
+        // THEN
+        verify(pmbAccountRepository).findByOwnerEmail(buddy.getEmail());
+        verify(pmbAccountMapping).mapAccountBalanceDTO(any(PmbAccount.class));
     }
 
 }

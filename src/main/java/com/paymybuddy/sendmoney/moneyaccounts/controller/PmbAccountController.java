@@ -1,13 +1,18 @@
 package com.paymybuddy.sendmoney.moneyaccounts.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.paymybuddy.sendmoney.moneyaccounts.exception.UserWithoutPmbAccountException;
+import com.paymybuddy.sendmoney.moneyaccounts.model.AccountBalanceDTO;
 import com.paymybuddy.sendmoney.moneyaccounts.model.EmailDTO;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccountDTO;
 import com.paymybuddy.sendmoney.moneyaccounts.service.PmbAccountService;
@@ -21,6 +26,12 @@ import com.paymybuddy.sendmoney.security.util.EmailRetrieve;
  */
 @RestController
 public class PmbAccountController {
+
+    /**
+     * Create a SLF4J/LOG4J LOGGER instance.
+     */
+    static final Logger LOGGER = LoggerFactory
+            .getLogger("PmbAccountController");
 
     /**
      * Declare a PmbAccountService object.
@@ -59,6 +70,25 @@ public class PmbAccountController {
         }
         return new ResponseEntity<Object>("PMB account saved.",
                 new HttpHeaders(), HttpStatus.CREATED);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @GetMapping("/account-balance")
+    public AccountBalanceDTO getAccountBalance()
+            throws UserWithoutPmbAccountException {
+        LOGGER.info("NEW GET REQUEST('/account-balance') ********************");
+        Buddy buddy = emailRetrieve.getBuddy();
+        AccountBalanceDTO accountBalanceDTO = pmbAccountService
+                .getAccountBalance(buddy);
+
+        if (accountBalanceDTO != null) {
+            LOGGER.info("GET REQUEST END: 200 Ok");
+            return accountBalanceDTO;
+        } else {
+            throw new UserWithoutPmbAccountException();
+        }
     }
 
 }

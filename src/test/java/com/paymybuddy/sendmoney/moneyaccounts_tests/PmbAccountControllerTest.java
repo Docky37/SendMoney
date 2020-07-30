@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.paymybuddy.sendmoney.moneyaccounts.model.AccountBalanceDTO;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccountDTO;
 import com.paymybuddy.sendmoney.moneyaccounts.service.PmbAccountService;
 import com.paymybuddy.sendmoney.security.model.Buddy;
@@ -101,4 +102,16 @@ public class PmbAccountControllerTest {
         verify(pmbAccountService).savePmbAccount(any(Buddy.class));
     }
 
+    @Test // GetMapping("/account-balance")
+    public void givenPmbAccount_whenGetAccountBalance_thenReturnAccountBalanceDTO()
+            throws Exception {
+        buddy.setEmail("User.Test@pmb.com");
+        given(emailRetrieve.getBuddy()).willReturn(buddy);
+        given(pmbAccountService.getAccountBalance(any(Buddy.class)))
+                .willReturn(new AccountBalanceDTO());
+        mvc.perform(MockMvcRequestBuilders.get("/account-balance"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+        verify(pmbAccountService).getAccountBalance(any(Buddy.class));
+    }
 }

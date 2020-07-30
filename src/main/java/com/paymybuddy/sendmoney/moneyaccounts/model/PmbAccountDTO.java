@@ -45,7 +45,7 @@ public class PmbAccountDTO {
      * This method is used to add a fullName in the Set<String> field (named
      * 'connections') of the logged user's PmbAccountDTO.
      *
-     * @param email
+     * @param fullName
      */
     public void addConnection(final String fullName) {
         this.connections.add(fullName);

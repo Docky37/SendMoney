@@ -3,6 +3,7 @@ package com.paymybuddy.sendmoney.moneyaccounts.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.paymybuddy.sendmoney.moneyaccounts.model.AccountBalanceDTO;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccount;
 import com.paymybuddy.sendmoney.moneyaccounts.model.PmbAccountDTO;
 import com.paymybuddy.sendmoney.moneyaccounts.repository.PmbAccountRepository;
@@ -64,5 +65,17 @@ public class PmbAccountServiceImpl implements PmbAccountService {
         String pmbAccountNumber = "PMB" + String.format("%07d", buddyId);
 
         return pmbAccountNumber;
+    }
+
+    /**
+     * {@inheritDoc}.
+     */
+    @Override
+    public AccountBalanceDTO getAccountBalance(final Buddy buddy) {
+        PmbAccount pmbAccount = pmbAccountRepository
+                .findByOwnerEmail(buddy.getEmail());
+        AccountBalanceDTO accountBalanceDTO = pmbAccountMapping
+                .mapAccountBalanceDTO(pmbAccount);
+        return accountBalanceDTO;
     }
 }
