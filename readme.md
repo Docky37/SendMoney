@@ -1,4 +1,4 @@
-#Pay My Buddy - v1.3
+#Pay My Buddy - SendMoney v1.4
 
 
 ###Infos
@@ -7,7 +7,26 @@ author: Thierry 'Docky' SCHREINER - DA Java student - Open ClassRooms
 
 mentored by: Yann 'Monsieur Plus' IRRILO
 
-release date: July, 27th 2020
+release date: July, 30th 2020
+
+SendMoney use Java 11.
+
+In src/main/resources you can found the PayMyBuddy.postman_collection.json file that you can import in Postman to use my request collection.
+
+
+### Database
+
+Application uses mySQL 8.0
+
+SendMoneyApplication deal with prod database called 'pmb_sendmoney' by credentials stored in IDE environment variables (**PMB_DB_USER = pmb-sendmoney-user**  and  **PMB_DB_PASSWORD= PazfWort_X72020!**)
+
+The pmb_sendmoney_test database use other credentials (testeur / 1231231).
+
+The file **schema.sql** (in sendmoney/src/main/resources) contains SQL instructions 
+to create both prod and test databases and mandatory data.
+The file **data.sql** (in sendmoney/src/main/resources) contains SQL instructions 
+to create some data for demonstration.
+
 
 
 ### Content
@@ -39,20 +58,6 @@ feature_getTransfer (/sendMoney), using an orderDTO:
 orderDTO. Deposit POST request on /pmb-adm/deposit need an admin logged user.
 - v1.1 fixes the credentials kill problem after a SQL export/import due to a character encoding trouble by replacing password VARCHAR type by BINARY(60) type in buddy table.
 - v1.2 use BigDecimal for money value (and decimal in database field.
-
-
-### Database
-
-The file **schema.sql** (in sendmoney/src/main/resources) contains sql instructions 
-to create both prod and test databases and mandatory data.
-The file **data.sql** (in sendmoney/src/main/resources) contains sql instructions 
-to create some data for demonstration.
-
-Application uses mySQL 8.0.
-
-SendMoneyApplication deal with prod database called 'pmb_sendmoney' by credentials stored in IDE environment variables (**PMB_DB_USER = pmb-sendmoney-user**  and  **PMB_DB_PASSWORD= PazfWort_X72020!**)
-
-The pmb_sendmoney_test database use other credentials (testeur / 1231231).
 
 
 

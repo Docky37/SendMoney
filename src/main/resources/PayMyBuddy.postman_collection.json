@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"username\":\"Thierry.Schreiner@hotmail.fr\",\n    \"password\":\"1231231\"\n}",
+							"raw": "{\n\t\"username\":\"send.money@pmb.com\",\n    \"password\":\"1231231\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -68,10 +68,16 @@
 					"name": "http://localhost:8080/authenticate (Al Pacino)",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"username\":\"Jean.Gabin@PatheCinema.fr\",\n    \"password\":\"1231231\"\n}",
+							"raw": "{\n\t\"username\":\"Al.Pacino@Hollywood.com\",\n    \"password\":\"1231231\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -127,7 +133,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"username\":\"Jean.Gabin@PatheCinema.fr\",\n    \"password\":\"1231231\"\n}",
+							"raw": "{\n\t\"username\":\"Angelina.Jolie@Ocean11.cine\",\n    \"password\":\"1231231\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -149,13 +155,13 @@
 					"response": []
 				},
 				{
-					"name": "http://localhost:8080/registration",
+					"name": "http://localhost:8080/registration (Someone ELSE)",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"firstName\":\"Yo\",\r\n    \"lastName\":\"Yo\",\r\n    \"email\":\"YoYo@mail.fr\",\r\n    \"password\":\"1231231\",\r\n    \"confirmPassword\":\"1231231\"\r\n}",
+							"raw": "{\r\n    \"firstName\":\"Someone\",\r\n    \"lastName\":\"ELSE\",\r\n    \"email\":\"Someone.ELSE@mail.fr\",\r\n    \"password\":\"1231231\",\r\n    \"confirmPassword\":\"1231231\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -177,6 +183,34 @@
 					"response": []
 				},
 				{
+					"name": "http://localhost:8080/authenticate (Someone Else)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"Someone.ELSE@mail.fr\",\n    \"password\":\"1231231\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "http://localhost:8080/welcome",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -186,7 +220,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUaGllcnJ5LlNjaHJlaW5lckBob3RtYWlsLmZyIiwiZXhwIjoxNTkyNzgwMjM3LCJpYXQiOjE1OTI3NzY2Mzd9.1XKwV1luM9zFiI1-RhUqumZXUBgeeGUACCHNoZC4kmk",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbC5QYWNpbm9ASG9sbHl3b29kLmNvbSIsImV4cCI6MTU5MzEyNjMzMCwiaWF0IjoxNTkzMTI2MDMwfQ.4Be-TNmMZKteGpp1kILh6ZAACWOX9AK5L5wF_z6lFr0",
 								"type": "text"
 							}
 						],
@@ -252,6 +286,65 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "http://localhost:8080/pmb-account",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTb21lb25lLkVMU0VAbWFpbC5mciIsImV4cCI6MTU5NTQ5NjY2NSwiaWF0IjoxNTk1NDk1NDY1fQ.yfI3ko00k--mMfmFpBdF1TJCMNJ7A8UtUFV-bhstNBw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"Someone.ELSE@mail.fr\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pmb-account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pmb-account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/account-balance",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbC5QYWNpbm9ASG9sbHl3b29kLmNvbSIsImV4cCI6MTU5NDg1NzgzNywiaWF0IjoxNTk0ODU2NjM3fQ.BjjV4UEP4y51cF8o5nmFVu0vuUer6IPOomD1vLpuoss"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/account-balance",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"account-balance"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -300,7 +393,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbC5QYWNpbm9ASG9sbHl3b29kLmNvbSIsImV4cCI6MTU5MzY0MDk2MCwiaWF0IjoxNTkzNjM5NzYwfQ.WDaqUNJoEHn2on11sFXRb7Ku75c5oimIfwQKBerRHhw",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbC5QYWNpbm9ASG9sbHl3b29kLmNvbSIsImV4cCI6MTU5NDg1NzgzNywiaWF0IjoxNTk0ODU2NjM3fQ.BjjV4UEP4y51cF8o5nmFVu0vuUer6IPOomD1vLpuoss",
 								"type": "text"
 							}
 						],
@@ -351,55 +444,19 @@
 			"name": "Transfer",
 			"item": [
 				{
-					"name": "http://localhost:8080//pmb-adm/deposit",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbC5QYWNpbm9ASG9sbHl3b29kLmNvbSIsImV4cCI6MTU5NDU5NjUxNCwiaWF0IjoxNTk0NTk1MzE0fQ.nePVX-ZK9x0RSfVZJlNCPqGsLyqKfKV1yEcpyCQ9bRw",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"my.beneficiary@pmb.fr\",\r\n    \"amount\":100.00}\r\n)",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080//pmb-adm/deposit",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"",
-								"pmb-adm",
-								"deposit"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "http://localhost:8080/send-money",
 					"request": {
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbC5QYWNpbm9ASG9sbHl3b29kLmNvbSIsImV4cCI6MTU5MzY0MDMzNSwiaWF0IjoxNTkzNjM5MTM1fQ.t49rY_UIpw4Cs8IaWiMdphORktXPEMouzMgTBAbor54",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbC5QYWNpbm9ASG9sbHl3b29kLmNvbSIsImV4cCI6MTU5MzcyNTg5NCwiaWF0IjoxNTkzNzI0Njk0fQ.MgRMgdHpPwloxWZb-iuf0cfZzkLvrh1NPlfW_QcK_is",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"beneficiary\":\"Angelina.Jolie@Ocean11.cine\",\r\n    \"amount\":150,\r\n    \"sender\":\"Al.Pacino@Hollywood.com\"\r\n}",
+							"raw": "{\r\n    \"beneficiary\":\"Daniel.Craig@JamesBond.fr\",\r\n    \"amount\":350,\r\n    \"description\":\"James Bond birthday gift.\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -421,6 +478,41 @@
 					"response": []
 				},
 				{
+					"name": "http://localhost:8080//pmb-adm/deposit",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZW5kLm1vbmV5QHBtYi5jb20iLCJleHAiOjE1OTQ4NTYzNjIsImlhdCI6MTU5NDg1NTE2Mn0.c-gsRzti3EHHNf8eWjZVvE29kFUJLDUmd7fBr0ZM9dk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"beneficiary\":\"Jean.Gabin@PatheCinema.fr\",\r\n    \"amount\":100.00,\r\n    \"description\":\"Monthly deposit\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pmb-adm/deposit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pmb-adm",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "http://localhost:8080/withdrawal",
 					"request": {
 						"method": "POST",
@@ -433,7 +525,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"beneficiary\":\"Jean.Gabin@PatheCinema.fr\",\r\n    \"amount\":100.00}\r\n)",
+							"raw": "{\r\n    \"beneficiary\":\"Jean.Gabin@PatheCinema.fr\",\r\n    \"amount\":100.00},\r\n    \"description\":\"Withdrawal .\"\r\n)",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -449,6 +541,75 @@
 							"port": "8080",
 							"path": [
 								"withdrawal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/transfer",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbC5QYWNpbm9ASG9sbHl3b29kLmNvbSIsImV4cCI6MTU5NTg0NzQxNCwiaWF0IjoxNTk1ODQzODE0fQ.rIIRx0ubSjHi-NmDRqIF3D0cisvjxatjyhIqqWgX3Uc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/transfer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transfer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080//pmb-adm/transfer",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbC5QYWNpbm9ASG9sbHl3b29kLmNvbSIsImV4cCI6MTU5NTg0NzQxNCwiaWF0IjoxNTk1ODQzODE0fQ.rIIRx0ubSjHi-NmDRqIF3D0cisvjxatjyhIqqWgX3Uc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"beneficiary\":\"Jean.Gabin@PatheCinema.fr\",\r\n    \"amount\":100.00,\r\n    \"description\":\"Monthly deposit\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pmb-adm/transfer?submitDay=07/02/2020",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pmb-adm",
+								"transfer"
+							],
+							"query": [
+								{
+									"key": "submitDay",
+									"value": "07/02/2020"
+								}
 							]
 						}
 					},
