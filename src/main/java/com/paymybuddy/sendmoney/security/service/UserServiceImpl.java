@@ -48,8 +48,7 @@ public class UserServiceImpl implements UserService {
         buddy.setLastName(userDTO.getLastName());
         buddy.setEmail(userDTO.getEmail());
         buddy.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
-        buddy.setRoles(new HashSet<>(roleRepository.findAll()));
-        //buddy.setRoles(new HashSet<>(roleRepository.findByName("ADMIN")));
+        buddy.setRoles(new HashSet<>(roleRepository.findByName("USER")));
         userRepository.save(buddy);
     }
 

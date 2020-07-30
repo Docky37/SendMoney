@@ -68,6 +68,6 @@ public class UserServiceTest {
         userService.save(userDTO);
         // THEN
         verify(userRepository).save(any(Buddy.class));
-        verify(roleRepository).findAll();
+        verify(roleRepository).findByName("USER");
     }
 }
